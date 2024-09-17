@@ -8,18 +8,18 @@ import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.getByType
 
 class AndroidApplicationComposeConventionPlugin : Plugin<Project> {
-    override fun apply(target: Project) {
-        with(target) {
-            with(pluginManager) {
-                apply(plugin = "com.android.application")
-                apply(plugin = "org.jetbrains.kotlin.android")
-                apply(plugin = "org.jetbrains.kotlin.plugin.compose")
-            }
+  override fun apply(target: Project) {
+    with(target) {
+      with(pluginManager) {
+        apply(plugin = "com.android.application")
+        apply(plugin = "org.jetbrains.kotlin.android")
+        apply(plugin = "org.jetbrains.kotlin.plugin.compose")
+      }
 
-            val extension = extensions.getByType<ApplicationExtension>()
+      val extension = extensions.getByType<ApplicationExtension>()
 
-            configureAndroidCompose(extension)
-            configureKotlinAndroid(extension)
-        }
+      configureAndroidCompose(extension)
+      configureKotlinAndroid(extension)
     }
+  }
 }
