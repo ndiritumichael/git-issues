@@ -1,0 +1,49 @@
+
+query GetRepositoryDetails($owner: String!, $name: String!) {
+
+    repository(owner: $owner, name: $name) {
+        name
+        owner {
+            login
+        }
+        description
+        stargazerCount
+        forkCount
+        createdAt
+        updatedAt
+        primaryLanguage {
+            name
+        }
+        licenseInfo {
+            name
+        }
+        url
+
+        issues(last: 10) {
+            edges {
+                node {
+                    title
+                    createdAt
+                    url
+                    title
+                    state
+                    author{
+                        login
+                    }
+                    labels{
+                        edges {
+                            node {
+                                name
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+
+        forks {
+            totalCount
+        }
+    }
+}

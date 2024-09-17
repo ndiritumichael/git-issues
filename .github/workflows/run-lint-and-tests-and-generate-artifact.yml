@@ -24,10 +24,10 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
-
-
+      - name: Make CodeLinting executable
+        run: chmod +x ./codeLinting.sh
       - name: Run lint checks
-        run: ./gradlew codeLinting
+        run: ./codeLinting.sh
 
   # Job that runs unit tests
   run-unit-tests:

@@ -1,23 +1,23 @@
 pluginManagement {
-  includeBuild("build-logic")
-  repositories {
-    google {
-      content {
-        includeGroupByRegex("com\\.android.*")
-        includeGroupByRegex("com\\.google.*")
-        includeGroupByRegex("androidx.*")
-      }
+    includeBuild("build-logic")
+    repositories {
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
+        mavenCentral()
+        gradlePluginPortal()
     }
-    mavenCentral()
-    gradlePluginPortal()
-  }
 }
 dependencyResolutionManagement {
-  repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-  repositories {
-    google()
-    mavenCentral()
-  }
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
 }
 
 rootProject.name = "GitIssuesMobile"
@@ -30,3 +30,6 @@ include(":core:datastore")
 include(":feature:login")
 include(":feature:repository")
 include(":feature:issues")
+plugins {
+    id("org.jetbrains.kotlinx.kover.aggregation") version "0.8.3" apply true
+}
