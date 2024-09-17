@@ -1,0 +1,52 @@
+# Workflow to perform checks for linting and unit tests, on PR into the main branch
+name: Run Checks
+
+# Sets the workflow to be triggered on pull-request specifically to main branch
+on:
+  pull_request:
+    branches: [ "main","dev" ]
+
+jobs:
+  # Job that runs ktlint and detekt lint checks
+  run-lint-checks:
+    name: Lint Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+
+
+      - name: Run lint checks
+        run: ./gradlew codeLinting
+
+  # Job that runs unit tests
+  run-unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+
+
+      - name: Run Unit Tests
+        run: ./gradlew testDebugUnitTest
