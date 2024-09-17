@@ -26,9 +26,9 @@ fun GetRepositoryDetailsQuery.Data.toIssues(): List<IssueDTO> =
                 createdAt = node.createdAt.toString(),
                 author = node.author?.login ?: "No Author",
                 label =
-                    node.labels
-                        ?.edges
-                        ?.filterNotNull()
-                        ?.mapNotNull { it.node?.name } ?: listOf(),
+                node.labels
+                    ?.edges
+                    ?.filterNotNull()
+                    ?.mapNotNull { it.node?.name } ?: listOf(),
             )
         } ?: emptyList()
