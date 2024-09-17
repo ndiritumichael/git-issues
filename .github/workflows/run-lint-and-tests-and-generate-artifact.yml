@@ -25,7 +25,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Run lint checks
-        run: ./gradlew codeLinting.sh
+        run: ./codeLinting.sh
 
   # Job that runs unit tests
   run-unit-tests:
