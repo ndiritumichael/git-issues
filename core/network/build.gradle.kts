@@ -21,12 +21,7 @@ apollo {
             endpointUrl.set(
                 "https://api.github.com/graphql",
             )
-            headers.put(
-                "Authorization",
-                "Bearer github_pat_11AEHQEHY0PCFsu4h5vEbD_" +
-                    "jXD6hrVOV0pVleZoV2TkHlGi0ZU6zFNGn0a" +
-                    "QUqo8u7zJCCGJDQWeijeZq1X",
-            )
+
             schemaFile.set(file("src/main/graphql/schema.graphqls"))
         }
     }

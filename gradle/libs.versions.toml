@@ -1,5 +1,6 @@
 [versions]
 agp = "8.5.2"
+apollo = "4.0.0"
 kotlin = "2.0.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -73,6 +74,9 @@ androidx-test-ext = { group = "androidx.test.ext", name = "junit-ktx", version.r
 
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
 
+apollo-runtime = { module = "com.apollographql.apollo:apollo-runtime", version.ref = "apollo"}
+
+
 #hilt
 hilt-compiler = { module = "com.google.dagger:hilt-android-compiler",version.ref = "hilt"}
 hilt-android= { module = "com.google.dagger:hilt-android",version.ref = "hilt"}
@@ -131,6 +135,7 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 kotlinX-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 room-compiler = { id = "androidx.room", version.ref = "room" }
 module-graph = { id = "com.jraska.module.graph.assertion", version.ref = "moduleGraph" }
+apollo = { id = "com.apollographql.apollo", version.ref = "apollo" }
 
 
 
