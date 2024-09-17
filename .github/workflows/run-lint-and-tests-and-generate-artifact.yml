@@ -24,6 +24,8 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
+      - name: Make CodeLinting executable
+        run: chmod +x ./codeLinting.sh
       - name: Run lint checks
         run: ./codeLinting.sh
 
