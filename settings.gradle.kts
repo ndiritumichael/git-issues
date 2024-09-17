@@ -24,3 +24,4 @@ rootProject.name = "GitIssuesMobile"
 include(":app")
 include(":core:domain")
 include(":core:data")
+include(":core:network")
