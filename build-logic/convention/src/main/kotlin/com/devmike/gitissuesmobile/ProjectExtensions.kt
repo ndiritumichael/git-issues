@@ -1,5 +1,3 @@
-
-
 package com.devmike.gitissuesmobile
 
 import org.gradle.api.Project
