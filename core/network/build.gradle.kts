@@ -1,43 +1,47 @@
 plugins {
-  alias(libs.plugins.android.library)
-  alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.gitissuesmobile.android.library)
+
+    alias(libs.plugins.gitissuesmobile.android.hilt)
+    alias(libs.plugins.apollo)
 }
 
 android {
-  namespace = "com.devmike.network"
-  compileSdk = 34
-
-  defaultConfig {
-    minSdk = 25
-
-    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    consumerProguardFiles("consumer-rules.pro")
-  }
-
-  buildTypes {
-    release {
-      isMinifyEnabled = false
-      proguardFiles(
-        getDefaultProguardFile("proguard-android-optimize.txt"),
-        "proguard-rules.pro",
-      )
-    }
-  }
-  compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-  }
-  kotlinOptions {
-    jvmTarget = "1.8"
-  }
+    namespace = "com.devmike.network"
+    compileSdk = 34
 }
 
 dependencies {
 
-  implementation(libs.androidx.core.ktx)
-  implementation(libs.androidx.appcompat)
-  implementation(libs.material)
-  testImplementation(libs.junit)
-  androidTestImplementation(libs.androidx.junit)
-  androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.apollo.runtime)
+}
+apollo {
+    service("service") {
+        packageName.set("com.devmike.network")
+        introspection {
+            endpointUrl.set(
+                "https://api.github.com/graphql",
+            )
+            headers.put(
+                "Authorization",
+                "Bearer github_pat_11AEHQEHY0PCFsu4h5vEbD_" +
+                    "jXD6hrVOV0pVleZoV2TkHlGi0ZU6zFNGn0a" +
+                    "QUqo8u7zJCCGJDQWeijeZq1X",
+            )
+            schemaFile.set(file("src/main/graphql/schema.graphqls"))
+        }
+    }
+}
+
+/**
+* fixes the warning * What went wrong:
+* A problem was found with the configuration of task
+*':core:network:runKtlintCheckOverMainSourceSet' (type 'KtLintCheckTask').
+* - Gradle detected a problem with the following location:
+*'C:\Users\User\AndroidStudioProjects\GitIssuesMobile\core\network\build\generated\source\apollo\service'.
+* Reason: Task ':core:network:runKtlintCheckOverMainSourceSet' uses this output of task '
+*:core:network:generateServiceApolloSources' without declaring an explicit or implicit dependency.
+*This can lead to incorrect results being produced, depending on what order the tasks are executed.
+*/
+tasks.named("runKtlintCheckOverMainSourceSet") {
+    dependsOn(tasks.named("generateServiceApolloSources"))
 }
