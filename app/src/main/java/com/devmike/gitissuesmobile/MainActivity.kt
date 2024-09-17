@@ -14,37 +14,37 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.devmike.gitissuesmobile.ui.theme.GitIssuesMobileTheme
 
 class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            GitIssuesMobileTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding),
-                    )
-                }
-            }
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    enableEdgeToEdge()
+    setContent {
+      GitIssuesMobileTheme {
+        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+          Greeting(
+            name = "Android",
+            modifier = Modifier.padding(innerPadding),
+          )
         }
+      }
     }
+  }
 }
 
 @Composable
 fun Greeting(
-    name: String,
-    modifier: Modifier = Modifier,
+  name: String,
+  modifier: Modifier = Modifier,
 ) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier,
-    )
+  Text(
+    text = "Hello $name!",
+    modifier = modifier,
+  )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    GitIssuesMobileTheme {
-        Greeting("Android")
-    }
+  GitIssuesMobileTheme {
+    Greeting("Android")
+  }
 }
