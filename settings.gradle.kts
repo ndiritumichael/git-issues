@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "GitIssuesMobile"
 include(":app")
+include(":core:domain")
