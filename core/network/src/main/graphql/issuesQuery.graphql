@@ -1,5 +1,5 @@
 
-query GetRepositoryDetails($owner: String!, $name: String!) {
+query GetRepositoryDetails($owner: String!, $name: String!, $first: Int, $after: String) {
 
     repository(owner: $owner, name: $name) {
         name
@@ -19,9 +19,14 @@ query GetRepositoryDetails($owner: String!, $name: String!) {
         }
         url
 
-        issues(last: 10) {
+        issues(first: $first, after: $after) {
+            pageInfo {
+                endCursor
+                hasNextPage
+            }
             edges {
                 node {
+                    body
                     title
                     createdAt
                     url
