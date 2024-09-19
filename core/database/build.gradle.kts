@@ -1,43 +1,27 @@
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.gitissuesmobile.android.library)
+    alias(libs.plugins.room.compiler)
+    alias(libs.plugins.gitissuesmobile.android.hilt)
+    alias(libs.plugins.ksp)
 }
 
 android {
     namespace = "com.devmike.database"
-    compileSdk = 34
+    room {
 
-    defaultConfig {
-        minSdk = 25
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
+        schemaDirectory("$projectDir/schemas")
     }
 }
-
 dependencies {
+    api(libs.room.runtime)
+    api(libs.room.ktx)
+    implementation(libs.room.testing)
+    implementation(libs.androidx.test.ext)
+    ksp(libs.room.compiler)
+    implementation(libs.androidx.paging.runtime)
+    implementation(libs.androidx.room.paging)
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    api(libs.androidx.paging.runtime)
+
+    implementation(project(":core:network"))
 }
