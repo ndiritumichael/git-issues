@@ -19,7 +19,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "GitIssuesMobile"
 include(":app")
 include(":core:domain")

@@ -12,6 +12,8 @@ plugins {
     alias(libs.plugins.spotless) apply true
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.module.graph) apply true
+    alias(libs.plugins.google.gms.google.services) apply false
+    alias(libs.plugins.google.firebase.crashlytics) apply false
 }
 subprojects {
     apply(plugin = "org.jlleitschuh.gradle.ktlint")

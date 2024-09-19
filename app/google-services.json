@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1069584791515",
+    "project_id": "gitissuesmobile",
+    "storage_bucket": "gitissuesmobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1069584791515:android:d5f81e50fbbec4284299fe",
+        "android_client_info": {
+          "package_name": "com.devmike.gitissuesmobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvBgevE431VyRYD3-gGIaLFzHWeNuFvsI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

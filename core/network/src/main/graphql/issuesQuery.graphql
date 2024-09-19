@@ -1,11 +1,12 @@
 
-query GetRepositoryDetails($owner: String!, $name: String!, $first: Int, $after: String) {
+query GetRepositoryDetails($owner: String!, $name: String!, $first: Int, $after: String ,) {
 
     repository(owner: $owner, name: $name) {
         name
         owner {
             login
         }
+        nameWithOwner
         description
         stargazerCount
         forkCount
@@ -19,14 +20,15 @@ query GetRepositoryDetails($owner: String!, $name: String!, $first: Int, $after:
         }
         url
 
-        issues(first: $first, after: $after) {
+        issues(first: $first, after: $after,  ) {
             pageInfo {
                 endCursor
                 hasNextPage
             }
             edges {
                 node {
-                    body
+                    bodyText
+                    id
                     title
                     createdAt
                     url
@@ -41,6 +43,9 @@ query GetRepositoryDetails($owner: String!, $name: String!, $first: Int, $after:
                                 name
                             }
                         }
+                    }
+                    comments{
+                        totalCount
                     }
 
                 }
