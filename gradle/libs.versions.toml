@@ -1,6 +1,7 @@
 [versions]
 agp = "8.5.2"
 apollo = "4.0.0"
+appauth = "0.11.1"
 kotlin = "2.0.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -32,18 +33,30 @@ ktor = "2.3.12"
 lottie = "6.0.0"
 mockk = "1.13.11"
 moduleGraph = "2.5.0"
+pagingRuntime = "3.3.2"
 robolectric = "4.12.2"
 room = "2.6.1"
+
 spotless = "6.4.2"
 timber = "5.0.1"
 appcompat = "1.7.0"
 material = "1.12.0"
 coreKtxVersion = "1.6.1"
 truth = "1.4.2"
+firebaseCrashlytics = "19.1.0"
+googleGmsGoogleServices = "4.4.2"
+googleFirebaseCrashlytics = "3.0.2"
+firebaseAnalytics = "22.1.0"
 
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingRuntime" }
+androidx-paging-runtime = { module = "androidx.paging:paging-runtime-ktx", version.ref = "pagingRuntime" }
+
+
+
+appauth = { module = "net.openid:appauth", version.ref = "appauth" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -88,6 +101,7 @@ room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 room-testing = {module = "androidx.room:room-testing",version.ref = "room"}
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "room" }
 datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore"}
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber"}
 
@@ -116,6 +130,8 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtxVersion" }
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlytics" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics", version.ref = "firebaseAnalytics" }
 
 [bundles]
 compose = ["androidx-activity-compose","androidx-compose-runtime","androidx-material3","androidx-compose-foundation","androidx-compose-foundation-layout",
@@ -147,3 +163,5 @@ gitissuesmobile-android-hilt = {id = "gitissuesmobile.android.hilt", version = "
 gitissuesmobile-library-compose = {id = "gitissuesmobile.android.library.compose", version = "unspecified"}
 gitissuesmobile-application-compose = {id = "gitissuesmobile.android.application.compose", version = "unspecified"}
 gitissuesmobile-android-library= {id = "gitissuesmobile.android.library",version = "unspecified"}
+google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
+google-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "googleFirebaseCrashlytics" }
