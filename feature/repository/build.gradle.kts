@@ -12,4 +12,5 @@ dependencies {
     implementation(project(":core:data"))
 
     implementation(libs.androidx.paging.compose)
+    implementation(libs.coil.compose)
 }

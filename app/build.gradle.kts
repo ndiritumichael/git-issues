@@ -41,6 +41,7 @@ android {
 }
 dependencies {
     implementation(projects.feature.repository)
+    implementation(projects.feature.issues)
     implementation(libs.appauth)
     implementation(projects.core.datastore)
     implementation(libs.firebase.crashlytics)

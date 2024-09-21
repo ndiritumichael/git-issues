@@ -1,6 +1,8 @@
 [versions]
 agp = "8.5.2"
 apollo = "4.0.0"
+apolloMockserver = "0.0.1"
+apolloTestingSupport = "4.0.0"
 appauth = "0.11.1"
 kotlin = "2.0.0"
 coreKtx = "1.13.1"
@@ -47,6 +49,7 @@ firebaseCrashlytics = "19.1.0"
 googleGmsGoogleServices = "4.4.2"
 googleFirebaseCrashlytics = "3.0.2"
 firebaseAnalytics = "22.1.0"
+coilCompose = "2.7.0"
 
 
 [libraries]
@@ -56,6 +59,8 @@ androidx-paging-runtime = { module = "androidx.paging:paging-runtime-ktx", versi
 
 
 
+apollo-mockserver = { module = "com.apollographql.mockserver:apollo-mockserver", version.ref = "apolloMockserver" }
+apollo-testing-support = { module = "com.apollographql.apollo:apollo-testing-support", version.ref = "apolloTestingSupport" }
 appauth = { module = "net.openid:appauth", version.ref = "appauth" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -86,6 +91,7 @@ androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-
 androidx-test-ext = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "androidxTestExt" }
 
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 
 apollo-runtime = { module = "com.apollographql.apollo:apollo-runtime", version.ref = "apollo"}
 
