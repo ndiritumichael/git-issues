@@ -9,4 +9,5 @@ data class RepositoryModel(
     val stargazers: Int,
     val forkCount: Int,
     val issueCount: Int,
+    val avatarUrl: String,
 )

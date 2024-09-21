@@ -1,15 +1,12 @@
-package com.devmike.data.sources
+package com.devmike.data.sources.repositories
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
-import androidx.room.withTransaction
 import com.devmike.data.mapper.toCachedRepository
-import com.devmike.database.GithubDatabase
-import com.devmike.database.dao.RepositorySearchDAO
 import com.devmike.database.entities.CachedRepository
-import com.devmike.database.entities.RemoteKeyEntity
+import com.devmike.database.repository.CachedRepoSearch
 import com.devmike.network.networkSource.GitHubIssuesRepo
 import java.net.SocketTimeoutException
 
@@ -20,8 +17,7 @@ import java.net.SocketTimeoutException
 class RepositoriesDataSources(
     private val query: String,
     private val githubIssuesRepository: GitHubIssuesRepo,
-    private val cacheRepositoryDAO: RepositorySearchDAO,
-    private val db: GithubDatabase,
+    private val cachedRepository: CachedRepoSearch,
 ) : RemoteMediator<Int, CachedRepository>() {
     override suspend fun load(
         loadType: LoadType,
@@ -33,7 +29,7 @@ class RepositoriesDataSources(
                     LoadType.REFRESH -> null
                     LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
                     LoadType.APPEND -> {
-                        val remoteKey = cacheRepositoryDAO.remoteKeyByQuery(query)
+                        val remoteKey = cachedRepository.remoteKeyByQuery(query)
                         remoteKey?.nextCursor
                     }
                 }
@@ -45,18 +41,13 @@ class RepositoriesDataSources(
                     MediatorResult.Error(error)
                 },
                 onSuccess = { result ->
-                    db.withTransaction {
-                        if (loadType == LoadType.REFRESH && result.data.isNotEmpty()) {
-                            cacheRepositoryDAO.deleteRepositories(query)
-                            cacheRepositoryDAO.clearRemoteKeysForQuery(query)
-                        }
-                        cacheRepositoryDAO.upsertAll(
-                            result.data.map { it.toCachedRepository(query) },
-                        )
-                        cacheRepositoryDAO.insertOrReplace(
-                            RemoteKeyEntity(searchQuery = query, nextCursor = result.nextCursor),
-                        )
-                    }
+
+                    cachedRepository.insertRepositories(
+                        loadType == LoadType.REFRESH && result.data.isNotEmpty(),
+                        query = query,
+                        nextCursor = result.nextCursor,
+                        result.data.map { it.toCachedRepository(query) },
+                    )
 
                     MediatorResult.Success(endOfPaginationReached = !result.hasNextPage)
                 },
