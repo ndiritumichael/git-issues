@@ -13,4 +13,5 @@ data class CachedRepository(
     val forkCount: Int,
     val issueCount: Int,
     val searchQuery: String,
+    val avatarUrl: String,
 )
