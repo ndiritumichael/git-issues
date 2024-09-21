@@ -24,7 +24,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.devmike.datastore.repo.DataStoreRepo
 import com.devmike.gitissuesmobile.ui.theme.GitIssuesMobileTheme
-import com.devmike.repository.screen.RepositorySearchScreen
+import com.devmike.issues.screen.IssuesScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import net.openid.appauth.AuthorizationException
@@ -53,14 +53,22 @@ class MainActivity : ComponentActivity() {
             val token by repo.getUserToken().collectAsStateWithLifecycle(initialValue = null)
             GitIssuesMobileTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) {
-                    if (token.isNullOrEmpty()) {
-                        Box(modifier = Modifier.fillMaxSize().padding(it)) {
-                            Button(onClick = { githubAuth() }) {
-                                Text(text = "Hello auth the screen")
+                    Box(modifier = Modifier.fillMaxSize().padding(it)) {
+                        if (token.isNullOrEmpty()) {
+                            Box(
+                                modifier =
+                                    Modifier
+                                        .fillMaxSize()
+                                        .padding(it),
+                            ) {
+                                Button(onClick = { githubAuth() }) {
+                                    Text(text = "Hello auth the screen")
+                                }
                             }
+                        } else {
+                            IssuesScreen()
+                            // RepositorySearchScreen()
                         }
-                    } else {
-                        RepositorySearchScreen()
                     }
                 }
             }
