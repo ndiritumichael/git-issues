@@ -8,5 +8,4 @@ data class RemoteKeyEntity(
     @PrimaryKey val searchQuery: String,
     val nextCursor: String?,
     val lastUpdated: Long = System.currentTimeMillis(),
-    val type: String,
 )
