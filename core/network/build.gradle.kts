@@ -15,6 +15,12 @@ dependencies {
     implementation(libs.apollo.runtime)
     implementation(projects.core.datastore)
     implementation(projects.core.domain)
+
+    dependencies {
+        testImplementation(libs.apollo.mockserver)
+
+        testImplementation(libs.apollo.testing.support)
+    }
 }
 apollo {
     service("service") {
@@ -25,9 +31,7 @@ apollo {
             )
             headers.put(
                 "Authorization",
-                "Bearer github_pat_11AEHQEHY0PCFsu4h5vEbD_" +
-                    "jXD6hrVOV0pVleZoV2TkHlGi0ZU6zFNGn0a" +
-                    "QUqo8u7zJCCGJDQWeijeZq1X",
+                "Bearer yourtoken",
             )
             schemaFile.set(file("src/main/graphql/schema.graphqls"))
         }
