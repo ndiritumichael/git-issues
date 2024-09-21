@@ -9,7 +9,7 @@ import com.devmike.database.entities.CachedRepository
 @Dao
 interface RepositorySearchDAO {
     @Upsert
-    suspend fun upsertAll(repositories: List<CachedRepository>)
+    suspend fun insertAll(repositories: List<CachedRepository>)
 
     @Query(
         """SELECT * FROM repositories
