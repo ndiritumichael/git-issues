@@ -13,6 +13,7 @@ data class IssueDTO(
     val author: String,
     val issueCommentsCount: Int,
     val repositoryName: String,
+    val assignees: List<String> = emptyList(),
 )
 
 fun GetRepositoryDetailsQuery.Data.toIssues(): List<IssueDTO> =
@@ -38,5 +39,6 @@ fun GetRepositoryDetailsQuery.Data.toIssues(): List<IssueDTO> =
                 bodyText = node.bodyText,
                 issueCommentsCount = node.comments.totalCount,
                 repositoryName = this.repository.nameWithOwner,
+                assignees = node.assignees.nodes?.mapNotNull { it?.name } ?: emptyList(),
             )
         } ?: emptyList()
