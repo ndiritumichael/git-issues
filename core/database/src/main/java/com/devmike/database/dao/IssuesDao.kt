@@ -15,6 +15,12 @@ interface IssuesDao {
     @Query("Delete from issues where repositoryName = :repositoryName")
     suspend fun deleteRepositoryIssues(repositoryName: String)
 
-    @Query("Select * from issues where repositoryName = :repositoryName")
-    suspend fun getRepositoryIssues(repositoryName: String): PagingSource<Int, CachedIssueEntity>
+    @Query(
+        "Select * from issues where repositoryName = :repositoryName",
+    )
+    fun getRepositoryIssues(
+        repositoryName: String,
+        // assignee: String?,
+        //  labels: String,
+    ): PagingSource<Int, CachedIssueEntity>
 }
