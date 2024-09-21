@@ -10,9 +10,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Error
-import androidx.compose.material.icons.filled.Label
 import androidx.compose.material.icons.filled.RadioButtonUnchecked
-import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -28,7 +26,10 @@ import androidx.compose.ui.unit.dp
 import com.devmike.domain.models.IssueModel
 
 @Composable
-fun IssueCard(issue: IssueModel,onClick: () -> Unit) {
+fun IssueCard(
+    issue: IssueModel,
+    onClick: () -> Unit,
+) {
     Card(
         modifier =
             Modifier
@@ -84,24 +85,7 @@ fun IssueCard(issue: IssueModel,onClick: () -> Unit) {
                 )
                 Spacer(modifier = Modifier.height(8.dp))
             }
-          /*  FlowRow(
-                modifier = Modifier.fillMaxWidth(),
-                mainAxisSpacing = 4,
-                crossAxisSpacing = 4,
-            ) {
-                issue.label.forEach { label ->
-                    AssistChip(
-                        onClick = { *//* Handle label click *//* },
-                        label = { Text(label) },
-                        leadingIcon = {
-                            Icon(
-                                Icons.Default.Label,
-                                contentDescription = "Label",
-                            )
-                        },
-                    )
-                }
-            }*/
+
             Spacer(modifier = Modifier.height(8.dp))
             if (issue.assignee.isNotEmpty()) {
                 Text(
@@ -175,7 +159,6 @@ fun IssueCardPreview() {
                 assignee = listOf(),
                 url = " https://github.com/flutter/flutter",
             ),
-    ){
-
+    ) {
     }
 }

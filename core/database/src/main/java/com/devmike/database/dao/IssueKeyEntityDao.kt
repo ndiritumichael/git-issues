@@ -28,7 +28,10 @@ interface IssueKeyEntityDao {
     suspend fun insertRemoteKey(remoteKey: CachedIssueKeyEntity)
 
     @Query(
-        "DELETE FROM cachedissuekeyentity WHERE repoName = :repoName AND assignee = :assignee AND labels = :labels",
+        """ DELETE FROM cachedissuekeyentity
+ WHERE repoName = :repoName
+ AND assignee = :assignee AND
+  labels = :labels""",
     )
     suspend fun clearRemoteKeysForQuery(
         repoName: String,
