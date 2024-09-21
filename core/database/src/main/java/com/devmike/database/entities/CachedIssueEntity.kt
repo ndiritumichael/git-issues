@@ -12,7 +12,8 @@ data class CachedIssueEntity(
     val url: String,
     val title: String,
     val createdAt: String,
-    val label: List<String>,
+    val label: String,
     val author: String,
     val repositoryName: String,
+    val assignee: String? = null,
 )
