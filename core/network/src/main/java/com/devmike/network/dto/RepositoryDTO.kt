@@ -11,6 +11,7 @@ data class RepositoryDTO(
     val stargazers: Int,
     val forkCount: Int,
     val issueCount: Int,
+    val avatarUrl: String,
 )
 
 fun SearchRepositoriesQuery.Data.toRepositoryDTOs(): List<RepositoryDTO> =
@@ -28,5 +29,6 @@ fun SearchRepositoriesQuery.Data.toRepositoryDTOs(): List<RepositoryDTO> =
                 stargazers = it.stargazers.totalCount,
                 forkCount = it.forkCount,
                 issueCount = it.issues.totalCount,
+                avatarUrl = it.owner.avatarUrl.toString(),
             )
         } ?: emptyList()

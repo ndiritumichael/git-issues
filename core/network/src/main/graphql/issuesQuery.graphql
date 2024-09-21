@@ -1,59 +1,130 @@
 
-query GetRepositoryDetails($owner: String!, $name: String!, $first: Int, $after: String ,) {
+query GetRepositoryDetails($owner: String!, $name: String!, $first: Int, $after: String,$filterBy: IssueFilters
+) {
 
-    repository(owner: $owner, name: $name) {
-        name
-        owner {
-            login
-        }
-        nameWithOwner
-        description
-        stargazerCount
-        forkCount
-        createdAt
-        updatedAt
-        primaryLanguage {
+        repository(owner: $owner, name: $name,) {
             name
-        }
-        licenseInfo {
-            name
-        }
-        url
-
-        issues(first: $first, after: $after,  ) {
-            pageInfo {
-                endCursor
-                hasNextPage
+            owner {
+                login
             }
-            edges {
-                node {
-                    bodyText
-                    id
-                    title
-                    createdAt
-                    url
-                    title
-                    state
-                    author{
-                        login
+            nameWithOwner
+            description
+            stargazerCount
+            forkCount
+            createdAt
+            updatedAt
+            primaryLanguage {
+                name
+            }
+            licenseInfo {
+                name
+            }
+            url
+
+            assignableUsers(first: 1){
+                edges {
+                    node {
+                        name
+                        id
+
+
                     }
-                    labels{
-                        edges {
-                            node {
+                }
+            }
+
+            issues(first: $first, after: $after,filterBy: $filterBy) {
+                pageInfo {
+                    endCursor
+                    hasNextPage
+                }
+                edges {
+                    node {
+                        bodyText
+                        id
+                        title
+                        createdAt
+                        url
+                        title
+                        state
+                        author{
+                            login
+                        }
+                        labels(first: 10){
+                            edges {
+                                node {
+                                    name
+                                }
+                            }
+                        }
+
+                        comments{
+                            totalCount
+                        }
+                        assignees(first: 10){
+                            nodes {
                                 name
                             }
                         }
-                    }
-                    comments{
-                        totalCount
-                    }
 
+                    }
                 }
             }
-        }
 
-        forks {
-            totalCount
+            forks {
+                totalCount
+            }
         }
     }
-}
+
+
+
+#query GetLabels($owner: String!, $name: String!) {
+#    repository(owner: $owner, name: $name) {labels(first: 100) {
+#        edges {
+#            node {
+#                name
+#            }
+#        }
+#    }
+#    }
+#}
+#
+#query GetIssues($owner: String!, $name: String!, $assignees: [String!]) {
+#    repository(owner: $owner, name: $name) {
+#        issues(first: 100, filterBy: {assignee: $assignees}) {
+#            edges {
+#                node {
+#                    title
+#                    # ... other fields
+#                }
+#            }
+#        }
+#    }
+#}
+#query SearchIssuesByTitle(
+#    $searchQuery: String!,
+#    $first: Int!
+#) {
+#    search(query: $searchQuery, type: ISSUE, first: $first) {
+#        issueCount
+#        edges {
+#            node {
+#                ... on Issue {
+#                    title
+#                    body
+#                    state
+#                    createdAt
+#                    url
+#                    labels(first: 5) {
+#                        edges {
+#                            node {
+#                                name
+#                            }
+#                        }
+#                    }
+#                }
+#            }
+#        }
+#    }
+#}
+#
