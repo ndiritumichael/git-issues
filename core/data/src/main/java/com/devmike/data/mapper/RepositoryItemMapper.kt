@@ -15,6 +15,7 @@ fun RepositoryDTO.toCachedRepository(query: String): CachedRepository =
         forkCount = forkCount,
         issueCount = issueCount,
         searchQuery = query,
+        avatarUrl = avatarUrl,
     )
 
 fun CachedRepository.toRepositoryModel(): RepositoryModel =
@@ -27,4 +28,5 @@ fun CachedRepository.toRepositoryModel(): RepositoryModel =
         stargazers = stargazers,
         forkCount = forkCount,
         issueCount = issueCount,
+        avatarUrl = avatarUrl,
     )
