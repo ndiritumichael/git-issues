@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BugReport
 import androidx.compose.material.icons.filled.ForkRight
@@ -21,9 +22,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.devmike.database.entities.CachedRepository
 
 @Composable
@@ -35,10 +38,24 @@ fun RepositoryItem(repository: CachedRepository) {
         Column(
             modifier = Modifier.padding(16.dp),
         ) {
-            Text(
-                text = repository.nameWithOwner,
-                style = MaterialTheme.typography.titleMedium,
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                AsyncImage(
+                    model = repository.avatarUrl,
+                    contentDescription = null,
+                    modifier =
+                        Modifier
+                            .size(30.dp)
+                            .clip(CircleShape),
+                )
+
+                Text(
+                    text = repository.nameWithOwner,
+                    style = MaterialTheme.typography.titleMedium,
+                )
+            }
             Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = repository.description ?: "No description",

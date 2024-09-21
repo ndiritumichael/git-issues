@@ -6,21 +6,19 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.itemKey
 import com.devmike.repository.screen.components.RepositoryItem
 
 @Composable
@@ -39,7 +37,11 @@ fun RepositorySearchScreen(viewModel: RepositorySearchViewModel = hiltViewModel(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            TextField(value = viewModel.searchQuery, onValueChange = viewModel::modifySearchQuery)
+            TextField(
+                value = viewModel.searchQuery,
+                onValueChange = viewModel::modifySearchQuery,
+                modifier = Modifier.fillMaxWidth(),
+            )
         },
     ) { paddingValues ->
 
@@ -60,7 +62,10 @@ fun RepositorySearchScreen(viewModel: RepositorySearchViewModel = hiltViewModel(
                     )
                 }
             }
-            items(repositoriesState.itemCount) { count ->
+            items(
+                repositoriesState.itemCount,
+                key = repositoriesState.itemKey { it.url },
+            ) { count ->
                 repositoriesState[count]?.let {
                     RepositoryItem(repository = it)
                 }
@@ -76,20 +81,5 @@ fun RepositorySearchScreen(viewModel: RepositorySearchViewModel = hiltViewModel(
                 }
             }
         }
-    }
-}
-
-@Composable
-fun <T : Any> LazyPagingItems<T>.rememberLazyListState(): LazyListState {
-    // After recreation, LazyPagingItems first return 0 items, then the cached items.
-    // This behavior/issue is resetting the LazyListState scroll position.
-    // Below is a workaround. More info: https://issuetracker.google.com/issues/177245496.
-    return when (itemCount) {
-        // Return a different LazyListState instance.
-        0 -> remember(this) { LazyListState(0, 0) }
-        // Return rememberLazyListState (normal case).
-        else ->
-            androidx.compose.foundation.lazy
-                .rememberLazyListState()
     }
 }
