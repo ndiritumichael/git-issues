@@ -19,6 +19,21 @@ suspend inline fun <reified T : Operation.Data> safeApolloQuery(
             response.data != null -> {
                 Result.success(response.data!!)
             }
+            response.exception != null -> {
+                when (response.exception!!.cause) {
+                    is SocketTimeoutException -> {
+                        Result.failure(AppErrors.Timeout(response.exception!!.cause))
+                    }
+
+                    is IOException -> {
+                        Result.failure(AppErrors.NoInternet(response.exception!!.cause))
+                    }
+
+                    else -> {
+                        Result.failure(AppErrors.Unknown(cause = response.exception!!.cause))
+                    }
+                }
+            }
             response.hasErrors() -> {
                 val firstError = response.errors?.firstOrNull()
                 when {
@@ -35,15 +50,19 @@ suspend inline fun <reified T : Operation.Data> safeApolloQuery(
                 }
             }
             else -> {
-                Result.failure(AppErrors.Unknown())
+                Result.failure(
+                    AppErrors.Unknown(
+                        response.errors?.first()?.message ?: "Something went wrong",
+                    ),
+                )
             }
         }
+    } catch (e: SocketTimeoutException) {
+        Result.failure(AppErrors.Timeout(e))
+    } catch (e: IOException) {
+        Result.failure(AppErrors.NoInternet(e))
     } catch (e: ApolloNetworkException) {
-        when (e.cause) {
-            is SocketTimeoutException -> Result.failure(AppErrors.Timeout())
-            is IOException -> Result.failure(AppErrors.NoInternet())
-            else -> Result.failure(AppErrors.Unknown(cause = e))
-        }
+        Result.failure(AppErrors.Unknown(cause = e))
     } catch (e: ApolloException) {
         throw e
     } catch (e: CancellationException) {
