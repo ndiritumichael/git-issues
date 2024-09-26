@@ -4,13 +4,16 @@ sealed class AppErrors(
     override val message: String,
     override val cause: Throwable? = null,
 ) : Exception(message, cause) {
-    class NoInternet :
-        AppErrors(
+    class NoInternet(
+        cause: Throwable? = null,
+    ) : AppErrors(
             "No internet connection, " +
                 "Please Ensure you have an internet connection",
         )
 
-    class Timeout : AppErrors("Connection Timed Out, Please Try Again")
+    class Timeout(
+        cause: Throwable? = null,
+    ) : AppErrors("Connection Timed Out, Please Try Again")
 
     class Unknown(
         override val message: String = "An Unknown Error Occurred",
@@ -24,6 +27,6 @@ sealed class AppErrors(
     class Unauthorized : AppErrors("You are not authorized to make this request")
 
     class GraphQLError(
-        error: String,
-    ) : AppErrors(error)
+        error: List<String>,
+    ) : AppErrors("Something went wrong")
 }

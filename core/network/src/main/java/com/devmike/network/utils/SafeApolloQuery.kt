@@ -2,9 +2,8 @@ package com.devmike.network.utils
 
 import com.apollographql.apollo.ApolloCall
 import com.apollographql.apollo.api.Operation
-import com.apollographql.apollo.exception.ApolloException
-import com.apollographql.apollo.exception.ApolloNetworkException
 import com.devmike.domain.helper.AppErrors
+import timber.log.Timber
 import java.io.IOException
 import java.net.SocketTimeoutException
 import kotlin.coroutines.cancellation.CancellationException
@@ -20,6 +19,7 @@ suspend inline fun <reified T : Operation.Data> safeApolloQuery(
                 Result.success(response.data!!)
             }
             response.exception != null -> {
+                Timber.tag("networkerrorexception").d(response.exception)
                 when (response.exception!!.cause) {
                     is SocketTimeoutException -> {
                         Result.failure(AppErrors.Timeout(response.exception!!.cause))
@@ -35,6 +35,7 @@ suspend inline fun <reified T : Operation.Data> safeApolloQuery(
                 }
             }
             response.hasErrors() -> {
+                Timber.tag("networkerrorexception").d("${response.errors}")
                 val firstError = response.errors?.firstOrNull()
                 when {
                     firstError?.message?.contains("NOT_FOUND", ignoreCase = true) == true -> {
@@ -43,7 +44,7 @@ suspend inline fun <reified T : Operation.Data> safeApolloQuery(
                     else -> {
                         Result.failure(
                             AppErrors.GraphQLError(
-                                response.errors?.first()?.message ?: "Something went wrong",
+                                response.errors?.map { it.message } ?: emptyList(),
                             ),
                         )
                     }
@@ -57,14 +58,6 @@ suspend inline fun <reified T : Operation.Data> safeApolloQuery(
                 )
             }
         }
-    } catch (e: SocketTimeoutException) {
-        Result.failure(AppErrors.Timeout(e))
-    } catch (e: IOException) {
-        Result.failure(AppErrors.NoInternet(e))
-    } catch (e: ApolloNetworkException) {
-        Result.failure(AppErrors.Unknown(cause = e))
-    } catch (e: ApolloException) {
-        throw e
     } catch (e: CancellationException) {
         throw e
     } catch (e: Exception) {
