@@ -53,6 +53,7 @@ query GetRepositoryDetails($owner: String!, $name: String!, $first: Int, $after:
                             edges {
                                 node {
                                     name
+                                    color
                                 }
                             }
                         }

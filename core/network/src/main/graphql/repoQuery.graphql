@@ -14,6 +14,7 @@ query SearchRepositories($query: String!,$first: Int, $after: String) {
                     login
                     avatarUrl
 
+
                 }
                 description
                 stargazers {
@@ -28,3 +29,4 @@ query SearchRepositories($query: String!,$first: Int, $after: String) {
         }
     }
 }
+
