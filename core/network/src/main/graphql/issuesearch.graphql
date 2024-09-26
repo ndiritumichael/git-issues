@@ -1,15 +1,50 @@
-query GetRepositoryLabels($owner: String!, $name: String!, $cursor: String) {
-    repository(owner: $owner, name: $name) {
-        labels(first: 100, after: $cursor) {
-            pageInfo {
-                hasNextPage
-                endCursor
-            }
-            nodes {
-                name
-                color
-                description
+query SearchIssues($query : String!,$cursor : String,$first : Int)
+{
+    search(query: $query,type: ISSUE,first :$first,after: $cursor){
+
+        pageInfo {
+            endCursor
+            hasNextPage
+        }
+        nodes {
+            ...on Issue{
+                repository {
+                    nameWithOwner
+                }
+
+                id
+                title
+                createdAt
+                url
+                title
+                state
+                author{
+                    login
+                }
+                labels(first: 20){
+                    edges {
+                        node {
+                            name
+                            color
+                        }
+                    }
+                }
+
+                comments{
+                    totalCount
+                }
+                assignees(first: 20){
+                    nodes {
+                        name
+                        login
+
+                    }
+                }
+
             }
         }
     }
 }
+
+
+
