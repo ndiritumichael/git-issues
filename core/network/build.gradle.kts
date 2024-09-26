@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.gitissuesmobile.android.library)
 
@@ -22,6 +24,18 @@ dependencies {
         testImplementation(libs.apollo.testing.support)
     }
 }
+
+val keystoreFile = project.rootProject.file("local.properties")
+val properties = Properties()
+properties.load(keystoreFile.inputStream())
+
+val gitdevtokenn = properties.getProperty("GITDEVTOKEN") ?: ""
+
+/**
+ * Apollo service
+
+ */
+
 apollo {
     service("service") {
         packageName.set("com.devmike.network")
@@ -31,7 +45,7 @@ apollo {
             )
             headers.put(
                 "Authorization",
-                "Bearer yourtoken",
+                "Bearer $gitdevtokenn",
             )
             schemaFile.set(file("src/main/graphql/schema.graphqls"))
         }
