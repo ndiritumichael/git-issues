@@ -50,6 +50,7 @@ googleGmsGoogleServices = "4.4.2"
 googleFirebaseCrashlytics = "3.0.2"
 firebaseAnalytics = "22.1.0"
 coilCompose = "2.7.0"
+turbine = "1.1.0"
 
 
 [libraries]
@@ -59,6 +60,7 @@ androidx-paging-runtime = { module = "androidx.paging:paging-runtime-ktx", versi
 
 
 
+androidx-paging-testing = { module = "androidx.paging:paging-testing", version.ref = "pagingRuntime" }
 apollo-mockserver = { module = "com.apollographql.mockserver:apollo-mockserver", version.ref = "apolloMockserver" }
 apollo-testing-support = { module = "com.apollographql.apollo:apollo-testing-support", version.ref = "apolloTestingSupport" }
 appauth = { module = "net.openid:appauth", version.ref = "appauth" }
@@ -138,6 +140,7 @@ core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtxV
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlytics" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics", version.ref = "firebaseAnalytics" }
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 
 [bundles]
 compose = ["androidx-activity-compose","androidx-compose-runtime","androidx-material3","androidx-compose-foundation","androidx-compose-foundation-layout",

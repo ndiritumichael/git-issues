@@ -27,6 +27,6 @@ sealed class AppErrors(
     class Unauthorized : AppErrors("You are not authorized to make this request")
 
     class GraphQLError(
-        error: List<String>,
+        val error: List<String>,
     ) : AppErrors("Something went wrong")
 }
