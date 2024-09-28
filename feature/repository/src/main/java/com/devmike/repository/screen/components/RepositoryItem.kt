@@ -1,5 +1,6 @@
 package com.devmike.repository.screen.components
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,20 +21,45 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.devmike.database.entities.CachedRepository
+import com.devmike.domain.models.RepositoryModel
+import timber.log.Timber
 
 @Composable
-fun RepositoryItem(repository: CachedRepository) {
+fun RepositoryItem(
+    repository: RepositoryModel,
+    onRepositoryClick: (name: String, owner: String) -> Unit,
+) {
+    val context = LocalContext.current
+
+    LaunchedEffect(key1 = repository) {
+        Timber.tag("repoScreen").d("$repository")
+    }
     Card(
         modifier = Modifier.fillMaxWidth().padding(4.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        onClick = {
+            if (repository.issueCount >
+                0
+            ) {
+                onRepositoryClick(repository.name, repository.owner)
+            } else {
+                Toast
+                    .makeText(
+                        context,
+                        "No issues found",
+                        Toast.LENGTH_SHORT,
+                    ).show()
+            }
+        },
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -45,10 +71,7 @@ fun RepositoryItem(repository: CachedRepository) {
                 AsyncImage(
                     model = repository.avatarUrl,
                     contentDescription = null,
-                    modifier =
-                        Modifier
-                            .size(30.dp)
-                            .clip(CircleShape),
+                    modifier = Modifier.size(30.dp).clip(CircleShape),
                 )
 
                 Text(

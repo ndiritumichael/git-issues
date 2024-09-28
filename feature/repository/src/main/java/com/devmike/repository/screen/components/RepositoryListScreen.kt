@@ -1,0 +1,151 @@
+package com.devmike.repository.screen.components
+
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.itemKey
+import com.devmike.domain.models.RepositoryModel
+import com.devmike.repository.R
+
+@Composable
+fun RepositoryListScreen(
+    modifier: Modifier,
+    repositoriesState: LazyPagingItems<RepositoryModel>,
+    onRepositoryClick: (name: String, owner: String) -> Unit,
+) {
+    LazyColumn(
+        modifier = modifier.fillMaxSize(),
+    ) {
+        repositoriesState.apply {
+            when {
+                loadState.refresh is LoadState.NotLoading -> {
+                    items(
+                        repositoriesState.itemCount,
+                        key = repositoriesState.itemKey { it.url },
+                    ) { count ->
+                        repositoriesState[count]?.let {
+                            RepositoryItem(repository = it, onRepositoryClick)
+                        }
+                    }
+
+                    if (loadState.source.append.endOfPaginationReached &&
+                        repositoriesState.itemCount == 0
+                    ) {
+                        item {
+                            NoRepositoriesFoundScreen()
+                        }
+                    }
+                }
+
+                loadState.refresh is LoadState.Loading -> {
+                    item {
+                        Box(
+                            modifier =
+                                Modifier
+                                    .fillMaxSize()
+                                    .padding(
+                                        top = 50.dp,
+                                        bottom = 50.dp,
+                                    ),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.height(100.dp),
+                            )
+                        }
+                    }
+                }
+
+                loadState.append is LoadState.Loading -> {
+                    item {
+                        Box(
+                            modifier = Modifier.fillMaxWidth(),
+                            contentAlignment = Alignment.Center,
+                        ) {
+                            CircularProgressIndicator(modifier = Modifier.height(50.dp))
+                            Text(text = "Search loading")
+                        }
+                    }
+                }
+
+                loadState.refresh is LoadState.Error || loadState.append is LoadState.Error -> {
+                    val errorMessage = this.loadState.refresh as LoadState.Error
+                    item {
+                        Box(
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(56.dp),
+                            contentAlignment = Alignment.BottomCenter,
+                        ) {
+                            Column(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                            ) {
+                                val errorText =
+
+                                    errorMessage.error.localizedMessage ?: "Something Went Wrong"
+
+                                Text(errorText, textAlign = TextAlign.Center)
+                                Button(onClick = { retry() }) {
+                                    Text(text = "Try Again")
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun NoRepositoriesFoundScreen() {
+    Column(
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.not_found),
+            contentDescription = "No repositoriesfound",
+            modifier = Modifier.size(120.dp),
+            colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(
+            text = "No repositories found",
+            style = MaterialTheme.typography.headlineSmall,
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = "Try refining your search.",
+            style = MaterialTheme.typography.bodyMedium,
+            textAlign = TextAlign.Center,
+        )
+    }
+}
