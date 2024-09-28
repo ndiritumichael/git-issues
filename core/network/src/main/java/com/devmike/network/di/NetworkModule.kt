@@ -22,6 +22,7 @@ object NetworkModule {
             .Builder()
             .serverUrl("https://api.github.com/graphql")
             .addHttpInterceptor(authInterceptor)
+            //    .addInterceptor(LoggingApolloInterceptor())
             .build()
 
     @Provides
