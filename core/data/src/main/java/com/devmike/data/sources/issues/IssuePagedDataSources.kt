@@ -4,10 +4,11 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
-import com.devmike.data.mapper.toEntity
-import com.devmike.database.dao.models.CachedIssueDTO
-import com.devmike.database.entities.CachedIssueEntity
+import com.devmike.data.mapper.toCachedIssueDTO
+import com.devmike.data.mapper.toIssuesWithLabelsandAssignees
+import com.devmike.database.entities.IssueWithAssigneesAndLabels
 import com.devmike.database.repository.CachedIssueRepo
+import com.devmike.domain.models.IssueSearchModel
 import com.devmike.network.networkSource.GitHubIssuesRepo
 import timber.log.Timber
 import javax.inject.Inject
@@ -18,12 +19,11 @@ class IssuePagedDataSources
     constructor(
         private val cachedIssueRepo: CachedIssueRepo,
         private val gitHubIssuesRepo: GitHubIssuesRepo,
-        private val owner: String,
-        private val name: String,
-    ) : RemoteMediator<Int, CachedIssueEntity>() {
+        private val issueSearchModel: IssueSearchModel,
+    ) : RemoteMediator<Int, IssueWithAssigneesAndLabels>() {
         override suspend fun load(
             loadType: LoadType,
-            state: PagingState<Int, CachedIssueEntity>,
+            state: PagingState<Int, IssueWithAssigneesAndLabels>,
         ): MediatorResult {
             return try {
                 val cursor: String? =
@@ -35,17 +35,17 @@ class IssuePagedDataSources
                         LoadType.APPEND -> {
                             val remoteKey =
                                 cachedIssueRepo.remoteKeyByQuery(
-                                    "$owner/$name",
-                                    null,
-                                    listOf(),
+                                    issueSearchModel.toCachedIssueDTO(),
                                 )
 
-                            Timber.tag("issueerror").d("cursor is $remoteKey")
                             remoteKey?.nextCursor
                         }
                     }
 
-                val response = gitHubIssuesRepo.getRepositoryIssues(owner, name, cursor)
+                val response =
+                    gitHubIssuesRepo.getRepositoryIssues(
+                        issueSearchModel.copy(cursor = cursor),
+                    )
 
                 response.fold(
                     onFailure = { error ->
@@ -53,16 +53,24 @@ class IssuePagedDataSources
                         MediatorResult.Error(error)
                     },
                     onSuccess = { pagedDtoWrapper ->
+                        Timber
+                            .tag(
+                                "issueerror",
+                            ).d(
+                                "cursor for ${pagedDtoWrapper.data}  was the cursor $cursor",
+                            )
 
                         cachedIssueRepo.insertIssues(
-                            loadType == LoadType.REFRESH && pagedDtoWrapper.data.isNotEmpty(),
+                            loadType == LoadType.REFRESH,
                             pagedDtoWrapper.nextCursor,
-                            CachedIssueDTO(
-                                repository = "$owner/$name",
-                                assignee = null,
-                                labels = listOf(),
-                            ),
-                            issues = pagedDtoWrapper.data.map { it.toEntity() },
+                            issueSearchModel
+                                .copy(
+                                    cursor = pagedDtoWrapper.nextCursor,
+                                ).toCachedIssueDTO(),
+                            issues =
+                                pagedDtoWrapper.data.map {
+                                    it.toIssuesWithLabelsandAssignees()
+                                },
                         )
 
                         MediatorResult.Success(

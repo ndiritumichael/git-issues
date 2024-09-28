@@ -12,16 +12,23 @@ import com.devmike.database.entities.CachedIssueKeyEntity
 @Dao
 interface IssueKeyEntityDao {
     @Query(
-        """SELECT * FROM cachedissuekeyentity
-            WHERE repoName = :repoName
+        """ select * FROM cachedissuekeyentity
+ WHERE repoName = :repoName
+ AND assignee = :assignee AND
+  labels = :labels
+   AND `query` = :query
+   AND issueState = :issueState
 
 
             """,
     )
     suspend fun getIssuesKey(
         repoName: String,
-        // assignee: String?,
-        //  labels: String,
+        assignee: List<String>,
+        labels: List<String>,
+        query: String?,
+        issueState: String,
+        // sortBy: String?,
     ): CachedIssueKeyEntity?
 
     @Upsert
@@ -31,11 +38,17 @@ interface IssueKeyEntityDao {
         """ DELETE FROM cachedissuekeyentity
  WHERE repoName = :repoName
  AND assignee = :assignee AND
-  labels = :labels""",
+  labels = :labels
+   AND `query` = :query
+   AND issueState = :issueState
+
+   """,
     )
     suspend fun clearRemoteKeysForQuery(
         repoName: String,
-        assignee: String?,
-        labels: String,
+        assignee: List<String>?,
+        labels: List<String>?,
+        query: String?,
+        issueState: String,
     )
 }
