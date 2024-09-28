@@ -47,4 +47,5 @@ data class LabelEntity(
     val id: Int = 0,
     val issueId: String,
     val label: String,
+    val color: String,
 )

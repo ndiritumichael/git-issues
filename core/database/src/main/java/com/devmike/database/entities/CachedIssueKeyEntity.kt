@@ -1,11 +1,29 @@
 package com.devmike.database.entities
 
 import androidx.room.Entity
+import androidx.room.Index
+import androidx.room.PrimaryKey
 
-@Entity(primaryKeys = ["repoName"])
+@Entity(
+    indices = [
+        Index(
+            value = [
+                "repoName",
+                "query", "assignee",
+                "labels", "nextCursor",
+                "sortBy",
+                "issueState",
+            ],
+            unique = true,
+        ),
+    ],
+)
 data class CachedIssueKeyEntity(
-    val repoName: String,
+    @PrimaryKey val repoName: String,
     val nextCursor: String?,
-    val assignee: String? = null,
-    val labels: String = "",
+    val assignee: List<String>,
+    val labels: List<String>,
+    val query: String?,
+    val sortBy: String? = null,
+    val issueState: String,
 )

@@ -4,8 +4,9 @@ import androidx.paging.PagingSource
 import androidx.room.withTransaction
 import com.devmike.database.GithubDatabase
 import com.devmike.database.dao.models.CachedIssueDTO
-import com.devmike.database.entities.CachedIssueEntity
 import com.devmike.database.entities.CachedIssueKeyEntity
+import com.devmike.database.entities.IssueWithAssigneesAndLabels
+import kotlinx.coroutines.DelicateCoroutinesApi
 import javax.inject.Inject
 
 class CachedIssueRepoImpl
@@ -17,46 +18,74 @@ class CachedIssueRepoImpl
             isRefresh: Boolean,
             nextCursor: String?,
             issueDTO: CachedIssueDTO,
-            issues: List<CachedIssueEntity>,
+            issues: List<IssueWithAssigneesAndLabels>,
         ) {
             db.withTransaction {
                 if (isRefresh) {
                     db.issueKeyDao().clearRemoteKeysForQuery(
-                        issueDTO.repository,
-                        issueDTO.assignee,
-                        issueDTO.labels.sorted().joinToString(),
+                        repoName = issueDTO.repository,
+                        assignee = issueDTO.assignee,
+                        labels = issueDTO.labels,
+                        query = issueDTO.query,
+                        issueState = issueDTO.issueStatus,
                     )
 
                     db.issueDao().deleteRepositoryIssues(
                         issueDTO.repository,
                     )
+
+                    db.issueDao().deleteLabelsForIssue(issueDTO.repository)
+                    db.issueDao().deleteLabelsForIssue(issueDTO.repository)
                 }
 
-                db.issueDao().insertIssues(issues)
+                db.issueDao().insertIssues(issues.map { it.issue })
+
+                db.issueDao().insertAssignees(
+                    issues.flatMap { it.assignees },
+                )
+
+                db.issueDao().insertLabels(
+                    issues.flatMap { it.labels },
+                )
+
                 db.issueKeyDao().insertRemoteKey(
                     CachedIssueKeyEntity(
                         nextCursor = nextCursor,
                         repoName = issueDTO.repository,
                         assignee = issueDTO.assignee,
-                        labels = issueDTO.labels.sorted().joinToString(),
+                        labels =
+                            issueDTO.labels,
+                        issueState = issueDTO.issueStatus,
+                        query = issueDTO.query,
+                        sortBy = issueDTO.sortBy,
                     ),
                 )
             }
         }
 
+        @OptIn(DelicateCoroutinesApi::class)
         override fun getIssueByRepository(
             repository: String,
-            assignee: String?,
-            labels: List<String>,
-        ): PagingSource<Int, CachedIssueEntity> =
-            db.issueDao().getRepositoryIssues(
-                repository,
-                // assignee, labels.sorted().joinToString())
+            assignee: List<String>?,
+            labels: List<String>?,
+            queryString: String,
+            issueState: String,
+        ): PagingSource<Int, IssueWithAssigneesAndLabels> =
+            db.issueDao().getIssuesWithAssigneesAndLabels(
+                repoName = repository,
+                assignees = assignee ?: emptyList(),
+                labels = labels,
+                query = queryString,
+                issueState = issueState,
             )
 
-        override suspend fun remoteKeyByQuery(
-            repository: String,
-            assignee: String?,
-            labels: List<String>,
-        ): CachedIssueKeyEntity? = db.issueKeyDao().getIssuesKey(repository)
+        override suspend fun remoteKeyByQuery(issueDTO: CachedIssueDTO): CachedIssueKeyEntity? =
+            db.issueKeyDao().getIssuesKey(
+                repoName = issueDTO.repository,
+                assignee = issueDTO.assignee,
+                labels = issueDTO.labels,
+                query = issueDTO.query,
+                issueState = issueDTO.issueStatus,
+                // sortBy = issueDTO.sortBy,
+            )
     }

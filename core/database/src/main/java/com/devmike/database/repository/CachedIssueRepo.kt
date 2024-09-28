@@ -2,8 +2,8 @@ package com.devmike.database.repository
 
 import androidx.paging.PagingSource
 import com.devmike.database.dao.models.CachedIssueDTO
-import com.devmike.database.entities.CachedIssueEntity
 import com.devmike.database.entities.CachedIssueKeyEntity
+import com.devmike.database.entities.IssueWithAssigneesAndLabels
 
 /**
  *The purpose of this interface is to abstract the daatabase and its
@@ -16,18 +16,16 @@ interface CachedIssueRepo {
         isRefresh: Boolean,
         nextCursor: String?,
         issueDTO: CachedIssueDTO,
-        issues: List<CachedIssueEntity>,
+        issues: List<IssueWithAssigneesAndLabels>,
     )
 
     fun getIssueByRepository(
         repository: String,
-        assignee: String?,
-        labels: List<String>,
-    ): PagingSource<Int, CachedIssueEntity>
+        assignee: List<String>?,
+        labels: List<String>?,
+        queryString: String,
+        issueState: String,
+    ): PagingSource<Int, IssueWithAssigneesAndLabels>
 
-    suspend fun remoteKeyByQuery(
-        repository: String,
-        assignee: String?,
-        labels: List<String>,
-    ): CachedIssueKeyEntity?
+    suspend fun remoteKeyByQuery(issueDTO: CachedIssueDTO): CachedIssueKeyEntity?
 }
