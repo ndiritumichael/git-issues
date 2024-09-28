@@ -3,28 +3,30 @@ package com.devmike.gitissuesmobile
 import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.compose.rememberNavController
 import com.devmike.datastore.repo.DataStoreRepo
+import com.devmike.gitissuesmobile.navigation.AppNavigation
 import com.devmike.gitissuesmobile.ui.theme.GitIssuesMobileTheme
-import com.devmike.issues.screen.IssuesScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import net.openid.appauth.AuthorizationException
@@ -42,7 +44,7 @@ class MainActivity : ComponentActivity() {
     private lateinit var service: AuthorizationService
 
     @Inject
-    lateinit var repo: DataStoreRepo
+    lateinit var dataStoreRepo: DataStoreRepo
 
     @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,30 +52,42 @@ class MainActivity : ComponentActivity() {
         service = AuthorizationService(this)
         enableEdgeToEdge()
         setContent {
-            val token by repo.getUserToken().collectAsStateWithLifecycle(initialValue = null)
+            val token by dataStoreRepo
+                .getUserToken()
+                .collectAsStateWithLifecycle(initialValue = "")
+
+            val coroutineScope = rememberCoroutineScope()
             GitIssuesMobileTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) {
-                    Box(modifier = Modifier.fillMaxSize().padding(it)) {
-                        if (token.isNullOrEmpty()) {
-                            Box(
-                                modifier =
-                                    Modifier
-                                        .fillMaxSize()
-                                        .padding(it),
-                            ) {
-                                Button(onClick = { githubAuth() }) {
-                                    Text(text = "Hello auth the screen")
+                Scaffold(modifier = Modifier.fillMaxSize()) { paddingValues ->
+                    Box(
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .padding(top = paddingValues.calculateTopPadding()),
+                    ) {
+                        AnimatedContent(token == null, label = "login") {
+                            if (it) {
+                                Box(
+                                    modifier = Modifier.fillMaxSize().padding(paddingValues),
+                                    contentAlignment = Alignment.Center,
+                                ) {
+                                    GitHubLoginScreen(
+                                        Modifier.padding(paddingValues),
+                                        onLoginClick = { githubAuth() },
+                                    )
+                                }
+                            } else {
+                                AppNavigation(navController = rememberNavController()) {
+                                    coroutineScope.launch {
+                                        dataStoreRepo.clearUserToken()
+                                    }
                                 }
                             }
-                        } else {
-                            IssuesScreen()
-                            // RepositorySearchScreen()
                         }
                     }
                 }
-            }
 
-            LaunchedEffect(key1 = true) {
+                LaunchedEffect(key1 = true) {}
             }
         }
     }
@@ -85,14 +99,20 @@ class MainActivity : ComponentActivity() {
                 val result = AuthorizationResponse.fromIntent(it.data!!)
 
                 if (ex != null) {
-                    Log.e("Github Auth", "launcher: $ex")
+                    Timber.tag("tokenerror").d("tokenerror: $ex")
                 } else {
                     val secret = ClientSecretBasic(Gitkeys.CLIENT_SECRET)
                     val tokenRequest = result?.createTokenExchangeRequest()
 
                     service.performTokenRequest(tokenRequest!!, secret) { res, exception ->
                         if (exception != null) {
-                            Timber.tag("Github Auth").e("launcher: " + exception.error)
+                            Timber.tag("tokenerror").d("tokenerror: $exception")
+                            Toast
+                                .makeText(
+                                    this,
+                                    "Something went wrong please try again",
+                                    Toast.LENGTH_SHORT,
+                                ).show()
                         } else {
                             val token = res?.accessToken
                             Toast.makeText(this, "Token: $token", Toast.LENGTH_SHORT).show()
@@ -106,7 +126,7 @@ class MainActivity : ComponentActivity() {
 
     private fun insertToken(token: String) {
         lifecycleScope.launch {
-            repo.insertToken(token)
+            dataStoreRepo.insertToken(token)
         }
     }
 

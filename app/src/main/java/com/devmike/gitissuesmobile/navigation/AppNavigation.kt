@@ -4,23 +4,29 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.toRoute
 import com.devmike.issues.screen.IssuesScreen
 import com.devmike.repository.screen.RepositorySearchScreen
 
 @Composable
-fun AppNavigation(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = AppDestinations.RepositorySearch) {
-        composable<AppDestinations.RepositorySearch> {
-            RepositorySearchScreen {
-                val destination = AppDestinations.Issues(it)
+fun AppNavigation(
+    navController: NavHostController,
+    onLogout: () -> Unit,
+) {
+    NavHost(
+        navController = navController,
+        startDestination = com.devmike.domain.appdestinations.AppDestinations.RepositorySearch,
+    ) {
+        composable<com.devmike.domain.appdestinations.AppDestinations.RepositorySearch> {
+            RepositorySearchScreen(onLogoutClicked = onLogout) { name, owner ->
+                val destination =
+                    com.devmike.domain.appdestinations.AppDestinations
+                        .Issues(repository = name, owner = owner)
                 navController.navigate(destination)
             }
         }
 
-        composable<AppDestinations.Issues> {
-            val repository: AppDestinations.Issues = it.toRoute()
-            IssuesScreen(repository = repository.repository) {
+        composable<com.devmike.domain.appdestinations.AppDestinations.Issues> {
+            IssuesScreen {
                 navController.navigateUp()
             }
         }
