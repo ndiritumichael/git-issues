@@ -31,7 +31,8 @@ object DbModule {
                 context,
                 GithubDatabase::class.java,
                 "githubdb",
-            ).build()
+            ).fallbackToDestructiveMigration()
+            .build()
 
     @Singleton
     @Provides
