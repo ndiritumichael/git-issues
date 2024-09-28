@@ -7,7 +7,7 @@ data class IssueModel(
     val url: String,
     val title: String,
     val createdAt: String,
-    val label: List<String>,
+    val label: List<LabelModel>,
     val author: String,
     val repositoryName: String,
     val assignee: List<String>,
