@@ -5,6 +5,10 @@ plugins {
 
 android {
     namespace = "com.devmike.issues"
+    defaultConfig {
+        minSdk = 26
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
 }
 dependencies {
     implementation(projects.core.data)

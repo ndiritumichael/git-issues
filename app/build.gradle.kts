@@ -17,6 +17,7 @@ plugins {
     id("org.jetbrains.kotlinx.kover")
     alias(libs.plugins.google.gms.google.services)
     alias(libs.plugins.google.firebase.crashlytics)
+    alias(libs.plugins.kotlinX.serialization)
     id("io.sentry.android.gradle") version ("4.11.0")
     id("io.sentry.kotlin.compiler.gradle") version ("4.11.0")
 }
@@ -44,6 +45,7 @@ dependencies {
     implementation(projects.feature.issues)
     implementation(libs.appauth)
     implementation(projects.core.datastore)
+    implementation(projects.core.domain)
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.analytics)
 }

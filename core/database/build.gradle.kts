@@ -22,6 +22,12 @@ dependencies {
     implementation(libs.androidx.room.paging)
 
     api(libs.androidx.paging.runtime)
+    implementation(libs.kotlinx.serialization.json)
 
-    implementation(project(":core:network"))
+    testImplementation(libs.androidx.arch.core.testing)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.core.ktx)
+    testImplementation(libs.truth)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.mockk)
 }

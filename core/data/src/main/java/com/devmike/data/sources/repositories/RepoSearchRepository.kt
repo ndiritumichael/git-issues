@@ -4,10 +4,14 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.devmike.database.entities.CachedRepository
+import androidx.paging.map
+import com.devmike.data.mapper.toRepositoryModel
 import com.devmike.database.repository.CachedRepoSearch
+import com.devmike.domain.models.RepositoryModel
+import com.devmike.domain.repository.IRepoSearchRepository
 import com.devmike.network.networkSource.GitHubIssuesRepo
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class RepoSearchRepository
@@ -15,10 +19,9 @@ class RepoSearchRepository
     constructor(
         private val githubIssuesRepo: GitHubIssuesRepo,
         private val cachedRepoSearch: CachedRepoSearch,
-    ) {
+    ) : IRepoSearchRepository {
         @OptIn(ExperimentalPagingApi::class)
-        fun searchRepositories(query: String): Flow<PagingData<CachedRepository>> {
-            //   val dbQuery = "%${query.replace(' ', '%')}%"
+        override fun searchRepositories(query: String): Flow<PagingData<RepositoryModel>> {
             val pagingSourceFactory = { cachedRepoSearch.searchRepositories(query) }
 
             return Pager(
@@ -31,11 +34,10 @@ class RepoSearchRepository
                     ),
                 pagingSourceFactory = pagingSourceFactory,
             ).flow
-            //
-            //        .map { pagingData ->
-//            pagingData.map {
-//                it.toRepositoryModel()
-//            }
-//        }
+                .map { pagingData ->
+                    pagingData.map {
+                        it.toRepositoryModel()
+                    }
+                }
         }
     }
