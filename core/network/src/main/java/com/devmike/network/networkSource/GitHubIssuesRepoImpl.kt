@@ -2,7 +2,13 @@ package com.devmike.network.networkSource
 
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.Optional
-import com.devmike.network.GetRepositoryDetailsQuery
+import com.devmike.domain.helper.IssueState
+import com.devmike.domain.models.AssigneeModel
+import com.devmike.domain.models.IssueSearchModel
+import com.devmike.domain.models.LabelModel
+import com.devmike.network.GetRepositoryAssigneesQuery
+import com.devmike.network.GetRepositoryLabelsQuery
+import com.devmike.network.SearchIssuesQuery
 import com.devmike.network.SearchRepositoriesQuery
 import com.devmike.network.dto.IssueDTO
 import com.devmike.network.dto.PagedDtoWrapper
@@ -10,6 +16,7 @@ import com.devmike.network.dto.RepositoryDTO
 import com.devmike.network.dto.toIssues
 import com.devmike.network.dto.toRepositoryDTOs
 import com.devmike.network.utils.safeApolloQuery
+import timber.log.Timber
 import javax.inject.Inject
 
 class GitHubIssuesRepoImpl
@@ -40,39 +47,136 @@ class GitHubIssuesRepoImpl
             }
 
         override suspend fun getRepositoryIssues(
+            issueSearchModel: IssueSearchModel,
+        ): Result<PagedDtoWrapper<List<IssueDTO>>> {
+            Timber.tag("issueload").e(issueSearchModel.buildQuery())
+            val issueTest =
+                safeApolloQuery {
+                    client
+                        .query(
+                            SearchIssuesQuery(
+                                query = issueSearchModel.buildQuery(),
+                                first = Optional.present(issueSearchModel.pageSize),
+                                cursor = Optional.present(issueSearchModel.cursor),
+                            ),
+                        )
+                }
+
+            return issueTest.map { data ->
+                Timber.tag("issueload").e(
+                    data.search.nodes
+                        ?.size
+                        .toString(),
+                )
+
+                PagedDtoWrapper(
+                    nextCursor = data.search.pageInfo.endCursor,
+                    hasNextPage = data.search.pageInfo.hasNextPage,
+                    data = data.toIssues(),
+                )
+            }
+        }
+
+        override suspend fun getRepositoryLabels(
             name: String,
             owner: String,
             cursor: String?,
             pageSize: Int,
-        ): Result<PagedDtoWrapper<List<IssueDTO>>> {
-            val result =
-                safeApolloQuery {
-                    client.query(
-                        GetRepositoryDetailsQuery(
-                            name = name,
-                            owner = owner,
-                            first = Optional.present(pageSize),
-                            after = Optional.present(cursor),
-                        ),
-                    )
-                }
-
-            return result.map { data ->
+        ): Result<PagedDtoWrapper<List<LabelModel>>> =
+            safeApolloQuery {
+                client.query(
+                    GetRepositoryLabelsQuery(
+                        name = name,
+                        owner = owner,
+                        first = Optional.present(pageSize),
+                        after = Optional.present(cursor),
+                    ),
+                )
+            }.map { data ->
                 PagedDtoWrapper(
                     nextCursor =
-                        data
-                            .repository
-                            ?.issues
+                        data.repository
+                            ?.labels
                             ?.pageInfo
                             ?.endCursor,
                     hasNextPage =
-                        data
-                            .repository
-                            ?.issues
+                        data.repository
+                            ?.labels
                             ?.pageInfo
                             ?.hasNextPage ?: false,
-                    data = data.toIssues(),
+                    data =
+                        data.repository?.labels?.edges?.mapNotNull { it?.node }?.map { node ->
+
+                            LabelModel(
+                                name = node.name,
+                                color = node.color,
+                            )
+                        } ?: emptyList(),
                 )
             }
+
+        override suspend fun getRepositoryAssignees(
+            name: String,
+            owner: String,
+            cursor: String?,
+            pageSize: Int,
+        ): Result<PagedDtoWrapper<List<AssigneeModel>>> =
+            safeApolloQuery {
+                client.query(
+                    GetRepositoryAssigneesQuery(
+                        name = name,
+                        owner = owner,
+                        first = Optional.present(pageSize),
+                        after = Optional.present(cursor),
+                    ),
+                )
+            }.map { data ->
+                PagedDtoWrapper(
+                    nextCursor =
+                        data.repository
+                            ?.assignableUsers
+                            ?.pageInfo
+                            ?.endCursor,
+                    hasNextPage =
+                        data.repository
+                            ?.assignableUsers
+                            ?.pageInfo
+                            ?.hasNextPage ?: false,
+                    data =
+                        data.repository?.assignableUsers?.edges?.mapNotNull { it?.node }?.map {
+                                node ->
+
+                            AssigneeModel(
+                                name = node.name,
+                                username = node.login,
+                                avatarUrl = node.avatarUrl.toString(),
+                            )
+                        } ?: emptyList(),
+                )
+            }
+
+        private fun IssueSearchModel.buildQuery(): String {
+            val baseQuery = this.query ?: ""
+
+            val repoFilter = "repo:$repository"
+
+            val stateFilter = if (issueState == IssueState.ALL.state) "" else "state:$issueState"
+
+            val labelsFilter = labels?.joinToString(" ") { "label:\"$it\"" } ?: ""
+
+            val assigneesFilter = assignees?.joinToString(" ") { "assignee:$it" } ?: ""
+
+            val sortFilter = sortBy?.let { "sort:$it" } ?: ""
+
+            // Combine all filters
+            return listOf(
+                baseQuery,
+                repoFilter,
+                stateFilter,
+                labelsFilter,
+                assigneesFilter,
+                sortFilter,
+            ).filter { it.isNotEmpty() }
+                .joinToString(" ")
         }
     }
