@@ -1,13 +1,13 @@
-package com.devmike.gitissuesmobile.navigation
+package com.devmike.domain.appdestinations
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed class AppDestinations  {
-
+sealed class AppDestinations {
     @Serializable
     data class Issues(
         val repository: String,
+        val owner: String,
     ) : AppDestinations()
 
     @Serializable

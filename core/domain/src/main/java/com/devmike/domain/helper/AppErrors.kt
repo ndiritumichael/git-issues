@@ -9,6 +9,7 @@ sealed class AppErrors(
     ) : AppErrors(
             "No internet connection, " +
                 "Please Ensure you have an internet connection",
+            cause,
         )
 
     class Timeout(
