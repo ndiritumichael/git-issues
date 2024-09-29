@@ -33,10 +33,8 @@ class IssuesDaoTest : BaseDbTest() {
                     url = "https://github.com/real-repo/issues/12345",
                     title = "App crash on save",
                     createdAt = "2024-09-21T10:30:00Z",
-                    label = listOf("bug"),
                     author = "johndoe",
                     repositoryName = "real-repo",
-                    assignee = null,
                 )
 
             val issue2 =
@@ -47,10 +45,8 @@ class IssuesDaoTest : BaseDbTest() {
                     url = "https://github.com/real-repo/issues/12346",
                     title = "Dark mode support",
                     createdAt = "2024-09-22T12:45:00Z",
-                    label = listOf("enhancement"),
                     author = "janedoe",
                     repositoryName = "real-repo",
-                    assignee = null,
                 )
 
             issuesDao.insertIssues(listOf(issue1, issue2))
@@ -78,10 +74,8 @@ class IssuesDaoTest : BaseDbTest() {
                     url = "https://github.com/real-repo/issues/12345",
                     title = "App crash on save",
                     createdAt = "2024-09-21T10:30:00Z",
-                    label = listOf("bug"),
                     author = "johndoe",
                     repositoryName = "real-repo",
-                    assignee = null,
                 )
 
             val issueUpdated =
@@ -92,10 +86,8 @@ class IssuesDaoTest : BaseDbTest() {
                     url = "https://github.com/real-repo/issues/12345",
                     title = "App crash on save (fixed)",
                     createdAt = "2024-09-21T10:30:00Z",
-                    label = listOf("bug"),
                     author = "johndoe",
                     repositoryName = "real-repo",
-                    assignee = null,
                 )
 
             // Insert original issue
@@ -128,10 +120,8 @@ class IssuesDaoTest : BaseDbTest() {
                     url = "https://github.com/real-repo/issues/12345",
                     title = "App crash on save",
                     createdAt = "2024-09-21T10:30:00Z",
-                    label = listOf("bug"),
                     author = "johndoe",
                     repositoryName = "real-repo",
-                    assignee = null,
                 )
 
             val issue2 =
@@ -142,10 +132,8 @@ class IssuesDaoTest : BaseDbTest() {
                     url = "https://github.com/another-repo/issues/54321",
                     title = "Google login issue",
                     createdAt = "2024-08-10T14:15:00Z",
-                    label = listOf("bug"),
                     author = "alice",
                     repositoryName = "another-repo",
-                    assignee = null,
                 )
 
             issuesDao.insertIssues(listOf(issue1, issue2))
@@ -202,10 +190,8 @@ class IssuesDaoTest : BaseDbTest() {
                     url = "https://github.com/real-repo/issues/67890",
                     title = "Issue with null body",
                     createdAt = "2024-09-23T08:00:00Z",
-                    label = listOf("question"),
                     author = "user3",
                     repositoryName = "real-repo",
-                    assignee = null,
                 )
 
             issuesDao.insertIssues(listOf(issue))
@@ -221,6 +207,5 @@ class IssuesDaoTest : BaseDbTest() {
 
             Truth.assertThat(pagingSource.data).containsExactly(issue)
             Truth.assertThat(pagingSource.data.first().bodyText).isNull()
-            Truth.assertThat(pagingSource.data.first().assignee).isNull()
         }
 }

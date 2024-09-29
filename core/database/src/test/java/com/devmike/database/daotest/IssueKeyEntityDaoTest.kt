@@ -30,6 +30,8 @@ class IssueKeyEntityDaoTest : BaseDbTest() {
                     nextCursor = "cursor-1234567890",
                     assignee = listOf("square/okhttp"),
                     labels = listOf("bug,network,priority-high"),
+                    issueState = "open",
+                    query = null,
                 )
             issueKeyEntityDao.insertRemoteKey(key1)
 
@@ -38,6 +40,8 @@ class IssueKeyEntityDaoTest : BaseDbTest() {
                     repoName = "square/okhttp",
                     assignee = listOf("square/okhttp"),
                     labels = listOf("bug,network,priority-high"),
+                    issueState = "open",
+                    query = null,
                 )
 
             Truth.assertThat(retrievedKey).isEqualTo(key1)
@@ -51,6 +55,8 @@ class IssueKeyEntityDaoTest : BaseDbTest() {
                     repoName = "nonexistent-organization/nonexistent-repo",
                     assignee = listOf("john.doe@company.com"),
                     labels = listOf("bug,feature"),
+                    issueState = "open",
+                    query = "jacoco",
                 )
 
             Truth.assertThat(retrievedKey).isNull()
@@ -63,16 +69,20 @@ class IssueKeyEntityDaoTest : BaseDbTest() {
                 CachedIssueKeyEntity(
                     repoName = "square/okhttp",
                     nextCursor = "cursor-1234567890",
-                    assignee = null,
-                    labels = null,
+                    assignee = emptyList(),
+                    labels = emptyList(),
+                    issueState = "open",
+                    query = null,
                 )
             issueKeyEntityDao.insertRemoteKey(key1)
 
             val retrievedKey =
                 issueKeyEntityDao.getIssuesKey(
                     repoName = "square/okhttp",
-                    assignee = null,
-                    labels = null,
+                    assignee = listOf(),
+                    labels = listOf(),
+                    issueState = "open",
+                    query = null,
                 )
 
             Truth.assertThat(retrievedKey).isEqualTo(key1)
@@ -85,16 +95,20 @@ class IssueKeyEntityDaoTest : BaseDbTest() {
                 CachedIssueKeyEntity(
                     repoName = "square/okhttp",
                     nextCursor = "cursor-1234567890",
-                    assignee = null,
-                    labels = null,
+                    assignee = listOf(),
+                    labels = listOf(),
+                    issueState = "open",
+                    query = "okhttp",
                 )
             issueKeyEntityDao.insertRemoteKey(key1)
 
             val retrievedKey =
                 issueKeyEntityDao.getIssuesKey(
                     repoName = "square/okhttp",
-                    assignee = null,
-                    labels = null,
+                    assignee = listOf(),
+                    labels = listOf(),
+                    issueState = "open",
+                    query = "okhttp",
                 )
 
             Truth.assertThat(retrievedKey).isEqualTo(key1)
@@ -109,6 +123,8 @@ class IssueKeyEntityDaoTest : BaseDbTest() {
                     nextCursor = "cursor-1234567890",
                     assignee = listOf("square/okhttp"),
                     labels = listOf("bug,network,priority-high"),
+                    issueState = "open",
+                    query = null,
                 )
             issueKeyEntityDao.insertRemoteKey(key1)
 
@@ -118,6 +134,8 @@ class IssueKeyEntityDaoTest : BaseDbTest() {
                     nextCursor = "cursor-abcdefghij",
                     assignee = listOf("square/okhttp"),
                     labels = listOf("bug,network,priority-high"),
+                    issueState = "open",
+                    query = null,
                 )
             issueKeyEntityDao.insertRemoteKey(updatedKey)
 
@@ -126,6 +144,8 @@ class IssueKeyEntityDaoTest : BaseDbTest() {
                     repoName = "square/okhttp",
                     assignee = listOf("square/okhttp"),
                     labels = listOf("bug", "network", "priority-high"),
+                    issueState = "open",
+                    query = null,
                 )
 
             Truth.assertThat(retrievedKey).isEqualTo(updatedKey)
@@ -140,6 +160,8 @@ class IssueKeyEntityDaoTest : BaseDbTest() {
                     nextCursor = "cursor-1234567890",
                     assignee = listOf("square/okhttp"),
                     labels = listOf("bug", "network", "priority-high"),
+                    issueState = "open",
+                    query = null,
                 )
             val key2 =
                 CachedIssueKeyEntity(
@@ -147,6 +169,8 @@ class IssueKeyEntityDaoTest : BaseDbTest() {
                     nextCursor = "cursor-abcdefghij",
                     assignee = listOf("square/okhttp"),
                     labels = listOf("bug", "network", "priority-high"),
+                    issueState = "open",
+                    query = null,
                 )
             val key3 =
                 CachedIssueKeyEntity(
@@ -154,6 +178,8 @@ class IssueKeyEntityDaoTest : BaseDbTest() {
                     nextCursor = "cursor-0123456789",
                     assignee = listOf("square/okhttp"),
                     labels = listOf("bug", "network", "priority-high"),
+                    issueState = "open",
+                    query = null,
                 )
             issueKeyEntityDao.insertRemoteKey(key1)
             issueKeyEntityDao.insertRemoteKey(key2)
@@ -163,6 +189,8 @@ class IssueKeyEntityDaoTest : BaseDbTest() {
                 repoName = "square/okhttp",
                 assignee = listOf("square/okhttp"),
                 labels = listOf("bug", "network", "priority-high"),
+                query = null,
+                issueState = "open",
             )
 
             val retrievedKey1 =
@@ -170,18 +198,24 @@ class IssueKeyEntityDaoTest : BaseDbTest() {
                     repoName = "square/okhttp",
                     assignee = listOf("square/okhttp"),
                     labels = listOf("bug", "network", "priority-high"),
+                    issueState = "open",
+                    query = null,
                 )
             val retrievedKey2 =
                 issueKeyEntityDao.getIssuesKey(
                     repoName = "square/okhttp",
                     assignee = listOf("square/okhttp"),
                     labels = listOf("bug", "network", "priority-high"),
+                    issueState = "open",
+                    query = null,
                 )
             val retrievedKey3 =
                 issueKeyEntityDao.getIssuesKey(
                     repoName = "another-organization/another-repo",
                     assignee = listOf("square/okhttp"),
                     labels = listOf("bug", "network", "priority-high"),
+                    issueState = "open",
+                    query = null,
                 )
 
             Truth.assertThat(retrievedKey1).isNull()
@@ -196,8 +230,10 @@ class IssueKeyEntityDaoTest : BaseDbTest() {
                 CachedIssueKeyEntity(
                     repoName = "square/okhttp",
                     nextCursor = "cursor-1234567890",
-                    assignee = null,
-                    labels = null,
+                    assignee = listOf(),
+                    labels = listOf(),
+                    issueState = "open",
+                    query = null,
                 )
             val key2 =
                 CachedIssueKeyEntity(
@@ -205,6 +241,8 @@ class IssueKeyEntityDaoTest : BaseDbTest() {
                     nextCursor = "cursor-abcdefghij",
                     assignee = listOf("square/okhttp"),
                     labels = listOf("bug", "network", "priority-high"),
+                    issueState = "open",
+                    query = null,
                 )
             val key3 =
                 CachedIssueKeyEntity(
@@ -212,6 +250,8 @@ class IssueKeyEntityDaoTest : BaseDbTest() {
                     nextCursor = "cursor-0123456789",
                     assignee = listOf("square/okhttp"),
                     labels = listOf("bug", "network", "priority-high"),
+                    issueState = "open",
+                    query = null,
                 )
             issueKeyEntityDao.insertRemoteKey(key1)
             issueKeyEntityDao.insertRemoteKey(key2)
@@ -219,27 +259,35 @@ class IssueKeyEntityDaoTest : BaseDbTest() {
 
             issueKeyEntityDao.clearRemoteKeysForQuery(
                 repoName = "square/okhttp",
-                assignee = null,
-                labels = null,
+                assignee = listOf(),
+                labels = listOf(),
+                query = null,
+                issueState = "open",
             )
 
             val retrievedKey1 =
                 issueKeyEntityDao.getIssuesKey(
                     repoName = "square/okhttp",
-                    assignee = null,
-                    labels = null,
+                    assignee = listOf(),
+                    labels = listOf(),
+                    issueState = "open",
+                    query = null,
                 )
             val retrievedKey2 =
                 issueKeyEntityDao.getIssuesKey(
                     repoName = "square/okhttp",
                     assignee = listOf("square/okhttp"),
                     labels = listOf("bug", "network", "priority-high"),
+                    issueState = "open",
+                    query = null,
                 )
             val retrievedKey3 =
                 issueKeyEntityDao.getIssuesKey(
                     repoName = "another-organization/another-repo",
                     assignee = listOf("square/okhttp"),
                     labels = listOf("bug", "network", "priority-high"),
+                    issueState = "open",
+                    query = null,
                 )
 
             Truth.assertThat(retrievedKey1).isNull()
