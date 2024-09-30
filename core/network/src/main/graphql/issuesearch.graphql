@@ -18,6 +18,7 @@ query SearchIssues($query : String!,$cursor : String,$first : Int)
                 url
                 title
                 state
+                bodyText
                 author{
                     login
                 }
