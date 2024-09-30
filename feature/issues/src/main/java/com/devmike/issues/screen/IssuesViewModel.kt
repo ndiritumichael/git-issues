@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
@@ -83,7 +84,9 @@ class IssuesViewModel
             combine(
                 snapshotFlow {
                     searchQuery
-                }.debounce(debounceDuration),
+                }.debounce(debounceDuration).map {
+                    if (it.length < 3) null else it
+                },
                 issueSearchModelState,
                 selectedLabels,
                 selectedAssignees,
