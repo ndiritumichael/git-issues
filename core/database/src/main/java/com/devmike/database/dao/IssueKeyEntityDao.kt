@@ -16,19 +16,20 @@ interface IssueKeyEntityDao {
  WHERE repoName = :repoName
  AND assignee = :assignee AND
   labels = :labels
-   AND `query` = :query
+   AND ((`query` is null AND  :query is null)   OR `query` = :query)
+   AND (sortBy = :sortBy OR (:sortBy IS NULL AND sortBy IS NULL))
    AND issueState = :issueState
 
 
             """,
     )
-    suspend fun getIssuesKey(
+    suspend fun getIssuesKeyByCriteria(
         repoName: String,
         assignee: List<String>,
         labels: List<String>,
         query: String?,
         issueState: String,
-        // sortBy: String?,
+        sortBy: String? = null,
     ): CachedIssueKeyEntity?
 
     @Upsert
@@ -39,7 +40,7 @@ interface IssueKeyEntityDao {
  WHERE repoName = :repoName
  AND assignee = :assignee AND
   labels = :labels
-   AND `query` = :query
+    AND ((`query` is null AND  :query is null)   OR `query` = :query)
    AND issueState = :issueState
 
    """,
