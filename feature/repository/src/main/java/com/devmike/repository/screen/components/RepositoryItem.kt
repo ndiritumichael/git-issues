@@ -1,5 +1,6 @@
 package com.devmike.repository.screen.components
 
+import android.content.res.Configuration
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -28,6 +29,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.devmike.domain.models.RepositoryModel
@@ -112,4 +114,39 @@ fun RepositoryStat(
         Spacer(modifier = Modifier.width(4.dp))
         Text(text = count, style = MaterialTheme.typography.bodySmall)
     }
+}
+
+@Composable
+@Preview(
+    showBackground = true,
+    backgroundColor = 0xFFF0EAE2,
+    device = "id:pixel_6_pro",
+    uiMode = Configuration.UI_MODE_NIGHT_NO or Configuration.UI_MODE_TYPE_NORMAL,
+)
+fun RepositoryItemPreview() {
+    RepositoryItem(
+        repository =
+            RepositoryModel(
+                name = "Room Database",
+                owner = "mike",
+                avatarUrl = "https://placehold.co/400",
+                nameWithOwner = "mike/Room Database",
+                description = "Room: SQLite database object-mapping library",
+                stargazers = 1000,
+                forkCount = 100,
+                issueCount = 10,
+                url = "https://github.com/mike/RoomDatabase",
+            ),
+        onRepositoryClick = { _, _ -> },
+    )
+}
+
+@Preview(
+    showBackground = true,
+    backgroundColor = 0xFFF0EAE2,
+    device = "spec:id=reference_phone,shape=Normal,width=411,height=891,unit=dp,dpi=420",
+)
+@Composable
+fun RepositoryStatPreview() {
+    RepositoryStat(icon = Icons.Default.Star, count = "1000")
 }
