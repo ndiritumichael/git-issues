@@ -11,7 +11,7 @@ android {
 
 dependencies {
 
-    api(project(":core:database"))
-    implementation(project(":core:network"))
-    api(project(":core:domain"))
+    implementation(projects.core.domain)
+    implementation(projects.core.network)
+    implementation(projects.core.database)
 }

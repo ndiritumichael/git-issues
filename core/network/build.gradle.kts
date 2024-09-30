@@ -45,7 +45,7 @@ apollo {
             )
             headers.put(
                 "Authorization",
-                "Bearer $gitdevtokenn",
+                "Bearer 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",
             )
             schemaFile.set(file("src/main/graphql/schema.graphqls"))
         }

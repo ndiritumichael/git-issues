@@ -5,15 +5,24 @@ plugins {
 
 android {
     namespace = "com.devmike.repository"
+
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            merges += "META-INF/LICENSE.md"
+            merges += "META-INF/LICENSE-notice.md"
+        }
+    }
 }
 
 dependencies {
 
     implementation(projects.core.data)
+    implementation(projects.core.domain)
 
     implementation(libs.androidx.paging.compose)
     implementation(libs.coil.compose)
-    implementation(libs.mockk)
+    testImplementation(libs.mockk)
     testImplementation(libs.turbine)
     testImplementation(libs.androidx.arch.core.testing)
     testImplementation(libs.kotlinx.coroutines.test)
