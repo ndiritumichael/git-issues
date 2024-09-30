@@ -42,13 +42,13 @@ interface IssuesDao {
         WHERE repositoryName = :repoName
         AND (
             (:assigneeSize = 0)
-            OR id IN (SELECT issueId FROM assignees WHERE assignee IN (:assignees))
+            OR issueId IN (SELECT issueId FROM assignees WHERE assignee IN (:assignees))
         )
         AND (
             (:labelsSize = 0)
-            OR id IN (SELECT issueId FROM labels WHERE label IN (:labels))
+            OR issueId IN (SELECT issueId FROM labels WHERE label IN (:labels))
         )
-        AND title LIKE '%' || :query || '%'
+         AND ( :query IS NULL OR issueId IN (SELECT issueId FROM issues_fts WHERE issues_fts MATCH :query))
 
         AND (:issueState = 'all' OR state = :issueState)
 
@@ -64,7 +64,7 @@ interface IssuesDao {
         assigneeSize: Int = assignees.size,
         labels: List<String>?,
         labelsSize: Int = labels?.size ?: 0,
-        query: String,
+        query: String?,
         issueState: String,
     ): PagingSource<Int, IssueWithAssigneesAndLabels>
 
@@ -76,13 +76,14 @@ interface IssuesDao {
         WHERE repositoryName = :repoName
         AND (
             (:assigneeSize = 0)
-            OR id IN (SELECT issueId FROM assignees WHERE assignee IN (:assignees))
+            OR issueId IN (SELECT issueId FROM assignees WHERE assignee IN (:assignees))
         )
         AND (
             (:labelsSize = 0)
-            OR id IN (SELECT issueId FROM labels WHERE label IN (:labels))
+            OR issueId IN (SELECT issueId FROM labels WHERE label IN (:labels))
         )
-        AND title LIKE '%' || :query || '%'
+        AND ( :query IS NULL OR issueId IN (SELECT issueId FROM issues_fts WHERE issues_fts MATCH :query))
+
 
         AND (:issueState = 'all' OR state = :issueState)
 

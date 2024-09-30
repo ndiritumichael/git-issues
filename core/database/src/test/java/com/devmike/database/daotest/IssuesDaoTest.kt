@@ -27,7 +27,7 @@ class IssuesDaoTest : BaseDbTest() {
         runTest {
             val issue1 =
                 CachedIssueEntity(
-                    id = "12345",
+                    issueId = "12345",
                     bodyText = "The app crashes when clicking the save button.",
                     state = "open",
                     url = "https://github.com/real-repo/issues/12345",
@@ -39,7 +39,7 @@ class IssuesDaoTest : BaseDbTest() {
 
             val issue2 =
                 CachedIssueEntity(
-                    id = "12346",
+                    issueId = "12346",
                     bodyText = "Feature request to add dark mode.",
                     state = "closed",
                     url = "https://github.com/real-repo/issues/12346",
@@ -68,7 +68,7 @@ class IssuesDaoTest : BaseDbTest() {
         runTest {
             val issue1 =
                 CachedIssueEntity(
-                    id = "12345",
+                    issueId = "12345",
                     bodyText = "The app crashes when clicking the save button.",
                     state = "open",
                     url = "https://github.com/real-repo/issues/12345",
@@ -80,7 +80,7 @@ class IssuesDaoTest : BaseDbTest() {
 
             val issueUpdated =
                 CachedIssueEntity(
-                    id = "12345",
+                    issueId = "12345",
                     bodyText = "Crash fixed in the latest release.",
                     state = "closed",
                     url = "https://github.com/real-repo/issues/12345",
@@ -114,7 +114,7 @@ class IssuesDaoTest : BaseDbTest() {
         runTest {
             val issue1 =
                 CachedIssueEntity(
-                    id = "12345",
+                    issueId = "12345",
                     bodyText = "The app crashes when clicking the save button.",
                     state = "open",
                     url = "https://github.com/real-repo/issues/12345",
@@ -126,7 +126,7 @@ class IssuesDaoTest : BaseDbTest() {
 
             val issue2 =
                 CachedIssueEntity(
-                    id = "54321",
+                    issueId = "54321",
                     bodyText = "Unable to log in with Google account.",
                     state = "closed",
                     url = "https://github.com/another-repo/issues/54321",
@@ -184,7 +184,7 @@ class IssuesDaoTest : BaseDbTest() {
         runTest {
             val issue =
                 CachedIssueEntity(
-                    id = "67890",
+                    issueId = "67890",
                     bodyText = null,
                     state = "open",
                     url = "https://github.com/real-repo/issues/67890",
