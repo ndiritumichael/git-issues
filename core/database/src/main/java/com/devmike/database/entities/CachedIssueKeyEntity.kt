@@ -2,24 +2,25 @@ package com.devmike.database.entities
 
 import androidx.room.Entity
 import androidx.room.Index
-import androidx.room.PrimaryKey
+
+/**
+ * Create a composite primary key from the non-nullable fields.
+ * Add add a unique index that includes all fields, including the nullable ones like @param[query]
+ * This ensures uniqueness across all fields while allowing nulls.
+*
+ */
 
 @Entity(
+    primaryKeys = ["repoName", "assignee", "labels", "issueState"],
     indices = [
         Index(
-            value = [
-                "repoName",
-                "query", "assignee",
-                "labels", "nextCursor",
-                "sortBy",
-                "issueState",
-            ],
+            value = ["repoName", "assignee", "labels", "issueState", "query", "sortBy"],
             unique = true,
         ),
     ],
 )
 data class CachedIssueKeyEntity(
-    @PrimaryKey val repoName: String,
+    val repoName: String,
     val nextCursor: String?,
     val assignee: List<String>,
     val labels: List<String>,

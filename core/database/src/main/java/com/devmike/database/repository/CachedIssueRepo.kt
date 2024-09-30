@@ -23,7 +23,7 @@ interface CachedIssueRepo {
         repository: String,
         assignee: List<String>?,
         labels: List<String>?,
-        queryString: String,
+        queryString: String?,
         issueState: String,
     ): PagingSource<Int, IssueWithAssigneesAndLabels>
 

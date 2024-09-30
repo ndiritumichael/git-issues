@@ -68,19 +68,26 @@ class CachedIssueRepoImpl
             repository: String,
             assignee: List<String>?,
             labels: List<String>?,
-            queryString: String,
+            queryString: String?,
             issueState: String,
         ): PagingSource<Int, IssueWithAssigneesAndLabels> =
             db.issueDao().getIssuesWithAssigneesAndLabels(
                 repoName = repository,
                 assignees = assignee ?: emptyList(),
                 labels = labels,
-                query = queryString,
+                query =
+                    queryString.let {
+                        if (it.isNullOrEmpty()) {
+                            null
+                        } else {
+                            "*$it*"
+                        }
+                    },
                 issueState = issueState,
             )
 
         override suspend fun remoteKeyByQuery(issueDTO: CachedIssueDTO): CachedIssueKeyEntity? =
-            db.issueKeyDao().getIssuesKey(
+            db.issueKeyDao().getIssuesKeyByCriteria(
                 repoName = issueDTO.repository,
                 assignee = issueDTO.assignee,
                 labels = issueDTO.labels,

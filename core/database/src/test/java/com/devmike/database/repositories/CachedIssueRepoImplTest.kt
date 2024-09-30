@@ -40,7 +40,7 @@ class CachedIssueRepoImplTest : BaseDbTest() {
                 listOf(
                     IssueWithAssigneesAndLabels(
                         CachedIssueEntity(
-                            id = "issue_id_1",
+                            issueId = "issue_id_1",
                             bodyText = "Initial body 1",
                             state = "open",
                             url = "https://github.com/square/okhttp/issues/1",
@@ -66,7 +66,7 @@ class CachedIssueRepoImplTest : BaseDbTest() {
                         issue =
 
                             CachedIssueEntity(
-                                id = "issue_id_2",
+                                issueId = "issue_id_2",
                                 bodyText = "New body 2",
                                 state = "open",
                                 url = "https://github.com/square/okhttp/issues/2",
@@ -91,7 +91,7 @@ class CachedIssueRepoImplTest : BaseDbTest() {
             Truth.assertThat(result).isInstanceOf(PagingSource.LoadResult.Page::class.java)
             val page = result as PagingSource.LoadResult.Page
             Truth.assertThat(page.data.size).isEqualTo(1)
-            Truth.assertThat(page.data[0].id).isEqualTo("issue_id_2")
+            Truth.assertThat(page.data[0].issueId).isEqualTo("issue_id_2")
         }
 
     @Test
@@ -113,7 +113,7 @@ class CachedIssueRepoImplTest : BaseDbTest() {
                         labels = listOf(),
                         issue =
                             CachedIssueEntity(
-                                id = "issue_id_1",
+                                issueId = "issue_id_1",
                                 bodyText = "Initial body 1",
                                 state = "open",
                                 url = "https://github.com/square/okhttp/issues/1",
@@ -136,7 +136,7 @@ class CachedIssueRepoImplTest : BaseDbTest() {
                         labels = listOf(),
                         issue =
                             CachedIssueEntity(
-                                id = "issue_id_2",
+                                issueId = "issue_id_2",
                                 bodyText = "New body 2",
                                 state = "open",
                                 url = "https://github.com/square/okhttp/issues/2",
@@ -203,7 +203,7 @@ class CachedIssueRepoImplTest : BaseDbTest() {
                         issue =
 
                             CachedIssueEntity(
-                                id = "issue_id_1",
+                                issueId = "issue_id_1",
                                 bodyText = "Body 1",
                                 state = "open",
                                 url = "https://github.com/square/okhttp/issues/1",
@@ -237,7 +237,7 @@ class CachedIssueRepoImplTest : BaseDbTest() {
                         issue =
 
                             CachedIssueEntity(
-                                id = "issue_id_2",
+                                issueId = "issue_id_2",
                                 bodyText = "Body 2",
                                 state = "open",
                                 url = "https://github.com/square/okhttp/issues/2",
@@ -271,7 +271,7 @@ class CachedIssueRepoImplTest : BaseDbTest() {
                         issue =
 
                             CachedIssueEntity(
-                                id = "issue_id_3",
+                                issueId = "issue_id_3",
                                 bodyText = "Coil body",
                                 state = "open",
                                 url = "https://github.com/coil-kt/coil/issues/3",
@@ -309,7 +309,7 @@ class CachedIssueRepoImplTest : BaseDbTest() {
             val page = result as PagingSource.LoadResult.Page
 
             Truth.assertThat(page.data.size).isEqualTo(1)
-            Truth.assertThat(page.data[0].issue.id).isEqualTo("issue_id_1")
+            Truth.assertThat(page.data[0].issue.issueId).isEqualTo("issue_id_1")
         }
 
     @Test
@@ -349,7 +349,7 @@ class CachedIssueRepoImplTest : BaseDbTest() {
                         issue =
 
                             CachedIssueEntity(
-                                id = "issue_id_1",
+                                issueId = "issue_id_1",
                                 bodyText = "Body 1",
                                 state = "open",
                                 url = "https://github.com/square/okhttp/issues/1",

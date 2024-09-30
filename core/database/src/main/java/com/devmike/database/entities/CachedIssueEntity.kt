@@ -1,7 +1,9 @@
 package com.devmike.database.entities
 
+import androidx.room.ColumnInfo
 import androidx.room.Embedded
 import androidx.room.Entity
+import androidx.room.Fts4
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import androidx.room.Relation
@@ -9,7 +11,7 @@ import androidx.room.Relation
 @Entity(tableName = "issues")
 data class CachedIssueEntity(
     @PrimaryKey
-    val id: String,
+    val issueId: String,
     val bodyText: String? = null,
     val state: String,
     val url: String,
@@ -22,12 +24,12 @@ data class CachedIssueEntity(
 data class IssueWithAssigneesAndLabels(
     @Embedded val issue: CachedIssueEntity,
     @Relation(
-        parentColumn = "id",
+        parentColumn = "issueId",
         entityColumn = "issueId",
     )
     val assignees: List<AssigneeEntity>,
     @Relation(
-        parentColumn = "id",
+        parentColumn = "issueId",
         entityColumn = "issueId",
     )
     val labels: List<LabelEntity>,
@@ -48,4 +50,15 @@ data class LabelEntity(
     val issueId: String,
     val label: String,
     val color: String,
+)
+
+@Fts4(contentEntity = CachedIssueEntity::class)
+@Entity(tableName = "issues_fts")
+data class CachedIssueFts(
+    @PrimaryKey
+    @ColumnInfo(name = "rowid")
+    val rowId: Int = 0,
+    val issueId: String,
+    val title: String?,
+    val bodyText: String?,
 )

@@ -10,6 +10,7 @@ import com.devmike.database.dao.RepoRemoteKeysDao
 import com.devmike.database.dao.RepositorySearchDAO
 import com.devmike.database.entities.AssigneeEntity
 import com.devmike.database.entities.CachedIssueEntity
+import com.devmike.database.entities.CachedIssueFts
 import com.devmike.database.entities.CachedIssueKeyEntity
 import com.devmike.database.entities.CachedRepository
 import com.devmike.database.entities.LabelEntity
@@ -23,8 +24,9 @@ import com.devmike.database.entities.RemoteKeyEntity
         CachedIssueKeyEntity::class,
         AssigneeEntity::class,
         LabelEntity::class,
+        CachedIssueFts::class,
     ],
-    version = 2,
+    version = 3,
     exportSchema = true,
 )
 @TypeConverters(Converters::class)
