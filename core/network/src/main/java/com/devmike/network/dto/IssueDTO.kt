@@ -79,7 +79,7 @@ fun SearchIssuesQuery.Data.toIssues(): List<IssueDTO> =
                         }
                     } ?: listOf(),
             id = node.id,
-            bodyText = null,
+            bodyText = node.bodyText,
             issueCommentsCount = node.comments.totalCount,
             repositoryName = node.repository.nameWithOwner,
             assignees = node.assignees.nodes?.mapNotNull { it?.login } ?: emptyList(),
