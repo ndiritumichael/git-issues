@@ -51,6 +51,8 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
+      - name: Get local.properties from secrets
+        run: echo "${{secrets.ProjectSecrets }}" > $GITHUB_WORKSPACE/local.properties
 
 
 
@@ -68,7 +70,7 @@ jobs:
 
   # Job that assembles debug apk
   run-debug-assemble:
-    name: Unit Tests
+    name: Debug Build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
