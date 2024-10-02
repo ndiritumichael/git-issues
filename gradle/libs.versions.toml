@@ -1,7 +1,7 @@
 [versions]
 agp = "8.5.2"
 apollo = "4.0.0"
-apolloMockserver = "0.0.1"
+apolloMockserver = "0.0.3"
 apolloTestingSupport = "4.0.0"
 appauth = "0.11.1"
 kotlin = "2.0.0"

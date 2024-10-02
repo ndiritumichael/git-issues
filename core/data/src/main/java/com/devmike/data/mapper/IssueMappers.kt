@@ -13,7 +13,7 @@ import java.util.Locale
 
 fun IssueDTO.toEntity(): CachedIssueEntity =
     CachedIssueEntity(
-        id = id,
+        issueId = id,
         title = title,
         state = state.lowercase(Locale.ROOT),
         author = author,
@@ -36,7 +36,7 @@ fun CachedIssueEntity.toIssueModel(
         assignee = assignee,
         author = author,
         bodyText = bodyText,
-        id = id,
+        id = issueId,
         repositoryName = repositoryName,
     )
 
