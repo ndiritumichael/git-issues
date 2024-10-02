@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.gitissuesmobile.android.hilt)
     alias(libs.plugins.ksp)
 
-    id("jacoco")
+    alias(libs.plugins.gitissuesmobile.android.library.jacoco)
 }
 
 android {

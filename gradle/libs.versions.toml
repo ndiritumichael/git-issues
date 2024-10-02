@@ -161,6 +161,8 @@ kotlinX-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", vers
 room-compiler = { id = "androidx.room", version.ref = "room" }
 module-graph = { id = "com.jraska.module.graph.assertion", version.ref = "moduleGraph" }
 apollo = { id = "com.apollographql.apollo", version.ref = "apollo" }
+google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
+google-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "googleFirebaseCrashlytics" }
 
 
 
@@ -172,5 +174,5 @@ gitissuesmobile-android-hilt = {id = "gitissuesmobile.android.hilt", version = "
 gitissuesmobile-library-compose = {id = "gitissuesmobile.android.library.compose", version = "unspecified"}
 gitissuesmobile-application-compose = {id = "gitissuesmobile.android.application.compose", version = "unspecified"}
 gitissuesmobile-android-library= {id = "gitissuesmobile.android.library",version = "unspecified"}
-google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
-google-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "googleFirebaseCrashlytics" }
+gitissuesmobile-android-application-jacoco = { id = "gitissuesmobile.android.application.jacoco", version = "unspecified" }
+gitissuesmobile-android-library-jacoco = { id = "gitissuesmobile.android.library.jacoco", version = "unspecified" }

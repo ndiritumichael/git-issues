@@ -21,7 +21,7 @@ plugins {
     id("io.sentry.android.gradle") version ("4.11.0")
     id("io.sentry.kotlin.compiler.gradle") version ("4.11.0")
 
-    id("jacoco")
+    alias(libs.plugins.gitissuesmobile.android.application.jacoco)
 }
 
 android {

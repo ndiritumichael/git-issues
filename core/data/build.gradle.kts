@@ -3,6 +3,7 @@ plugins {
 
     alias(libs.plugins.gitissuesmobile.android.hilt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.gitissuesmobile.android.library.jacoco)
 }
 
 android {

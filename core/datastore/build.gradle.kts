@@ -3,15 +3,11 @@ plugins {
 
     alias(libs.plugins.gitissuesmobile.android.hilt)
 
-    id("jacoco")
+    alias(libs.plugins.gitissuesmobile.android.library.jacoco)
 }
 
 android {
     namespace = "com.devmike.datastore"
-
-    testCoverage {
-        jacocoVersion = "0.8.8"
-    }
 }
 
 dependencies {

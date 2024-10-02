@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.gitissuesmobile.android.feature)
     alias(libs.plugins.gitissuesmobile.library.compose)
+    alias(libs.plugins.gitissuesmobile.android.library.jacoco)
 }
 
 android {
