@@ -36,19 +36,12 @@ suspend inline fun <reified T : Operation.Data> safeApolloQuery(
             }
             response.hasErrors() -> {
                 Timber.tag("networkerrorexception").d("${response.errors}")
-                val firstError = response.errors?.firstOrNull()
-                when {
-                    firstError?.message?.contains("NOT_FOUND", ignoreCase = true) == true -> {
-                        Result.failure(AppErrors.NotFound())
-                    }
-                    else -> {
-                        Result.failure(
-                            AppErrors.GraphQLError(
-                                response.errors?.map { it.message } ?: emptyList(),
-                            ),
-                        )
-                    }
-                }
+
+                Result.failure(
+                    AppErrors.GraphQLError(
+                        response.errors?.map { it.message } ?: emptyList(),
+                    ),
+                )
             }
             else -> {
                 Result.failure(
