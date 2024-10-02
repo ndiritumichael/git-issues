@@ -34,9 +34,9 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
-        buildConfigField("String", "GITHUBCLIENTKEY", githubClientKey)
-        buildConfigField("String", "GITHUBSECRET", githubSecret)
-        buildConfigField("String", "SENTRYDSN", sentryDsn)
+        buildConfigField("String", "GITHUBCLIENTKEY", "\"$githubClientKey\"")
+        buildConfigField("String", "GITHUBSECRET", "\"$githubSecret\"")
+        buildConfigField("String", "SENTRYDSN", "\"$sentryDsn\"")
     }
     buildFeatures {
         buildConfig = true
@@ -66,7 +66,7 @@ sentry {
     // The authentication token to use for uploading proguard mappings/source contexts.
     // WARNING: Do not expose this token in your build.gradle files, but rather set an environment
     // variable and read it into this property.
-    authToken.set(sentryAuthToken)
+    authToken.set("\"$sentryAuthToken\"")
 
     // The url of your Sentry instance. If you're using SAAS (not self hosting) you do not have to
     // set this. If you are self hosting you can set your URL here
