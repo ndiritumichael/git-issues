@@ -25,6 +25,14 @@ private val coverageExclusions =
         "**/Manifest*.*",
         "**/*_Hilt*.class",
         "**/Hilt_*.class",
+        "**/*Binding*.*",
+        "**/di/**", // Exclude DI folders
+        "**/*_Impl.java", // Exclude Room generated classes
+        "**/Generated*.class",
+        "**/*_Impl.class",
+        "**/Generated*.class", // Exclude Apollo generated classes
+        "**/*Database$*",
+        "**/*Database_*",
     )
 
 private fun String.capitalize() =

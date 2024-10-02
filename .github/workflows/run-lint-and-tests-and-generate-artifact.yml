@@ -46,11 +46,14 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Get local.properties from secrets
-        run: echo "${{secrets.ProjectSecrets }}" > $GITHUB_WORKSPACE/local.properties
+
 
       - name: Make gradlew executable
         run: chmod +x ./gradlew
+
+      - name: Get local.properties from secrets
+        run: echo "${{secrets.ProjectSecrets }}" > $GITHUB_WORKSPACE/local.properties
+
 
 
 
@@ -60,9 +63,37 @@ jobs:
 
 
 
+
+
+
+
+
+  # Job that assembles debug apk
+  run-debug-assemble:
+    name: Debug Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+      - name: Get local.properties from secrets
+        run: echo "${{secrets.ProjectSecrets }}" > $GITHUB_WORKSPACE/local.properties
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+
+      - name: Assemble debug
+        run: ./gradlew assembleDebug
+
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4.3.3
         with:
-            name: GitIssues.apk
-            path: app/build/outputs/apk/debug/app-debug.apk
+          name: GitIssues.apk
+          path: app/build/outputs/apk/debug/app-debug.apk
 
