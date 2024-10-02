@@ -1,0 +1,26 @@
+
+query GetRepositoryAssignees($owner: String!, $name: String!, $first: Int, $after: String
+) {
+
+    repository(owner: $owner, name: $name) {
+
+
+        assignableUsers(first: $first,after: $after){
+            pageInfo {
+                endCursor
+                hasNextPage
+
+            }
+            edges {
+                node {
+                    name
+                    login
+                    avatarUrl
+
+
+
+                }
+            }
+        }
+    }
+}

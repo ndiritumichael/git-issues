@@ -1,6 +1,10 @@
-query SearchRepositories($query: String!) {
-    search(query: $query, type: REPOSITORY,first: 10) {
+query SearchRepositories($query: String!,$first: Int, $after: String) {
+    search(query: $query, type: REPOSITORY,first: $first, after: $after) {
         repositoryCount
+        pageInfo {
+            endCursor
+            hasNextPage
+        }
         nodes {
             ... on Repository {
                 url
@@ -10,17 +14,14 @@ query SearchRepositories($query: String!) {
                     login
                     avatarUrl
 
+
                 }
                 description
                 stargazers {
                     totalCount
                 }
                 forkCount
-                languages {
-                    nodes {
-                        name
-                    }
-                }
+
                 issues{
                     totalCount
                 }
@@ -28,3 +29,4 @@ query SearchRepositories($query: String!) {
         }
     }
 }
+

@@ -1,43 +1,28 @@
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.gitissuesmobile.android.library)
+
+    alias(libs.plugins.gitissuesmobile.android.hilt)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.gitissuesmobile.android.library.jacoco)
 }
 
 android {
     namespace = "com.devmike.data"
-    compileSdk = 34
-
-    defaultConfig {
-        minSdk = 25
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro",
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
 }
 
 dependencies {
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    implementation(projects.core.domain)
+    implementation(projects.core.network)
+    implementation(projects.core.database)
+    testImplementation(libs.androidx.test.ext)
+    testImplementation(libs.mockk)
+    testImplementation(libs.turbine)
+    testImplementation(libs.androidx.arch.core.testing)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.core.ktx)
+    testImplementation(libs.truth)
+    // alternatively - without Android dependencies for tests
+    testImplementation(libs.androidx.paging.testing)
+    testImplementation(libs.robolectric)
 }

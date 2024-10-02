@@ -24,6 +24,9 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
+      - name: Get local.properties from secrets
+        run: echo "${{secrets.ProjectSecrets }}" > $GITHUB_WORKSPACE/local.properties
+
       - name: Make CodeLinting executable
         run: chmod +x ./codeLinting.sh
       - name: Run lint checks
@@ -43,6 +46,9 @@ jobs:
           distribution: 'zulu'
           java-version: '17'
 
+      - name: Get local.properties from secrets
+        run: echo "${{secrets.ProjectSecrets }}" > $GITHUB_WORKSPACE/local.properties
+
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
@@ -50,3 +56,13 @@ jobs:
 
       - name: Run Unit Tests
         run: ./gradlew testDebugUnitTest
+
+
+
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v4.3.3
+        with:
+            name: GitIssues.apk
+            path: app/build/outputs/apk/debug/app-debug.apk
+
