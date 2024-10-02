@@ -10,6 +10,7 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
+        maven("https://plugins.gradle.org/m2/")
     }
 }
 dependencyResolutionManagement {
@@ -19,6 +20,11 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
+plugins {
+    id("org.jetbrains.kotlinx.kover.aggregation") version "0.8.3" apply true
+}
+
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "GitIssuesMobile"
 include(":app")
@@ -27,9 +33,5 @@ include(":core:data")
 include(":core:network")
 include(":core:database")
 include(":core:datastore")
-include(":feature:login")
 include(":feature:repository")
 include(":feature:issues")
-plugins {
-    id("org.jetbrains.kotlinx.kover.aggregation") version "0.8.3" apply true
-}
