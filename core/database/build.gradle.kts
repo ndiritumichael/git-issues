@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.room.compiler)
     alias(libs.plugins.gitissuesmobile.android.hilt)
     alias(libs.plugins.ksp)
+
+    id("jacoco")
 }
 
 android {
@@ -10,6 +12,12 @@ android {
     room {
 
         schemaDirectory("$projectDir/schemas")
+    }
+    buildTypes {
+        debug {
+            enableAndroidTestCoverage = true
+            enableUnitTestCoverage = true
+        }
     }
 }
 dependencies {
@@ -30,4 +38,19 @@ dependencies {
     testImplementation(libs.truth)
     testImplementation(libs.robolectric)
     testImplementation(libs.mockk)
+}
+
+val exclusions =
+    listOf(
+        "**/R.class",
+        "**/R\$*.class",
+        "**/BuildConfig.*",
+        "**/Manifest*.*",
+        "**/*Test*.*",
+    )
+tasks.withType(Test::class) {
+    configure<JacocoTaskExtension> {
+        isIncludeNoLocationClasses = true
+        excludes = listOf("jdk.internal.*") + exclusions
+    }
 }

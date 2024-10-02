@@ -14,9 +14,18 @@ plugins {
     alias(libs.plugins.module.graph) apply true
     alias(libs.plugins.google.gms.google.services) apply false
     alias(libs.plugins.google.firebase.crashlytics) apply false
+    // id("com.vanniktech.android.junit.jacoco") version "0.16.0"
+
+    // id("org.jetbrains.kotlinx.kover") version "0.8.3"
+
+    // id("jacoco")
+    // id("jacoco-report-aggregation")
 }
+
 subprojects {
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
+    //   apply(plugin = "org.jetbrains.kotlinx.kover")
+    apply(plugin = "jacoco")
 
     ktlint {
         android.set(true)
@@ -31,11 +40,28 @@ subprojects {
     }
 }
 
+buildscript {
+    val kotlinVersion by extra("1.4.10")
+    val jacocoVersion by extra("0.2")
+
+    dependencies {
+        classpath("com.dicedmelon.gradle:jacoco-android:0.1.5")
+
+        classpath("com.hiya:jacoco-android:$jacocoVersion")
+    }
+}
+
 subprojects {
     apply(plugin = "io.gitlab.arturbosch.detekt")
+    apply(plugin = "jacoco")
     detekt {
         buildUponDefaultConfig = true
-        config = files("${project.rootDir}/config/detekt/detekt.yml")
+
+        config.setFrom("${project.rootDir}/config/detekt/detekt.yml")
         parallel = true
     }
 }
+
+// tasks.withType(Test) {
+//    jacoco.includeNoLocationClasses = true
+// }

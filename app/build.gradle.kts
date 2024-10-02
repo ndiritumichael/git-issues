@@ -14,12 +14,14 @@ val sentryAuthToken = properties.getProperty("SENTRYAUTHTOKEN") ?: ""
 plugins {
     alias(libs.plugins.gitissuesmobile.application.compose)
     alias(libs.plugins.gitissuesmobile.android.hilt)
-    id("org.jetbrains.kotlinx.kover")
+
     alias(libs.plugins.google.gms.google.services)
     alias(libs.plugins.google.firebase.crashlytics)
     alias(libs.plugins.kotlinX.serialization)
     id("io.sentry.android.gradle") version ("4.11.0")
     id("io.sentry.kotlin.compiler.gradle") version ("4.11.0")
+
+    id("jacoco")
 }
 
 android {

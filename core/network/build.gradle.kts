@@ -18,11 +18,10 @@ dependencies {
     implementation(projects.core.datastore)
     implementation(projects.core.domain)
 
-    dependencies {
-        testImplementation(libs.apollo.mockserver)
+    testImplementation(libs.apollo.mockserver)
+    testImplementation(libs.truth)
 
-        testImplementation(libs.apollo.testing.support)
-    }
+    testImplementation(libs.apollo.testing.support)
 }
 
 val keystoreFile = project.rootProject.file("local.properties")
@@ -52,6 +51,14 @@ apollo {
     }
 }
 
+jacoco {
+    toolVersion = "0.8.4"
+}
+
+tasks.withType<Test> {
+    //   jacoco. = true
+}
+
 /**
 * fixes the warning * What went wrong:
 * A problem was found with the configuration of task
@@ -64,4 +71,11 @@ apollo {
 */
 tasks.named("runKtlintCheckOverMainSourceSet") {
     dependsOn(tasks.named("generateServiceApolloSources"))
+}
+
+tasks.withType(Test::class) {
+    configure<JacocoTaskExtension> {
+        isIncludeNoLocationClasses = true
+        excludes = listOf("jdk.internal.*") // + exclusions
+    }
 }
