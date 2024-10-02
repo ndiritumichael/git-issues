@@ -7,6 +7,7 @@ import com.devmike.database.dao.models.CachedIssueDTO
 import com.devmike.database.entities.CachedIssueKeyEntity
 import com.devmike.database.entities.IssueWithAssigneesAndLabels
 import kotlinx.coroutines.DelicateCoroutinesApi
+import timber.log.Timber
 import javax.inject.Inject
 
 class CachedIssueRepoImpl
@@ -20,6 +21,7 @@ class CachedIssueRepoImpl
             issueDTO: CachedIssueDTO,
             issues: List<IssueWithAssigneesAndLabels>,
         ) {
+            Timber.tag("dbdata").d(issues.toString())
             db.withTransaction {
                 if (isRefresh) {
                     db.issueKeyDao().clearRemoteKeysForQuery(
@@ -93,6 +95,6 @@ class CachedIssueRepoImpl
                 labels = issueDTO.labels,
                 query = issueDTO.query,
                 issueState = issueDTO.issueStatus,
-                // sortBy = issueDTO.sortBy,
+                sortBy = issueDTO.sortBy,
             )
     }

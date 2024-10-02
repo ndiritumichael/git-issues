@@ -16,7 +16,6 @@ import com.devmike.network.dto.RepositoryDTO
 import com.devmike.network.dto.toIssues
 import com.devmike.network.dto.toRepositoryDTOs
 import com.devmike.network.utils.safeApolloQuery
-import timber.log.Timber
 import javax.inject.Inject
 
 class GitHubIssuesRepoImpl
@@ -30,14 +29,13 @@ class GitHubIssuesRepoImpl
             pageSize: Int,
         ): Result<PagedDtoWrapper<List<RepositoryDTO>>> =
             safeApolloQuery {
-                client
-                    .query(
-                        SearchRepositoriesQuery(
-                            query = name,
-                            first = Optional.present(pageSize),
-                            after = Optional.present(cursor),
-                        ),
-                    )
+                client.query(
+                    SearchRepositoriesQuery(
+                        query = name,
+                        first = Optional.present(pageSize),
+                        after = Optional.present(cursor),
+                    ),
+                )
             }.map { data ->
                 PagedDtoWrapper(
                     nextCursor = data.search.pageInfo.endCursor,
@@ -49,25 +47,18 @@ class GitHubIssuesRepoImpl
         override suspend fun getRepositoryIssues(
             issueSearchModel: IssueSearchModel,
         ): Result<PagedDtoWrapper<List<IssueDTO>>> {
-            Timber.tag("issueload").e(issueSearchModel.buildQuery())
             val issueTest =
                 safeApolloQuery {
-                    client
-                        .query(
-                            SearchIssuesQuery(
-                                query = issueSearchModel.buildQuery(),
-                                first = Optional.present(issueSearchModel.pageSize),
-                                cursor = Optional.present(issueSearchModel.cursor),
-                            ),
-                        )
+                    client.query(
+                        SearchIssuesQuery(
+                            query = issueSearchModel.buildQuery(),
+                            first = Optional.present(issueSearchModel.pageSize),
+                            cursor = Optional.present(issueSearchModel.cursor),
+                        ),
+                    )
                 }
 
             return issueTest.map { data ->
-                Timber.tag("issueload").e(
-                    data.search.nodes
-                        ?.size
-                        .toString(),
-                )
 
                 PagedDtoWrapper(
                     nextCursor = data.search.pageInfo.endCursor,
@@ -143,20 +134,25 @@ class GitHubIssuesRepoImpl
                             ?.pageInfo
                             ?.hasNextPage ?: false,
                     data =
-                        data.repository?.assignableUsers?.edges?.mapNotNull { it?.node }?.map {
-                                node ->
+                        data.repository
+                            ?.assignableUsers
+                            ?.edges
+                            ?.mapNotNull {
+                                it?.node
+                            }?.map { node ->
 
-                            AssigneeModel(
-                                name = node.name,
-                                username = node.login,
-                                avatarUrl = node.avatarUrl.toString(),
-                            )
-                        } ?: emptyList(),
+                                AssigneeModel(
+                                    name = node.name,
+                                    username = node.login,
+                                    avatarUrl = node.avatarUrl.toString(),
+                                )
+                            } ?: emptyList(),
                 )
             }
 
+        // combine all filters for the search interface
         private fun IssueSearchModel.buildQuery(): String {
-            val baseQuery = this.query ?: ""
+            val baseQuery = (this.query ?: "") + " is:issue"
 
             val repoFilter = "repo:$repository"
 
@@ -176,7 +172,6 @@ class GitHubIssuesRepoImpl
                 labelsFilter,
                 assigneesFilter,
                 sortFilter,
-            ).filter { it.isNotEmpty() }
-                .joinToString(" ")
+            ).filter { it.isNotEmpty() }.joinToString(" ")
         }
     }
