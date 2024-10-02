@@ -114,6 +114,6 @@ class RepositorySearchTest {
             val result = gitHubIssuesRepo.searchRepositories("repo4", null, 10)
 
             Truth.assertThat(result.isFailure).isTrue()
-            Truth.assertThat(result.exceptionOrNull()?.message).isEqualTo("Some GraphQL error")
+            Truth.assertThat(result.exceptionOrNull()?.message).isEqualTo("Something went wrong")
         }
 }
