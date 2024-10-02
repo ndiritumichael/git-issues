@@ -28,8 +28,8 @@ class IssueKeyEntityDaoTest : BaseDbTest() {
                 CachedIssueKeyEntity(
                     repoName = "square/okhttp",
                     nextCursor = "cursor-1234567890",
-                    assignee = listOf("ndiritumichael"),
-                    labels = listOf("bug", "network", "priority-high"),
+                    assignee = listOf(),
+                    labels = listOf(),
                     issueState = "open",
                     query = null,
                 )
@@ -38,8 +38,8 @@ class IssueKeyEntityDaoTest : BaseDbTest() {
             val retrievedKey =
                 issueKeyEntityDao.getIssuesKeyByCriteria(
                     repoName = "square/okhttp",
-                    assignee = listOf("ndiritumichael"),
-                    labels = listOf("bug", "network", "priority-high"),
+                    assignee = listOf(),
+                    labels = listOf(),
                     issueState = "open",
                     query = null,
                 )
