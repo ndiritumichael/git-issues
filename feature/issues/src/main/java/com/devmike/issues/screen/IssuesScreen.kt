@@ -57,6 +57,7 @@ import com.devmike.issues.screen.components.AssigneesScreen
 import com.devmike.issues.screen.components.IssueCard
 import com.devmike.issues.screen.components.IssueStateChip
 import com.devmike.issues.screen.components.LabelsScreen
+import com.devmike.issues.screen.components.NoIssuesFoundScreen
 import com.devmike.issues.screen.components.SearchTextField
 import kotlinx.coroutines.flow.flowOf
 
@@ -268,18 +269,26 @@ fun IssuesScreen(
             }
             issues.apply {
                 when {
+                    loadState.refresh is LoadState.NotLoading -> {
+                        if (loadState.source.append.endOfPaginationReached &&
+                            issues.itemCount == 0
+                        ) {
+                            item {
+                                NoIssuesFoundScreen()
+                            }
+                        }
+                    }
+
                     loadState.refresh is LoadState.Loading -> {
                         item {
                             Box(
                                 modifier =
-                                    Modifier.fillMaxSize().padding(
-                                        top = 50.dp,
-                                        bottom = 50.dp,
-                                    ),
+                                    Modifier
+                                        .padding(),
                                 contentAlignment = Alignment.Center,
                             ) {
                                 CircularProgressIndicator(
-                                    modifier = Modifier.height(30.dp),
+                                    modifier = Modifier.height(100.dp),
                                 )
                             }
                         }
@@ -291,16 +300,20 @@ fun IssuesScreen(
                                 modifier = Modifier.fillMaxWidth(),
                                 contentAlignment = Alignment.Center,
                             ) {
-                                CircularProgressIndicator(modifier = Modifier.height(30.dp))
+                                CircularProgressIndicator(modifier = Modifier.height(50.dp))
+                                Text(text = "Search loading")
                             }
                         }
                     }
 
-                    loadState.refresh is LoadState.Error -> {
+                    loadState.refresh is LoadState.Error || loadState.append is LoadState.Error -> {
                         val errorMessage = this.loadState.refresh as LoadState.Error
                         item {
                             Box(
-                                modifier = Modifier.fillMaxWidth().padding(56.dp),
+                                modifier =
+                                    Modifier
+                                        .fillMaxWidth()
+                                        .padding(56.dp),
                                 contentAlignment = Alignment.BottomCenter,
                             ) {
                                 Column(
@@ -308,11 +321,10 @@ fun IssuesScreen(
                                     horizontalAlignment = Alignment.CenterHorizontally,
                                 ) {
                                     val errorText =
-                                        if (errorMessage.error.localizedMessage!!.contains("404")) {
-                                            "Character not Found"
-                                        } else {
-                                            errorMessage.error.localizedMessage
-                                        }
+
+                                        errorMessage.error.localizedMessage
+                                            ?: "Something Went Wrong"
+
                                     Text(errorText, textAlign = TextAlign.Center)
                                     Button(onClick = { retry() }) {
                                         Text(text = "Try Again")

@@ -68,7 +68,7 @@ class IssuesRepositoryImpl
                         repository = issueSearchModel.repository,
                         assignee = issueSearchModel.assignees,
                         labels = issueSearchModel.labels,
-                        queryString = issueSearchModel.query ?: "",
+                        queryString = issueSearchModel.query,
                         issueState = issueSearchModel.issueState,
                     )
                 }

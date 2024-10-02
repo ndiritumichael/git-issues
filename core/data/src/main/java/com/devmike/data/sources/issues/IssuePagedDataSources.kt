@@ -42,6 +42,13 @@ class IssuePagedDataSources
                         }
                     }
 
+                Timber
+                    .tag(
+                        "issueerror",
+                    ).d(
+                        "cursor for ${issueSearchModel.toCachedIssueDTO()}  was the cursor $cursor",
+                    )
+
                 val response =
                     gitHubIssuesRepo.getRepositoryIssues(
                         issueSearchModel.copy(cursor = cursor),
@@ -57,7 +64,7 @@ class IssuePagedDataSources
                             .tag(
                                 "issueerror",
                             ).d(
-                                "cursor for ${pagedDtoWrapper.data}  was the cursor $cursor",
+                                "cursor for ${pagedDtoWrapper.data.size}  was the cursor $cursor",
                             )
 
                         cachedIssueRepo.insertIssues(

@@ -16,7 +16,7 @@ interface IssueKeyEntityDao {
  WHERE repoName = :repoName
  AND assignee = :assignee AND
   labels = :labels
-   AND ((`query` is null AND  :query is null)   OR `query` = :query)
+   AND ((`query` is NULL AND  :query is NULL)   OR `query` = :query)
    AND (sortBy = :sortBy OR (:sortBy IS NULL AND sortBy IS NULL))
    AND issueState = :issueState
 
