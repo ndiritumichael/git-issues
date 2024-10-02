@@ -1,0 +1,99 @@
+# Workflow to perform checks for linting and unit tests, on PR into the main branch
+name: Run Checks
+
+# Sets the workflow to be triggered on pull-request specifically to main branch
+on:
+  pull_request:
+    branches: [ "main","dev" ]
+
+jobs:
+  # Job that runs ktlint and detekt lint checks
+  run-lint-checks:
+    name: Lint Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Get local.properties from secrets
+        run: echo "${{secrets.ProjectSecrets }}" > $GITHUB_WORKSPACE/local.properties
+
+      - name: Make CodeLinting executable
+        run: chmod +x ./codeLinting.sh
+      - name: Run lint checks
+        run: ./codeLinting.sh
+
+  # Job that runs unit tests
+  run-unit-tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+      - name: Get local.properties from secrets
+        run: echo "${{secrets.ProjectSecrets }}" > $GITHUB_WORKSPACE/local.properties
+
+
+
+
+      - name: Run Unit Tests
+        run: ./gradlew testDebugUnitTest
+
+
+
+
+
+
+
+
+
+  # Job that assembles debug apk
+  run-debug-assemble:
+    name: Debug Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+      - name: Get local.properties from secrets
+        run: echo "${{secrets.ProjectSecrets }}" > $GITHUB_WORKSPACE/local.properties
+
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+
+
+      - name: Assemble debug
+        run: ./gradlew assembleDebug
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v4.3.3
+        with:
+          name: GitIssues.apk
+          path: app/build/outputs/apk/debug/app-debug.apk
+

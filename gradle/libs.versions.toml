@@ -1,5 +1,9 @@
 [versions]
 agp = "8.5.2"
+apollo = "4.0.0"
+apolloMockserver = "0.0.3"
+apolloTestingSupport = "4.0.0"
+appauth = "0.11.1"
 kotlin = "2.0.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -16,7 +20,7 @@ archCore = "2.2.0"
 composeNavigation = "2.8.0"
 androidxTestExt = "1.2.1"
 
-detekt = "1.19.0"
+detekt = "1.23.7"
 datastore = "1.1.1"
 
 hilt = "2.51.1"
@@ -25,24 +29,41 @@ hiltNavigationCompose = "1.2.0"
 kotlinx-coroutines = "1.8.1"
 kotlinx-serialization = "1.6.3"
 ksp = "2.0.0-1.0.21"
-ktlint = "11.6.1"
+ktlint = "12.1.1"
 ktor = "2.3.12"
 
 lottie = "6.0.0"
 mockk = "1.13.11"
 moduleGraph = "2.5.0"
+pagingRuntime = "3.3.2"
 robolectric = "4.12.2"
 room = "2.6.1"
+
 spotless = "6.4.2"
 timber = "5.0.1"
 appcompat = "1.7.0"
 material = "1.12.0"
 coreKtxVersion = "1.6.1"
 truth = "1.4.2"
+firebaseCrashlytics = "19.1.0"
+googleGmsGoogleServices = "4.4.2"
+googleFirebaseCrashlytics = "3.0.2"
+firebaseAnalytics = "22.1.0"
+coilCompose = "2.7.0"
+turbine = "1.1.0"
 
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingRuntime" }
+androidx-paging-runtime = { module = "androidx.paging:paging-runtime-ktx", version.ref = "pagingRuntime" }
+
+
+
+androidx-paging-testing = { module = "androidx.paging:paging-testing", version.ref = "pagingRuntime" }
+apollo-mockserver = { module = "com.apollographql.mockserver:apollo-mockserver", version.ref = "apolloMockserver" }
+apollo-testing-support = { module = "com.apollographql.apollo:apollo-testing-support", version.ref = "apolloTestingSupport" }
+appauth = { module = "net.openid:appauth", version.ref = "appauth" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -72,6 +93,10 @@ androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-
 androidx-test-ext = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "androidxTestExt" }
 
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
+
+apollo-runtime = { module = "com.apollographql.apollo:apollo-runtime", version.ref = "apollo"}
+
 
 #hilt
 hilt-compiler = { module = "com.google.dagger:hilt-android-compiler",version.ref = "hilt"}
@@ -84,6 +109,7 @@ room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 room-testing = {module = "androidx.room:room-testing",version.ref = "room"}
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "room" }
 datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore"}
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber"}
 
@@ -112,6 +138,9 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtxVersion" }
 truth = { module = "com.google.truth:truth", version.ref = "truth" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlytics" }
+firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics", version.ref = "firebaseAnalytics" }
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 
 [bundles]
 compose = ["androidx-activity-compose","androidx-compose-runtime","androidx-material3","androidx-compose-foundation","androidx-compose-foundation-layout",
@@ -131,6 +160,9 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 kotlinX-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 room-compiler = { id = "androidx.room", version.ref = "room" }
 module-graph = { id = "com.jraska.module.graph.assertion", version.ref = "moduleGraph" }
+apollo = { id = "com.apollographql.apollo", version.ref = "apollo" }
+google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
+google-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "googleFirebaseCrashlytics" }
 
 
 
@@ -142,3 +174,5 @@ gitissuesmobile-android-hilt = {id = "gitissuesmobile.android.hilt", version = "
 gitissuesmobile-library-compose = {id = "gitissuesmobile.android.library.compose", version = "unspecified"}
 gitissuesmobile-application-compose = {id = "gitissuesmobile.android.application.compose", version = "unspecified"}
 gitissuesmobile-android-library= {id = "gitissuesmobile.android.library",version = "unspecified"}
+gitissuesmobile-android-application-jacoco = { id = "gitissuesmobile.android.application.jacoco", version = "unspecified" }
+gitissuesmobile-android-library-jacoco = { id = "gitissuesmobile.android.library.jacoco", version = "unspecified" }

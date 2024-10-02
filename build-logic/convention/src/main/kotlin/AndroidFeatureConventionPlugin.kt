@@ -17,6 +17,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             }
             extensions.configure<LibraryExtension> {
                 defaultConfig {
+                    minSdk = 26
                     testInstrumentationRunner =
                         "androidx.test.runner.AndroidJUnitRunner"
                 }
@@ -26,7 +27,10 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
             dependencies {
                 add("implementation", libs.findLibrary("androidx.hilt.navigation.compose").get())
                 add("implementation", libs.findLibrary("androidx.lifecycle.runtimeCompose").get())
-                add("implementation", libs.findLibrary("androidx.lifecycle.viewmodel.compose").get())
+                add(
+                    "implementation",
+                    libs.findLibrary("androidx.lifecycle.viewmodel.compose").get(),
+                )
             }
         }
     }

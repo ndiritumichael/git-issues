@@ -1,0 +1,98 @@
+{
+  "data": {
+    "search": {
+      "repositoryCount": 745086,
+      "pageInfo": {
+        "endCursor": "Y3Vyc29yOjU=",
+        "hasNextPage": true
+      },
+      "nodes": [
+        {
+          "url": "https://github.com/flutter/flutter",
+          "name": "flutter",
+          "nameWithOwner": "flutter/flutter",
+          "owner": {
+            "login": "flutter",
+            "avatarUrl": "https://avatars.githubusercontent.com/u/14101776?v=4"
+          },
+          "description": "Flutter makes it easy and fast to build beautiful apps for mobile and beyond",
+          "stargazers": {
+            "totalCount": 165167
+          },
+          "forkCount": 27246,
+          "issues": {
+            "totalCount": 98864
+          }
+        },
+        {
+          "url": "https://github.com/flutter/plugins",
+          "name": "plugins",
+          "nameWithOwner": "flutter/plugins",
+          "owner": {
+            "login": "flutter",
+            "avatarUrl": "https://avatars.githubusercontent.com/u/14101776?v=4"
+          },
+          "description": "Plugins for Flutter maintained by the Flutter team",
+          "stargazers": {
+            "totalCount": 17459
+          },
+          "forkCount": 9807,
+          "issues": {
+            "totalCount": 0
+          }
+        },
+        {
+          "url": "https://github.com/iampawan/FlutterExampleApps",
+          "name": "FlutterExampleApps",
+          "nameWithOwner": "iampawan/FlutterExampleApps",
+          "owner": {
+            "login": "iampawan",
+            "avatarUrl": "https://avatars.githubusercontent.com/u/12619420?u=a49ba4b7f5ae93afc2febc86a021b42d2f5b5858&v=4"
+          },
+          "description": "[Example APPS] Basic Flutter apps, for flutter devs.",
+          "stargazers": {
+            "totalCount": 20474
+          },
+          "forkCount": 3768,
+          "issues": {
+            "totalCount": 41
+          }
+        },
+        {
+          "url": "https://github.com/Solido/awesome-flutter",
+          "name": "awesome-flutter",
+          "nameWithOwner": "Solido/awesome-flutter",
+          "owner": {
+            "login": "Solido",
+            "avatarUrl": "https://avatars.githubusercontent.com/u/1295961?u=b85eaeb98c4c24aeec8046b7839a5ddf2d504289&v=4"
+          },
+          "description": "An awesome list that curates the best Flutter libraries, tools, tutorials, articles and more.",
+          "stargazers": {
+            "totalCount": 53193
+          },
+          "forkCount": 6644,
+          "issues": {
+            "totalCount": 0
+          }
+        },
+        {
+          "url": "https://github.com/flutter/engine",
+          "name": "engine",
+          "nameWithOwner": "flutter/engine",
+          "owner": {
+            "login": "flutter",
+            "avatarUrl": "https://avatars.githubusercontent.com/u/14101776?v=4"
+          },
+          "description": "The Flutter engine",
+          "stargazers": {
+            "totalCount": 7367
+          },
+          "forkCount": 5946,
+          "issues": {
+            "totalCount": 0
+          }
+        }
+      ]
+    }
+  }
+}

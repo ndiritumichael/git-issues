@@ -58,5 +58,14 @@ gradlePlugin {
             id = "gitissuesmobile.android.library"
             implementationClass = "AndroidLibraryConventionPlugin"
         }
+
+        register("androidApplicationJacoco") {
+            id = "gitissuesmobile.android.application.jacoco"
+            implementationClass = "AndroidApplicationJacocoConventionPlugin"
+        }
+        register("androidLibraryJacoco") {
+            id = "gitissuesmobile.android.library.jacoco"
+            implementationClass = "AndroidLibraryJacocoConventionPlugin"
+        }
     }
 }

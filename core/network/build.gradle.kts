@@ -1,43 +1,82 @@
+import java.util.Properties
+
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.gitissuesmobile.android.library)
+
+    alias(libs.plugins.gitissuesmobile.android.hilt)
+    alias(libs.plugins.apollo)
+    alias(libs.plugins.gitissuesmobile.android.library.jacoco)
 }
 
 android {
     namespace = "com.devmike.network"
     compileSdk = 34
-
-    defaultConfig {
-        minSdk = 25
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
 }
 
 dependencies {
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.apollo.runtime)
+    implementation(projects.core.datastore)
+    implementation(projects.core.domain)
+
+    testImplementation(libs.apollo.mockserver)
+    testImplementation(libs.truth)
+
+    testImplementation(libs.apollo.testing.support)
+}
+
+val keystoreFile = project.rootProject.file("local.properties")
+val properties = Properties()
+properties.load(keystoreFile.inputStream())
+
+val gitdevtokenn = properties.getProperty("GITDEVTOKEN") ?: ""
+
+/**
+ * Apollo service
+
+ */
+
+apollo {
+    service("service") {
+        packageName.set("com.devmike.network")
+        introspection {
+            endpointUrl.set(
+                "https://api.github.com/graphql",
+            )
+            headers.put(
+                "Authorization",
+                "Bearer $gitdevtokenn",
+            )
+            schemaFile.set(file("src/main/graphql/schema.graphqls"))
+        }
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.4"
+}
+
+tasks.withType<Test> {
+    //   jacoco. = true
+}
+
+/**
+* fixes the warning * What went wrong:
+* A problem was found with the configuration of task
+*':core:network:runKtlintCheckOverMainSourceSet' (type 'KtLintCheckTask').
+* - Gradle detected a problem with the following location:
+*'C:\Users\User\AndroidStudioProjects\GitIssuesMobile\core\network\build\generated\source\apollo\service'.
+* Reason: Task ':core:network:runKtlintCheckOverMainSourceSet' uses this output of task '
+*:core:network:generateServiceApolloSources' without declaring an explicit or implicit dependency.
+*This can lead to incorrect results being produced, depending on what order the tasks are executed.
+*/
+tasks.named("runKtlintCheckOverMainSourceSet") {
+    dependsOn(tasks.named("generateServiceApolloSources"))
+}
+
+tasks.withType(Test::class) {
+    configure<JacocoTaskExtension> {
+        isIncludeNoLocationClasses = true
+        excludes = listOf("jdk.internal.*") // + exclusions
+    }
 }
