@@ -36,7 +36,7 @@ lottie = "6.0.0"
 mockk = "1.13.11"
 moduleGraph = "2.5.0"
 pagingRuntime = "3.3.2"
-robolectric = "4.12.2"
+robolectric = "4.13"
 room = "2.6.1"
 
 spotless = "6.4.2"
@@ -87,6 +87,7 @@ androidx-compose-ui-util = { group = "androidx.compose.ui", name = "ui-util" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "composeNavigation" }
 androidx-lifecycle-runtimeCompose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidxCoreSplashscreen" }
+androidx-navigation-testing = { module = "androidx.navigation:navigation-testing", version.ref = "composeNavigation" }
 
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycleRuntimeKtx" }

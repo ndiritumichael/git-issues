@@ -12,7 +12,6 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
@@ -80,8 +79,6 @@ class SearchViewModelTest {
             val queries = listOf("A", "An", "Andr", "Android")
             queries.forEach { query ->
                 viewModel.modifySearchQuery(query)
-                delay(5000)
-                println(viewModel.searchQuery)
             }
 
             queries.forEach { query ->
