@@ -3,21 +3,26 @@ package com.devmike.issues
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.testing.invoke
-import androidx.paging.testing.asSnapshot
+import androidx.paging.AsyncPagingDataDiffer
+import androidx.paging.cachedIn
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
 import com.devmike.domain.appdestinations.AppDestinations
-import com.devmike.domain.helper.IssueState
-import com.devmike.domain.models.IssueSearchModel
 import com.devmike.issues.screen.IssuesViewModel
 import com.devmike.issues.testdouble.IssueRepositoryDouble
+import com.devmike.issues.testdouble.fakeFlutterAssignees
+import com.devmike.issues.testdouble.fakeFlutterIssues
+import com.devmike.issues.testdouble.fakeFlutterLabels
+import com.devmike.issues.util.IssueDiffCallback
+import com.devmike.issues.util.IssueItemUpdateCallback
 import com.devmike.issues.util.MainCoroutineRule
 import com.google.common.truth.Truth
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -59,44 +64,107 @@ class IssueViewModelTest {
     @Test
     fun `issuesResults emits correct data when filters are applied`() =
         runTest {
-            advanceUntilIdle()
+            val scope = CoroutineScope(Dispatchers.Unconfined)
 
-        /*    backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
-                viewModel.issuesResults.collect()
-            }*/
-            val issmodel =
-                IssueSearchModel(
-                    repository = "flutter/flutter",
-                    labels = null,
-                    assignees = null,
-                    issueState = IssueState.ALL.state,
-                    query = null,
-                    sortBy = "created-desc",
+            val job =
+                backgroundScope.launch {
+                    viewModel.issuesResults.collect()
+                }
+
+            val differ =
+                AsyncPagingDataDiffer(
+                    diffCallback = IssueDiffCallback(),
+                    updateCallback = IssueItemUpdateCallback(),
                 )
-            // Launch a coroutine to collect from issuesResults
-            backgroundScope.launch(UnconfinedTestDispatcher(testScheduler)) {
-                viewModel.issuesResults.collect()
+
+            advanceUntilIdle()
+
+            viewModel.issuesResults.test {
+                // val first = awaitItem()
+
+                val data = awaitItem()
+
+                data
+                    .cachedIn(
+                        scope,
+                    ).test {
+                        val items = awaitItem()
+
+                        differ.submitData(items)
+
+                        Truth.assertThat(differ.snapshot()).containsExactlyElementsIn(
+                            fakeFlutterIssues,
+                        )
+
+                        //  awaitComplete()
+                    }
             }
 
+            job.cancel()
+        }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `repositoryLabels emits correct data`() =
+        runTest {
+            val scope = CoroutineScope(Dispatchers.Unconfined)
+
+            val job =
+                backgroundScope.launch {
+                    viewModel.repositoryLabels.collect()
+                }
+
+            val differ =
+                AsyncPagingDataDiffer(
+                    diffCallback = com.devmike.issues.util.LabelDiffCallback,
+                    updateCallback = IssueItemUpdateCallback(),
+                )
+
             advanceUntilIdle()
 
-            // println("the results are ${issuesResults.size}")
-            // val issuesResults = viewModel.issuesRepository.getPagedIssues(issmodel).asSnapshot { }
+            viewModel.repositoryLabels
+                .test {
+                    val items = awaitItem()
 
-            // Truth.assertThat(issuesResults).isEmpty()
-//            val data = viewModel.someResults.value?.asSnapshot()
-//
-//            println(" the data is $data")
+                    differ.submitData(items)
+
+                    Truth.assertThat(differ.snapshot()).containsExactlyElementsIn(fakeFlutterLabels)
+
+                    // awaitComplete()
+                }
+
+            job.cancel()
+        }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `repositoryAssignees emitscorrect data`() =
+        runTest {
+            val scope = CoroutineScope(Dispatchers.Unconfined)
+
+            val job =
+                backgroundScope.launch {
+                    viewModel.repositoryAssignees.collect()
+                }
+
+            val differ =
+                AsyncPagingDataDiffer(
+                    diffCallback = com.devmike.issues.util.AssigneeDiffCallback,
+                    updateCallback = IssueItemUpdateCallback(),
+                )
+
             advanceUntilIdle()
 
-            viewModel.someResults.test {
-                val flow = awaitItem() // Collect the first (and likely only) item
-                println("the flow is ${flow?.asSnapshot()}") // Access the snapshot and print
-                awaitComplete() // Ensure the flow completes (if expected)
+            viewModel.repositoryAssignees.test {
+                val items = awaitItem()
+
+                differ.submitData(items)
+
+                Truth.assertThat(differ.snapshot()).containsExactlyElementsIn(fakeFlutterAssignees)
+
+                // awaitComplete()
             }
 
-            // println("the value of the flow is${viewModel.someResults.value?.asSnapshot { }}")
-
-            advanceUntilIdle()
+            job.cancel()
         }
 }

@@ -8,12 +8,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.devmike.domain.appdestinations.AppDestinations
 import com.devmike.domain.helper.IssueState
 import com.devmike.domain.models.AssigneeModel
-import com.devmike.domain.models.IssueModel
 import com.devmike.domain.models.IssueSearchModel
 import com.devmike.domain.models.LabelModel
 import com.devmike.domain.repository.IssuesRepository
@@ -21,15 +19,11 @@ import com.devmike.issues.toggleItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
@@ -99,7 +93,6 @@ class IssuesViewModel
                     repository = repoDetails.repository,
                     owner = repoDetails.owner,
                 ).cachedIn(viewModelScope)
-                .stateIn(viewModelScope, SharingStarted.Lazily, PagingData.empty())
 
         /**
          * Flow of PagingData containing the assignable users for the current repository.
@@ -110,7 +103,7 @@ class IssuesViewModel
                     repository = repoDetails.repository,
                     owner = repoDetails.owner,
                 ).cachedIn(viewModelScope)
-                .stateIn(viewModelScope, SharingStarted.Lazily, PagingData.empty())
+        // .stateIn(viewModelScope, SharingStarted.Lazily, PagingData.empty())
 
         private val issueSearchModelState =
             MutableStateFlow(
@@ -123,8 +116,6 @@ class IssuesViewModel
                     sortBy = "created-desc",
                 ),
             )
-
-        val someResults = MutableStateFlow<Flow<PagingData<IssueModel>>?>(null)
 
         @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
         val issuesResults =
@@ -157,12 +148,8 @@ class IssuesViewModel
                             ),
                         )
 
-                someResults.value = data
-                println("the data in viewmodel is  is $data")
-                data
-            }.flatMapLatest {
-                it
-            }.cachedIn(viewModelScope)
+                data.cachedIn(viewModelScope)
+            }
 
         fun modifySearchQuery(query: String) {
             searchQuery = query
