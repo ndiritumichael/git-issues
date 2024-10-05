@@ -100,7 +100,9 @@ val fakeissues =
             issue =
                 CachedIssueEntity(
                     issueId = "issue5",
-                    bodyText = "Investigate and address performance issues related to scrolling smoothness",
+                    bodyText =
+                        "Investigate and address performance " +
+                            "issues related to scrolling smoothness",
                     state = "open",
                     createdAt = "2023-10-23T09:00:00Z",
                     url = "url5",
@@ -284,7 +286,7 @@ val fakenetworkissuespage1 =
                     IssueLabel("enhancement", "a2eeef"),
                     IssueLabel("ios", "007ec6"),
                 ),
-            assignees = listOf(), // Unassigned
+            assignees = listOf(),
         ),
         IssueDTO(
             id = "issue3",

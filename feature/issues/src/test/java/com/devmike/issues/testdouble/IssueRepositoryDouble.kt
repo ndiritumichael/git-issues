@@ -32,7 +32,6 @@ class IssueRepositoryDouble : IssuesRepository {
         }
 
     override fun getPagedIssues(issueSearchModel: IssueSearchModel): Flow<PagingData<IssueModel>> {
-        println("this method is being callleddd")
         val filteredIssues =
             when (issueSearchModel.repository) {
                 "flutter/flutter" ->

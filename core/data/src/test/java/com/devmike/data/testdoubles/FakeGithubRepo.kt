@@ -10,6 +10,7 @@ import com.devmike.network.networkSource.GitHubIssuesRepo
 import fakenetworkissuespage1
 import fakenetworkissuespage2
 
+@Suppress("ktlint:standard:max-line-length")
 class FakeGithubRepo : GitHubIssuesRepo {
     override suspend fun searchRepositories(
         name: String,
@@ -24,11 +25,12 @@ class FakeGithubRepo : GitHubIssuesRepo {
                         name = "flutter",
                         nameWithOwner = "flutter/flutter",
                         owner = "flutter",
-                        description = "Flutter makes it easy and fast to build beautiful apps for mobile and beyond",
-                        stargazers = 150000, // Example value
-                        forkCount = 25000, // Example value
-                        issueCount = 10000, // Example value
-                        avatarUrl = "https://example.com/flutter_avatar.png", // Example URL
+                        description =
+                            "Flutter makes it easy and fast to build beautiful apps for mobile and beyond",
+                        stargazers = 150000,
+                        forkCount = 25000,
+                        issueCount = 10000,
+                        avatarUrl = "https://example.com/flutter_avatar.png",
                     ),
                     RepositoryDTO(
                         url = "https://github.com/JetBrains/kotlin",
@@ -36,10 +38,10 @@ class FakeGithubRepo : GitHubIssuesRepo {
                         nameWithOwner = "JetBrains/kotlin",
                         owner = "JetBrains",
                         description = "The Kotlin Programming Language.",
-                        stargazers = 45000, // Example value
-                        forkCount = 6000, // Example value
-                        issueCount = 3000, // Example value
-                        avatarUrl = "https://example.com/kotlin_avatar.png", // Example URL
+                        stargazers = 45000,
+                        forkCount = 6000,
+                        issueCount = 3000,
+                        avatarUrl = "https://example.com/kotlin_avatar.png",
                     ),
                     RepositoryDTO(
                         url = "https://github.com/android/android",
@@ -47,10 +49,10 @@ class FakeGithubRepo : GitHubIssuesRepo {
                         nameWithOwner = "android/android",
                         owner = "android",
                         description = "The Android Open Source Project",
-                        stargazers = 80000, // Example value
-                        forkCount = 30000, // Example value
-                        issueCount = 12000, // Example value
-                        avatarUrl = "https://example.com/android_avatar.png", // Example URL
+                        stargazers = 80000,
+                        forkCount = 30000,
+                        issueCount = 12000,
+                        avatarUrl = "https://example.com/android_avatar.png",
                     ),
                 )
             } else {

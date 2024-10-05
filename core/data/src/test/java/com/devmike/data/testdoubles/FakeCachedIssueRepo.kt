@@ -54,10 +54,9 @@ class FakeCachedIssueRepo : CachedIssueRepo {
         this.issues.update {
             if (isRefresh) {
                 emptyList()
-            } else
-                {
-                    it + issues
-                }
+            } else {
+                it + issues
+            }
         }
     }
 

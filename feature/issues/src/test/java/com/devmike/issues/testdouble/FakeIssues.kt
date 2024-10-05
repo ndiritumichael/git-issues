@@ -15,7 +15,7 @@ val fakeFlutterIssues =
             author = "user1",
             repositoryName = "flutter/flutter",
             assignee = emptyList(),
-            label = listOf(LabelModel(name = "bug", color = "#d73a4a")), // Red
+            label = listOf(LabelModel(name = "bug", color = "#d73a4a")),
         ),
         IssueModel(
             id = "flutterIssue2",
@@ -30,7 +30,7 @@ val fakeFlutterIssues =
             author = "user2",
             repositoryName = "flutter/flutter",
             assignee = emptyList(),
-            label = listOf(LabelModel(name = "performance", color = "#fef2c0")), // Yellow
+            label = listOf(LabelModel(name = "performance", color = "#fef2c0")),
         ),
         IssueModel(
             id = "flutterIssue3",
@@ -42,7 +42,7 @@ val fakeFlutterIssues =
             author = "user3",
             repositoryName = "flutter/flutter",
             assignee = emptyList(),
-            label = listOf(LabelModel(name = "enhancement", color = "#22863a")), // Green
+            label = listOf(LabelModel(name = "enhancement", color = "#22863a")),
         ),
         IssueModel(
             id = "flutterIssue4",
@@ -57,7 +57,7 @@ val fakeFlutterIssues =
             author = "user4",
             repositoryName = "flutter/flutter",
             assignee = emptyList(),
-            label = listOf(LabelModel(name = "bug", color = "#d73a4a")), // Red
+            label = listOf(LabelModel(name = "bug", color = "#d73a4a")),
         ),
         IssueModel(
             id = "flutterIssue5",
@@ -69,7 +69,7 @@ val fakeFlutterIssues =
             author = "user5",
             repositoryName = "flutter/flutter",
             assignee = emptyList(),
-            label = listOf(LabelModel(name = "documentation", color = "#007bff")), // Blue
+            label = listOf(LabelModel(name = "documentation", color = "#007bff")),
         ),
     )
 val fakektorIssues =
@@ -89,7 +89,9 @@ val fakektorIssues =
         IssueModel(
             id = "MDU6SXNzdWUyNTY1Mjk0MjY=",
             title = "Exception when browser tab with active Websocket connection was closed",
-            bodyText = "Exception thrown when closing browser tab with active Websocket connection.",
+            bodyText =
+                "Exception thrown when closing browser tab with " +
+                    "active Websocket connection.",
             state = "closed",
             createdAt = "2017-09-10T18:26:43Z",
             url = "https://github.com/ktorio/ktor/issues/202",
@@ -113,7 +115,9 @@ val fakektorIssues =
         IssueModel(
             id = "MDU6SXNzdWUyNTY1NzMwODU=",
             title = "Any ideas for the model layer?",
-            bodyText = "Request for suggestions on modeling business logic and DB interaction in Ktor.",
+            bodyText =
+                "Request for suggestions on modeling business logic" +
+                    " and DB interaction in Ktor.",
             state = "closed",
             createdAt = "2017-09-11T03:36:03Z",
             url = "https://github.com/ktorio/ktor/issues/204",

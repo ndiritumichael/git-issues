@@ -51,6 +51,7 @@ googleFirebaseCrashlytics = "3.0.2"
 firebaseAnalytics = "22.1.0"
 coilCompose = "2.7.0"
 turbine = "1.1.0"
+recyclerview = "1.3.2"
 
 
 [libraries]
@@ -142,6 +143,7 @@ truth = { module = "com.google.truth:truth", version.ref = "truth" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlytics" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics", version.ref = "firebaseAnalytics" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 
 [bundles]
 compose = ["androidx-activity-compose","androidx-compose-runtime","androidx-material3","androidx-compose-foundation","androidx-compose-foundation-layout",
