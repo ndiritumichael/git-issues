@@ -12,7 +12,7 @@ android {
 
 dependencies {
 
-    implementation(projects.core.domain)
+    api(projects.core.domain)
     implementation(projects.core.network)
     implementation(projects.core.database)
     testImplementation(libs.androidx.test.ext)
