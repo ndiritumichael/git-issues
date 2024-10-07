@@ -17,13 +17,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
-import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import com.devmike.domain.models.RepositoryModel
 import com.devmike.repository.utils.createTestPagingFlow
-import kotlinx.coroutines.flow.flow
 
 @Composable
 fun RepositoryListScreen(
@@ -131,75 +129,74 @@ fun RepositoryListScreen(
 fun RepositoryListScreenPreview() {
     val items =
 
-                createTestPagingFlow(
-                    listOf(
-                        RepositoryModel(
-                            url = "https://github.com/square/retrofit",
-                            name = "Retrofit",
-                            nameWithOwner = "square/retrofit",
-                            owner = "square",
-                            description = "A type-safe HTTP client for Android and Java.",
-                            stargazers = 40000,
-                            forkCount = 8000, issueCount = 1500,
-                            avatarUrl = "https://avatars.githubusercontent.com/u/82592",
-                        ),
-                        RepositoryModel(
-                            url = "https://github.com/bumptech/glide",
-                            name = "Glide",
-                            nameWithOwner = "bumptech/glide",
-                            owner = "bumptech",
-                            description =
-                                """An image loading and caching library
+        createTestPagingFlow(
+            listOf(
+                RepositoryModel(
+                    url = "https://github.com/square/retrofit",
+                    name = "Retrofit",
+                    nameWithOwner = "square/retrofit",
+                    owner = "square",
+                    description = "A type-safe HTTP client for Android and Java.",
+                    stargazers = 40000,
+                    forkCount = 8000, issueCount = 1500,
+                    avatarUrl = "https://avatars.githubusercontent.com/u/82592",
+                ),
+                RepositoryModel(
+                    url = "https://github.com/bumptech/glide",
+                    name = "Glide",
+                    nameWithOwner = "bumptech/glide",
+                    owner = "bumptech",
+                    description =
+                        """An image loading and caching library
                                 |for Android focused on smooth scrolling.
-                                """.trimMargin(),
-                            stargazers = 35000,
-                            forkCount = 6500,
-                            issueCount = 1200,
-                            avatarUrl = "https://avatars.githubusercontent.com/u/4255330",
-                        ),
-                        RepositoryModel(
-                            url = "https://github.com/JetBrains/kotlin",
-                            name = "Kotlin",
-                            nameWithOwner = "JetBrains/kotlin",
-                            owner = "JetBrains",
-                            description = "The Kotlin Programming Language.",
-                            stargazers = 41000,
-                            forkCount = 7800,
-                            issueCount = 2300,
-                            avatarUrl = "https://avatars.githubusercontent.com/u/878438",
-                        ),
-                        RepositoryModel(
-                            url = "https://github.com/androidx/androidx",
-                            name = "AndroidX",
-                            nameWithOwner = "androidx/androidx",
-                            owner = "androidx",
-                            description =
-                                """
-                                AndroidX is the open-source project that the Android team uses to
-                                develop, test, package, version and release libraries within Jetpack.
-                                """.trimIndent(),
-                            stargazers = 10000,
-                            forkCount = 3500, issueCount = 800,
-                            avatarUrl = "https://avatars.githubusercontent.com/u/44576557",
-                        ),
-                        RepositoryModel(
-                            url = "https://github.com/coil-kt/coil",
-                            name = "Coil",
-                            nameWithOwner = "coil-kt/coil",
-                            owner = "coil-kt",
-                            description =
-                                """
-                                "An image loading library for
-                                Android backed by Kotlin Coroutines."
-                                """.trimIndent(),
-                            stargazers = 8000,
-                            forkCount = 1000,
-                            issueCount = 300,
-                            avatarUrl = "https://avatars.githubusercontent.com/u/70237063",
-                        ),
-                    ),
-                )
-
+                        """.trimMargin(),
+                    stargazers = 35000,
+                    forkCount = 6500,
+                    issueCount = 1200,
+                    avatarUrl = "https://avatars.githubusercontent.com/u/4255330",
+                ),
+                RepositoryModel(
+                    url = "https://github.com/JetBrains/kotlin",
+                    name = "Kotlin",
+                    nameWithOwner = "JetBrains/kotlin",
+                    owner = "JetBrains",
+                    description = "The Kotlin Programming Language.",
+                    stargazers = 41000,
+                    forkCount = 7800,
+                    issueCount = 2300,
+                    avatarUrl = "https://avatars.githubusercontent.com/u/878438",
+                ),
+                RepositoryModel(
+                    url = "https://github.com/androidx/androidx",
+                    name = "AndroidX",
+                    nameWithOwner = "androidx/androidx",
+                    owner = "androidx",
+                    description =
+                        """
+                        AndroidX is the open-source project that the Android team uses to
+                        develop, test, package, version and release libraries within Jetpack.
+                        """.trimIndent(),
+                    stargazers = 10000,
+                    forkCount = 3500, issueCount = 800,
+                    avatarUrl = "https://avatars.githubusercontent.com/u/44576557",
+                ),
+                RepositoryModel(
+                    url = "https://github.com/coil-kt/coil",
+                    name = "Coil",
+                    nameWithOwner = "coil-kt/coil",
+                    owner = "coil-kt",
+                    description =
+                        """
+                        "An image loading library for
+                        Android backed by Kotlin Coroutines."
+                        """.trimIndent(),
+                    stargazers = 8000,
+                    forkCount = 1000,
+                    issueCount = 300,
+                    avatarUrl = "https://avatars.githubusercontent.com/u/70237063",
+                ),
+            ),
+        )
 
     RepositoryListScreen(
         modifier = Modifier,

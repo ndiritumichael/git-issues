@@ -34,7 +34,7 @@ fun LogoutConfirmationDialog(
                     Text("Keep me logged in")
                 }
             },
-            modifier = Modifier.testTag("Logout_Dialog")
+            modifier = Modifier.testTag("Logout_Dialog"),
         )
     }
 }

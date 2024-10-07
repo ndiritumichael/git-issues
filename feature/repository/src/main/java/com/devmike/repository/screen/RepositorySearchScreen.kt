@@ -36,7 +36,7 @@ fun RepositorySearchScreen(
     onRepositoryClick: (name: String, owner: String) -> Unit,
 ) {
     LaunchedEffect(viewModel) {
-        viewModel.modifyDebounceTime(500L)
+        viewModel.modifyDebounceTime(DEBOUNCE_DURATION)
     }
     val repositoriesState = viewModel.searchResults.collectAsLazyPagingItems()
 
@@ -99,3 +99,4 @@ fun RepositorySearchScreen(
 }
 
 const val MINIMUM_SEARCH_LENGTH = 3
+const val DEBOUNCE_DURATION = 500L
