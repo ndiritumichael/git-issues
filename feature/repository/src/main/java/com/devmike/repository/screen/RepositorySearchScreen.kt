@@ -12,12 +12,14 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -33,6 +35,9 @@ fun RepositorySearchScreen(
     onLogoutClicked: () -> Unit,
     onRepositoryClick: (name: String, owner: String) -> Unit,
 ) {
+    LaunchedEffect(viewModel) {
+        viewModel.modifyDebounceTime(500L)
+    }
     val repositoriesState = viewModel.searchResults.collectAsLazyPagingItems()
 
     val showIdleScreen =
@@ -64,7 +69,10 @@ fun RepositorySearchScreen(
                     )
                 },
                 actions = {
-                    IconButton(onClick = { showLogoutDialog = true }) {
+                    IconButton(
+                        onClick = { showLogoutDialog = true },
+                        modifier = Modifier.testTag("logout_button"),
+                    ) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.Logout,
                             contentDescription = "logout",
@@ -81,7 +89,7 @@ fun RepositorySearchScreen(
                 IdleScreen(modifier = Modifier.padding(paddingValues))
             } else {
                 RepositoryListScreen(
-                    modifier = Modifier.padding(paddingValues),
+                    modifier = Modifier.padding(paddingValues).testTag("repositorieslist"),
                     repositoriesState = repositoriesState,
                     onRepositoryClick = onRepositoryClick,
                 )
