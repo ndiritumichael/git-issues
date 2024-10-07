@@ -50,6 +50,9 @@ dependencies {
     implementation(projects.core.domain)
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.analytics)
+    // For Robolectric tests.
+    testImplementation(libs.hilt.android.testing)
+    kspTest(libs.hilt.compiler)
 }
 
 sentry {

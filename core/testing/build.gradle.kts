@@ -9,7 +9,8 @@ android {
 }
 
 dependencies {
-
+    implementation(projects.core.data)
+    implementation(projects.core.datastore)
     implementation(libs.androidx.arch.core.testing)
     implementation(libs.kotlinx.coroutines.test)
     implementation(libs.core.ktx)

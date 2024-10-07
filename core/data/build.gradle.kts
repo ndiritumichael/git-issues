@@ -13,8 +13,8 @@ android {
 dependencies {
 
     api(projects.core.domain)
-    implementation(projects.core.network)
-    implementation(projects.core.database)
+    api(projects.core.network)
+    api(projects.core.database)
     testImplementation(libs.androidx.test.ext)
     testImplementation(libs.mockk)
     testImplementation(libs.turbine)
