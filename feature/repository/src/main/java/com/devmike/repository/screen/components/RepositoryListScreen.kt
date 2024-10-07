@@ -22,6 +22,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.itemKey
 import com.devmike.domain.models.RepositoryModel
+import com.devmike.repository.utils.createTestPagingFlow
 import kotlinx.coroutines.flow.flow
 
 @Composable
@@ -34,14 +35,14 @@ fun RepositoryListScreen(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        items(
+       /* items(
             repositoriesState.itemCount,
             key = repositoriesState.itemKey { it.url },
         ) { count ->
             repositoriesState[count]?.let {
                 RepositoryItem(repository = it, onRepositoryClick)
             }
-        }
+        }*/
         repositoriesState.apply {
             when {
                 loadState.refresh is LoadState.NotLoading -> {
@@ -129,16 +130,8 @@ fun RepositoryListScreen(
 @Preview
 fun RepositoryListScreenPreview() {
     val items =
-        flow {
-//        emit(PagingData.empty(LoadStates(
-//            refresh = LoadState.Loading,
-//            prepend = LoadState.NotLoading(false),
-//            append = LoadState.NotLoading(false)
-//        )))
-//
-//        kotlinx.coroutines.delay(2000L)
-            emit(
-                PagingData.from(
+
+                createTestPagingFlow(
                     listOf(
                         RepositoryModel(
                             url = "https://github.com/square/retrofit",
@@ -205,9 +198,9 @@ fun RepositoryListScreenPreview() {
                             avatarUrl = "https://avatars.githubusercontent.com/u/70237063",
                         ),
                     ),
-                ),
-            )
-        }
+                )
+
+
     RepositoryListScreen(
         modifier = Modifier,
         repositoriesState = items.collectAsLazyPagingItems(),
