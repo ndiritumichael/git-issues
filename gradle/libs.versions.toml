@@ -151,7 +151,8 @@ ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 [bundles]
 compose = ["androidx-activity-compose","androidx-compose-runtime","androidx-material3","androidx-compose-foundation","androidx-compose-foundation-layout",
     "androidx-compose-material-iconsExtended","androidx-compose-ui-util","lottie-compose","androidx-navigation-compose","androidx-ui",
-    "androidx-ui-tooling","androidx-ui-tooling-preview","androidx-ui-test-manifest","androidx-hilt-navigation-compose","androidx-lifecycle-viewmodel-compose","androidx-ui-test-junit4"]
+    "androidx-ui-tooling","androidx-ui-tooling-preview","androidx-ui-test-manifest","androidx-hilt-navigation-compose","androidx-lifecycle-viewmodel-compose","androidx-ui-test-junit4",
+"androidx-espresso-core"]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
