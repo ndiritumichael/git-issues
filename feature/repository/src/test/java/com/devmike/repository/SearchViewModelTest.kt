@@ -12,7 +12,6 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
@@ -66,6 +65,7 @@ class SearchViewModelTest {
 
             // When search query is modified
             viewModel.modifySearchQuery(query)
+            advanceUntilIdle()
 
             // Then searchQuery should be updated
             Truth.assertThat(viewModel.searchQuery).isEqualTo(query)
@@ -80,8 +80,6 @@ class SearchViewModelTest {
             val queries = listOf("A", "An", "Andr", "Android")
             queries.forEach { query ->
                 viewModel.modifySearchQuery(query)
-                delay(5000)
-                println(viewModel.searchQuery)
             }
 
             queries.forEach { query ->

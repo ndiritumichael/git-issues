@@ -7,7 +7,7 @@ import com.devmike.database.entities.IssueWithAssigneesAndLabels
 
 /**
  *The purpose of this interface is to abstract the daatabase and its
- *  transactions from th data layer which assists
+ *  transactions from the data layer which assists
  *  in testing the data layer without having to provide the  db implentations
  */
 

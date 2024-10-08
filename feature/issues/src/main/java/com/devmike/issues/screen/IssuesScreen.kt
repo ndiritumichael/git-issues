@@ -55,7 +55,11 @@ fun IssuesScreen(
     viewModel: IssuesViewModel = hiltViewModel(),
     onBackClicked: () -> Unit,
 ) {
-    val issues = viewModel.issuesResults.collectAsLazyPagingItems()
+    val issues =
+        viewModel.issuesResults.collectAsStateWithLifecycle(
+            initialValue = flowOf(),
+        ).value.collectAsLazyPagingItems()
+
     var showAssigneesDialog by remember { mutableStateOf(false) }
     var showLabelsDialog by remember { mutableStateOf(false) }
     var showSearch by remember {
@@ -93,6 +97,7 @@ fun IssuesScreen(
                         label = viewModel.repoDetails.repository + " Issues",
                     ) {
                         showSearch = false
+                        viewModel.modifySearchQuery("")
                     }
                 } else {
                     TopAppBar(
@@ -137,10 +142,12 @@ fun IssuesScreen(
     ) { paddingValues ->
         LazyColumn(
             modifier =
-                Modifier.fillMaxSize().padding(
-                    bottom = paddingValues.calculateBottomPadding(),
-                    top = paddingValues.calculateTopPadding(),
-                ),
+                Modifier
+                    .fillMaxSize()
+                    .padding(
+                        bottom = paddingValues.calculateBottomPadding(),
+                        top = paddingValues.calculateTopPadding(),
+                    ),
         ) {
             stickyHeader {
                 FiltersScreen(

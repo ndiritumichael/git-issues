@@ -8,7 +8,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.devmike.domain.appdestinations.AppDestinations
 import com.devmike.domain.helper.IssueState
@@ -21,51 +20,90 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
+/**
+ * A ViewModel for managing the issues screen in the application.
+ *
+ * @param savedStateHandle A handle to retrieve and save the state of the ViewModel across configuration changes.
+ * @param issuesRepository The repository for fetching and manipulating issue data.
+ */
 @HiltViewModel
 class IssuesViewModel
     @Inject
     constructor(
         savedStateHandle: SavedStateHandle,
-        private val issuesRepository: IssuesRepository,
+        val issuesRepository: IssuesRepository,
     ) : ViewModel() {
+        /**
+         * Debounce duration for search queries (in milliseconds).
+         */
         private val debounceDuration = 500L
+
+        /*** Navigation arguments for the current screen (assuming it's an Issues screen).
+         */
         val repoDetails: AppDestinations.Issues = savedStateHandle.toRoute()
+
+        /**
+         * Mutable state flow to hold the currently selected assignees.
+         */
         private val _selectedAssignees = MutableStateFlow<Set<AssigneeModel>>(setOf())
+
+        /**
+         * Exposes the selected assignees as a read-only state flow.
+         */
         val selectedAssignees = _selectedAssignees.asStateFlow()
 
+        /**
+         * Mutable state flow to hold the currently selected labels.
+         */
         private val _selectedLabels = MutableStateFlow<Set<LabelModel>>(setOf())
+
+        /**
+         * Exposes the selected labels as a read-only state flow.
+         */
         val selectedLabels = _selectedLabels.asStateFlow()
 
+        /**
+         * Mutable state flow to hold the currently selected issuestate (e.g., open, closed, all).
+         */
         private val _selectedIssueState = MutableStateFlow(IssueState.ALL)
+
+        /**
+         * Exposes the selected issue state as a read-only state flow.
+         */
         val selectedIssueState = _selectedIssueState.asStateFlow()
 
+        /**
+         * Mutable state holding the current search query entered by the user.
+         */
+        var searchQuery by mutableStateOf("")
+
+        /**
+         * Flow of PagingData containing the labels for the current repository.
+         */
         val repositoryLabels =
             issuesRepository
                 .getRepositoryLabels(
                     repository = repoDetails.repository,
                     owner = repoDetails.owner,
                 ).cachedIn(viewModelScope)
-                .stateIn(viewModelScope, SharingStarted.Lazily, PagingData.empty())
 
+        /**
+         * Flow of PagingData containing the assignable users for the current repository.
+         */
         val repositoryAssignees =
             issuesRepository
                 .getRepositoryAssignees(
                     repository = repoDetails.repository,
                     owner = repoDetails.owner,
                 ).cachedIn(viewModelScope)
-                .stateIn(viewModelScope, SharingStarted.Lazily, PagingData.empty())
-
-        var searchQuery by mutableStateOf("")
+        // .stateIn(viewModelScope, SharingStarted.Lazily, PagingData.empty())
 
         private val issueSearchModelState =
             MutableStateFlow(
@@ -99,15 +137,19 @@ class IssuesViewModel
                     selectedIssueState,
                 ->
 
-                issuesRepository.getPagedIssues(
-                    issueSearchModel.copy(
-                        query = searchQuery,
-                        labels = selectedLabels.toList().map { it.name }.ifEmpty { null },
-                        assignees = selectedAssignees.map { it.username }.ifEmpty { null },
-                        issueState = selectedIssueState.state,
-                    ),
-                )
-            }.debounce(debounceDuration).flatMapLatest { it }.cachedIn(viewModelScope)
+                val data =
+                    issuesRepository
+                        .getPagedIssues(
+                            issueSearchModel.copy(
+                                query = searchQuery,
+                                labels = selectedLabels.toList().map { it.name }.ifEmpty { null },
+                                assignees = selectedAssignees.map { it.username }.ifEmpty { null },
+                                issueState = selectedIssueState.state,
+                            ),
+                        )
+
+                data.cachedIn(viewModelScope)
+            }
 
         fun modifySearchQuery(query: String) {
             searchQuery = query

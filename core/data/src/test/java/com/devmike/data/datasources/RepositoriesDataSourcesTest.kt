@@ -1,4 +1,4 @@
-package com.devmike.database.repository
+package com.devmike.data.datasources
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
@@ -9,6 +9,7 @@ import com.devmike.data.mapper.toCachedRepository
 import com.devmike.data.sources.repositories.RepositoriesDataSources
 import com.devmike.database.entities.CachedRepository
 import com.devmike.database.entities.RemoteKeyEntity
+import com.devmike.database.repository.CachedRepoSearch
 import com.devmike.network.dto.PagedDtoWrapper
 import com.devmike.network.dto.RepositoryDTO
 import com.devmike.network.networkSource.GitHubIssuesRepo

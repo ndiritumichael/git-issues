@@ -17,4 +17,17 @@ dependencies {
     implementation(libs.androidx.paging.compose)
     implementation(libs.coil.compose)
     implementation(projects.core.domain)
+    implementation(libs.androidx.recyclerview)
+    implementation(libs.androidx.paging.runtime)
+    testImplementation(libs.androidx.test.ext)
+    testImplementation(libs.mockk)
+    testImplementation(libs.turbine)
+    testImplementation(libs.androidx.arch.core.testing)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.core.ktx)
+    testImplementation(libs.truth)
+    // alternatively - without Android dependencies for tests
+    testImplementation(libs.androidx.paging.testing)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.androidx.navigation.testing)
 }

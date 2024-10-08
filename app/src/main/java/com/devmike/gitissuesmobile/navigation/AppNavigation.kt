@@ -17,7 +17,9 @@ fun AppNavigation(
         startDestination = com.devmike.domain.appdestinations.AppDestinations.RepositorySearch,
     ) {
         composable<com.devmike.domain.appdestinations.AppDestinations.RepositorySearch> {
-            RepositorySearchScreen(onLogoutClicked = onLogout) { name, owner ->
+            RepositorySearchScreen(
+                onLogoutClicked = onLogout,
+            ) { name, owner ->
                 val destination =
                     com.devmike.domain.appdestinations.AppDestinations
                         .Issues(repository = name, owner = owner)
