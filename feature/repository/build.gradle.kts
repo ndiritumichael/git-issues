@@ -20,13 +20,16 @@ dependencies {
 
     implementation(projects.core.data)
     implementation(projects.core.domain)
+    debugImplementation(libs.ui.test.manifest)
 
     implementation(libs.androidx.paging.compose)
     implementation(libs.coil.compose)
     testImplementation(libs.mockk)
     testImplementation(libs.turbine)
     testImplementation(libs.androidx.arch.core.testing)
+    androidTestImplementation(libs.androidx.arch.core.testing)
     testImplementation(libs.kotlinx.coroutines.test)
+    androidTestImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.core.ktx)
     testImplementation(libs.truth)
     // alternatively - without Android dependencies for tests

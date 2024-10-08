@@ -6,7 +6,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.devmike.domain.repository.IRepoSearchRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +14,7 @@ import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -24,7 +23,7 @@ class RepositorySearchViewModel
     constructor(
         private val repoSearchRepository: IRepoSearchRepository,
     ) : ViewModel() {
-        private val debounceDuration = 500L
+        private var debounceDuration = 0L
         var searchQuery by mutableStateOf("")
             private set
 
@@ -36,19 +35,24 @@ class RepositorySearchViewModel
 
                     (
                         if (query.isEmpty()) {
-                            flowOf(PagingData.empty())
+                            flowOf()
                         } else {
-                            repoSearchRepository.searchRepositories(query.trim())
+
+                            val data = repoSearchRepository.searchRepositories(query.trim())
+
+                            data.cachedIn(viewModelScope)
                         }
+
                     )
                 }.cachedIn(viewModelScope)
-                .stateIn(
-                    viewModelScope,
-                    kotlinx.coroutines.flow.SharingStarted.Lazily,
-                    PagingData.empty(),
-                )
 
         fun modifySearchQuery(query: String) {
-            searchQuery = query
+            viewModelScope.launch {
+                searchQuery = query
+            }
+        }
+
+        fun modifyDebounceTime(duration: Long) {
+            debounceDuration = duration
         }
     }

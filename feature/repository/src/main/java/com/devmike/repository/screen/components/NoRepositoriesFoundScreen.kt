@@ -32,7 +32,7 @@ fun NoRepositoriesFoundScreen() {
     ) {
         Image(
             painter = painterResource(id = R.drawable.not_found),
-            contentDescription = "No repositoriesfound",
+            contentDescription = "No repositories found",
             modifier = Modifier.size(120.dp),
             colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface),
         )

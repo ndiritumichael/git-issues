@@ -4,6 +4,7 @@ apollo = "4.0.0"
 apolloMockserver = "0.0.3"
 apolloTestingSupport = "4.0.0"
 appauth = "0.11.1"
+hiltAndroidTesting = "2.51.1"
 kotlin = "2.0.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -65,6 +66,7 @@ androidx-paging-testing = { module = "androidx.paging:paging-testing", version.r
 apollo-mockserver = { module = "com.apollographql.mockserver:apollo-mockserver", version.ref = "apolloMockserver" }
 apollo-testing-support = { module = "com.apollographql.apollo:apollo-testing-support", version.ref = "apolloTestingSupport" }
 appauth = { module = "net.openid:appauth", version.ref = "appauth" }
+hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hiltAndroidTesting" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -144,11 +146,12 @@ firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashly
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics", version.ref = "firebaseAnalytics" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
+ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
 
 [bundles]
 compose = ["androidx-activity-compose","androidx-compose-runtime","androidx-material3","androidx-compose-foundation","androidx-compose-foundation-layout",
     "androidx-compose-material-iconsExtended","androidx-compose-ui-util","lottie-compose","androidx-navigation-compose","androidx-ui",
-    "androidx-ui-tooling","androidx-ui-tooling-preview","androidx-ui-test-manifest","androidx-hilt-navigation-compose","androidx-lifecycle-viewmodel-compose"]
+    "androidx-ui-tooling","androidx-ui-tooling-preview","androidx-ui-test-manifest","androidx-hilt-navigation-compose","androidx-lifecycle-viewmodel-compose","androidx-ui-test-junit4"]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

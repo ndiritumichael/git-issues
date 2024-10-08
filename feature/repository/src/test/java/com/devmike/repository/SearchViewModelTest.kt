@@ -65,6 +65,7 @@ class SearchViewModelTest {
 
             // When search query is modified
             viewModel.modifySearchQuery(query)
+            advanceUntilIdle()
 
             // Then searchQuery should be updated
             Truth.assertThat(viewModel.searchQuery).isEqualTo(query)
