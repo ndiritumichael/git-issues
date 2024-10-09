@@ -33,7 +33,11 @@ object DbModule {
                 "githubdb",
             ).fallbackToDestructiveMigration()
             .build()
+}
 
+@Module
+@InstallIn(SingletonComponent::class)
+object DaoModule {
     @Singleton
     @Provides
     fun providesRepositoryDao(db: GithubDatabase): RepositorySearchDAO = db.getRepositoryDao()
