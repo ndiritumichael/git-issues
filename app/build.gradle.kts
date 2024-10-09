@@ -50,6 +50,7 @@ dependencies {
     implementation(projects.core.domain)
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.analytics)
+    implementation(libs.androidx.core.splashscreen)
     // For Robolectric tests.
     testImplementation(libs.hilt.android.testing)
     kspTest(libs.hilt.compiler)

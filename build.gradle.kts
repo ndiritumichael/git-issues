@@ -14,18 +14,12 @@ plugins {
     alias(libs.plugins.module.graph) apply true
     alias(libs.plugins.google.gms.google.services) apply false
     alias(libs.plugins.google.firebase.crashlytics) apply false
-    // id("com.vanniktech.android.junit.jacoco") version "0.16.0"
-
-    // id("org.jetbrains.kotlinx.kover") version "0.8.3"
-
-    // id("jacoco")
-    // id("jacoco-report-aggregation")
+    alias(libs.plugins.dokka)
 }
 
 subprojects {
     apply(plugin = "org.jlleitschuh.gradle.ktlint")
-    //   apply(plugin = "org.jetbrains.kotlinx.kover")
-    apply(plugin = "jacoco")
+    //  apply(plugin = "org.jetbrains.dokka")
 
     ktlint {
         android.set(true)
@@ -38,22 +32,9 @@ subprojects {
 
     tasks.withType<org.jlleitschuh.gradle.ktlint.tasks.KtLintCheckTask>().configureEach {
     }
-}
 
-buildscript {
-    val kotlinVersion by extra("1.4.10")
-    val jacocoVersion by extra("0.2")
-
-    dependencies {
-        classpath("com.dicedmelon.gradle:jacoco-android:0.1.5")
-
-        classpath("com.hiya:jacoco-android:$jacocoVersion")
-    }
-}
-
-subprojects {
     apply(plugin = "io.gitlab.arturbosch.detekt")
-    apply(plugin = "jacoco")
+
     detekt {
         buildUponDefaultConfig = true
 
@@ -61,7 +42,15 @@ subprojects {
         parallel = true
     }
 }
+allprojects {
+    apply(plugin = "org.jetbrains.dokka")
+}
 
-// tasks.withType(Test) {
-//    jacoco.includeNoLocationClasses = true
-// }
+/**
+ * fixes the error [Explicit Dependency](https://www.reddit.com/r/Kotlin/comments/18cjcbj/dokka_with_multilevel_multimodule_projects_using/)
+ */
+tasks.dokkaHtmlMultiModule {
+    moduleName.set("GitIssues Dokka Documentation")
+    dependsOn(":core:dokkaHtmlMultiModule")
+    dependsOn(":feature:dokkaHtmlMultiModule")
+}

@@ -23,6 +23,7 @@ androidxTestExt = "1.2.1"
 
 detekt = "1.23.7"
 datastore = "1.1.1"
+dokka = "1.9.20"
 
 hilt = "2.51.1"
 hiltNavigationCompose = "1.2.0"
@@ -170,6 +171,8 @@ module-graph = { id = "com.jraska.module.graph.assertion", version.ref = "module
 apollo = { id = "com.apollographql.apollo", version.ref = "apollo" }
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
 google-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "googleFirebaseCrashlytics" }
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka"}
+
 
 
 
