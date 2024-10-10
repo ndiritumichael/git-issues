@@ -16,7 +16,7 @@ import javax.inject.Singleton
 /**
  * Provides a singleton instance of [DataStore] for storing and retrieving application preferences.
  *
- * @param context The application context to create the DataStore instance.
+ * context to create the DataStore instance.
  *
  * @return A singleton instance of [DataStore] for storing and retrieving application preferences.
  */
