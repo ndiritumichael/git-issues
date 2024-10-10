@@ -17,4 +17,8 @@ dependencies {
     implementation(libs.truth)
     implementation(libs.robolectric)
     implementation(libs.mockk)
+    // For Robolectric tests.
+    implementation(libs.hilt.android.testing)
+    ksp(libs.hilt.compiler)
+    implementation(libs.datastore)
 }
