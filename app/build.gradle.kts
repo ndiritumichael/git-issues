@@ -54,6 +54,17 @@ dependencies {
     // For Robolectric tests.
     testImplementation(libs.hilt.android.testing)
     kspTest(libs.hilt.compiler)
+
+    testImplementation(libs.androidx.test.ext)
+
+    testImplementation(libs.androidx.arch.core.testing)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.core.ktx)
+    testImplementation(libs.truth)
+    testImplementation(libs.robolectric)
+    debugImplementation(libs.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.ui.test.manifest)
+    testImplementation(projects.core.testing)
 }
 
 sentry {
