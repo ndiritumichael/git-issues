@@ -14,7 +14,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Logout
-import androidx.compose.material.icons.filled.Logout
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -32,6 +31,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -71,7 +71,7 @@ fun IssuesScreen(
         mutableStateOf(false)
     }
 
-    val selectedAssignes by viewModel.selectedAssignees.collectAsStateWithLifecycle()
+    val selectedAssignees by viewModel.selectedAssignees.collectAsStateWithLifecycle()
     val selectedLabels by viewModel.selectedLabels.collectAsStateWithLifecycle()
 
     val selectedIssueState by viewModel.selectedIssueState.collectAsStateWithLifecycle()
@@ -79,7 +79,7 @@ fun IssuesScreen(
     AssigneesScreen(
         showDialog = showAssigneesDialog,
         pagedAssignees = viewModel.repositoryAssignees.collectAsLazyPagingItems(),
-        selectedAssignees = selectedAssignes,
+        selectedAssignees = selectedAssignees,
         onAssigneeSelected = { viewModel.modifySelectedAssignees(it) },
         onDismiss = { showAssigneesDialog = false },
     )
@@ -106,7 +106,7 @@ fun IssuesScreen(
                     }
                 } else {
                     TopAppBar(
-                        modifier = Modifier,
+                        modifier = Modifier.testTag("issue_app_bar"),
                         windowInsets = WindowInsets(top = 0.dp, bottom = 0.dp),
                         title = {
                             Column {
@@ -162,7 +162,7 @@ fun IssuesScreen(
         ) {
             stickyHeader {
                 FiltersScreen(
-                    selectedAssignes = selectedAssignes.map { it.username },
+                    selectedAssignes = selectedAssignees.map { it.username },
                     selectedLabels = selectedLabels.map { it.name },
                     selectedIssueState = selectedIssueState,
                     showLabelsDialog = { showLabelsDialog = true },
