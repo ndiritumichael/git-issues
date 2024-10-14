@@ -37,6 +37,17 @@ android {
         buildConfigField("String", "GITHUBCLIENTKEY", "\"$githubClientKey\"")
         buildConfigField("String", "GITHUBSECRET", "\"$githubSecret\"")
         buildConfigField("String", "SENTRYDSN", "\"$sentryDsn\"")
+
+        testInstrumentationRunner = "com.devmike.gitissuesmobile.CustomTestRunner"
+    }
+
+    testOptions {
+        packaging {
+            jniLibs {
+                useLegacyPackaging = true
+            }
+            resources.excludes.add("META-INF/*")
+        }
     }
     buildFeatures {
         buildConfig = true
@@ -50,9 +61,24 @@ dependencies {
     implementation(projects.core.domain)
     implementation(libs.firebase.crashlytics)
     implementation(libs.firebase.analytics)
+    implementation(libs.androidx.core.splashscreen)
     // For Robolectric tests.
     testImplementation(libs.hilt.android.testing)
+    androidTestImplementation(libs.hilt.android.testing)
+    kspAndroidTest(libs.hilt.compiler)
     kspTest(libs.hilt.compiler)
+
+    testImplementation(libs.androidx.test.ext)
+
+    testImplementation(libs.androidx.arch.core.testing)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.core.ktx)
+    testImplementation(libs.truth)
+    testImplementation(libs.robolectric)
+    debugImplementation(libs.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.ui.test.manifest)
+    testImplementation(projects.core.testing)
+    androidTestImplementation(projects.core.testing)
 }
 
 sentry {

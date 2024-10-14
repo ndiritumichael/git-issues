@@ -8,6 +8,14 @@ import com.apollographql.apollo.interceptor.ApolloInterceptorChain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
 
+/**
+ * A custom Apollo interceptor that logs the received response for each request.
+ *
+ * @param request The Apollo request to be sent.
+ * @param chain The Apollo interceptor chain to be used for further processing.
+ *
+ * @return A Flow of Apollo responses, where each response is logged before being returned.
+ */
 class LoggingApolloInterceptor : ApolloInterceptor {
     override fun <D : Operation.Data> intercept(
         request: ApolloRequest<D>,

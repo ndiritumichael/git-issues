@@ -8,6 +8,19 @@ import java.io.IOException
 import java.net.SocketTimeoutException
 import kotlin.coroutines.cancellation.CancellationException
 
+/**
+ * Executes an Apollo GraphQL query safely and handles potential errors.
+ *
+ * This function wraps the execution of an Apollo GraphQL query within a try-catch block
+ * and handles various error scenarios, returning a [Result] object that encapsulates
+ * either the successful query data or a specific error.
+ *
+ * @param T The type of the query data.
+ * @param query A lambda function that returns an [ApolloCall] representing the GraphQL query.
+ * @return A [Result] object containing either the successful query data of type [T]
+ *         or a specific error derived from [AppErrors].
+ *
+ */
 suspend inline fun <reified T : Operation.Data> safeApolloQuery(
     query: () -> ApolloCall<T>,
 ): Result<T> =
