@@ -15,7 +15,7 @@ dependencies {
     implementation(libs.kotlinx.coroutines.test)
     implementation(libs.core.ktx)
     implementation(libs.truth)
-    implementation(libs.robolectric)
+    // implementation(libs.robolectric)
     implementation(libs.mockk)
     // For Robolectric tests.
     implementation(libs.hilt.android.testing)
