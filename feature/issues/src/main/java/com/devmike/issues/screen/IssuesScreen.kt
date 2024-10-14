@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
@@ -55,14 +54,10 @@ import kotlinx.coroutines.flow.flowOf
 @Composable
 fun IssuesScreen(
     viewModel: IssuesViewModel = hiltViewModel(),
-    onLogoutClicked: () -> Unit = {},
     onBackClicked: () -> Unit,
 ) {
     val issues =
         viewModel.issuesResults
-            .collectAsStateWithLifecycle(
-                initialValue = flowOf(),
-            ).value
             .collectAsLazyPagingItems()
 
     var showAssigneesDialog by remember { mutableStateOf(false) }
@@ -139,18 +134,13 @@ fun IssuesScreen(
                             IconButton(onClick = { showSearch = true }) {
                                 Icon(Icons.Default.Search, contentDescription = "Search")
                             }
-                            IconButton(onClick = onLogoutClicked) {
-                                Icon(
-                                    Icons.AutoMirrored.Filled.Logout,
-                                    contentDescription = "Search",
-                                )
-                            }
                         },
                     )
                 }
             }
         },
     ) { paddingValues ->
+
         LazyColumn(
             modifier =
                 Modifier
