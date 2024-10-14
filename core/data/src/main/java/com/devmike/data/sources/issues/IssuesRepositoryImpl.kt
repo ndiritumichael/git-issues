@@ -85,6 +85,8 @@ class IssuesRepositoryImpl
             ).flow.map { pagingData ->
                 pagingData.map { withAssigneesAndLabels ->
 
+                    println("the data issues " + withAssigneesAndLabels)
+
                     withAssigneesAndLabels.issue.toIssueModel(
                         assignee = withAssigneesAndLabels.assignees.toSet().map { it.assignee },
                         labels = withAssigneesAndLabels.labels.toSet().map { it.toModel() },

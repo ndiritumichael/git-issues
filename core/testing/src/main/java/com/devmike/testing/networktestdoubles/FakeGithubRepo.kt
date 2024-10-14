@@ -15,43 +15,8 @@ class FakeGithubRepo : GitHubIssuesRepo {
         pageSize: Int,
     ): Result<PagedDtoWrapper<List<RepositoryDTO>>> {
         val repositories =
-            if (cursor == null) {
-                listOf(
-                    RepositoryDTO(
-                        url = "https://github.com/flutter/flutter",
-                        name = "flutter",
-                        nameWithOwner = "flutter/flutter",
-                        owner = "flutter",
-                        description =
-                            "Flutter makes it easy and fast to build beautiful apps for mobile and beyond",
-                        stargazers = 150000,
-                        forkCount = 25000,
-                        issueCount = 10000,
-                        avatarUrl = "https://example.com/flutter_avatar.png",
-                    ),
-                    RepositoryDTO(
-                        url = "https://github.com/JetBrains/kotlin",
-                        name = "kotlin",
-                        nameWithOwner = "JetBrains/kotlin",
-                        owner = "JetBrains",
-                        description = "The Kotlin Programming Language.",
-                        stargazers = 45000,
-                        forkCount = 6000,
-                        issueCount = 3000,
-                        avatarUrl = "https://example.com/kotlin_avatar.png",
-                    ),
-                    RepositoryDTO(
-                        url = "https://github.com/android/android",
-                        name = "android",
-                        nameWithOwner = "android/android",
-                        owner = "android",
-                        description = "The Android Open Source Project",
-                        stargazers = 80000,
-                        forkCount = 30000,
-                        issueCount = 12000,
-                        avatarUrl = "https://example.com/android_avatar.png",
-                    ),
-                )
+            if (cursor == null && name == "flutter") {
+                fakeRepositoryDTOs
             } else {
                 emptyList()
             }
@@ -59,8 +24,8 @@ class FakeGithubRepo : GitHubIssuesRepo {
         return Result.success(
             PagedDtoWrapper(
                 data = repositories,
-                hasNextPage = cursor == null,
-                nextCursor = if (cursor == null) "cursor" else null,
+                hasNextPage = cursor == null && name == "flutter",
+                nextCursor = if (cursor == null && name == "flutter") "cursor" else null,
             ),
         )
     }
