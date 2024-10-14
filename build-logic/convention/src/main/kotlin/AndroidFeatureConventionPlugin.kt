@@ -22,6 +22,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                         "androidx.test.runner.AndroidJUnitRunner"
                 }
                 testOptions.animationsDisabled = true
+                testOptions.unitTests.isIncludeAndroidResources = true
             }
 
             dependencies {

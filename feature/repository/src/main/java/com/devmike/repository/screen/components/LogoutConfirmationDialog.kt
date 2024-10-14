@@ -25,7 +25,7 @@ fun LogoutConfirmationDialog(
             title = { Text("Logout Confirmation") },
             text = { Text("Are you sure you want to logout?") },
             confirmButton = {
-                TextButton(onClick = onLogout) {
+                TextButton(onClick = onLogout, modifier = Modifier.testTag("confirm_logout")) {
                     Text("Yes", color = Color.DarkGray)
                 }
             },

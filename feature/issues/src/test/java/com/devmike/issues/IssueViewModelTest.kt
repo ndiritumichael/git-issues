@@ -4,7 +4,6 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.testing.invoke
 import androidx.paging.AsyncPagingDataDiffer
-import androidx.paging.cachedIn
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
 import com.devmike.domain.appdestinations.AppDestinations
@@ -17,8 +16,6 @@ import com.devmike.issues.util.IssueDiffCallback
 import com.devmike.issues.util.IssueItemUpdateCallback
 import com.devmike.issues.util.MainCoroutineRule
 import com.google.common.truth.Truth
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -64,8 +61,6 @@ class IssueViewModelTest {
     @Test
     fun `issuesResults emits correct data when filters are applied`() =
         runTest {
-            val scope = CoroutineScope(Dispatchers.Unconfined)
-
             val job =
                 backgroundScope.launch {
                     viewModel.issuesResults.collect()
@@ -82,22 +77,15 @@ class IssueViewModelTest {
             viewModel.issuesResults.test {
                 // val first = awaitItem()
 
-                val data = awaitItem()
+                val items = awaitItem()
 
-                data
-                    .cachedIn(
-                        scope,
-                    ).test {
-                        val items = awaitItem()
+                differ.submitData(items)
 
-                        differ.submitData(items)
+                Truth.assertThat(differ.snapshot()).containsExactlyElementsIn(
+                    fakeFlutterIssues,
+                )
 
-                        Truth.assertThat(differ.snapshot()).containsExactlyElementsIn(
-                            fakeFlutterIssues,
-                        )
-
-                        //  awaitComplete()
-                    }
+                //  awaitComplete()
             }
 
             job.cancel()
@@ -107,8 +95,6 @@ class IssueViewModelTest {
     @Test
     fun `repositoryLabels emits correct data`() =
         runTest {
-            val scope = CoroutineScope(Dispatchers.Unconfined)
-
             val job =
                 backgroundScope.launch {
                     viewModel.repositoryLabels.collect()
@@ -140,8 +126,6 @@ class IssueViewModelTest {
     @Test
     fun `repositoryAssignees emitscorrect data`() =
         runTest {
-            val scope = CoroutineScope(Dispatchers.Unconfined)
-
             val job =
                 backgroundScope.launch {
                     viewModel.repositoryAssignees.collect()

@@ -14,6 +14,9 @@ internal fun Project.configureKotlinAndroid(commonExtension: CommonExtension<*, 
 
         defaultConfig {
             minSdk = 26
+
+            testOptions.animationsDisabled = true
+            testOptions.unitTests.isIncludeAndroidResources = true
         }
 
         configureKotlin()
@@ -34,6 +37,7 @@ internal fun Project.configureKotlinAndroid(commonExtension: CommonExtension<*, 
         }
     }
 }
+
 private fun Project.configureKotlin() {
     tasks.withType<KotlinCompile>().configureEach {
         compilerOptions {
