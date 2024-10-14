@@ -57,7 +57,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             val token by dataStoreRepo
                 .getUserToken()
-                .collectAsStateWithLifecycle(initialValue = "")
+                .collectAsStateWithLifecycle(initialValue = null)
 
             val coroutineScope = rememberCoroutineScope()
             GitIssuesMobileTheme {
