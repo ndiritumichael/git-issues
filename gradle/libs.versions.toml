@@ -41,6 +41,7 @@ pagingRuntime = "3.3.2"
 robolectric = "4.13"
 room = "2.6.1"
 
+sentry-android = "4.11.0"
 spotless = "6.4.2"
 timber = "5.0.1"
 appcompat = "1.7.0"
@@ -174,6 +175,8 @@ apollo = { id = "com.apollographql.apollo", version.ref = "apollo" }
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
 google-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "googleFirebaseCrashlytics" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka"}
+sentry-android = { id = "io.sentry.android.gradle", version.ref ="sentry-android" }
+sentry-kotlin-compiler = { id = "io.sentry.kotlin.compiler.gradle", version.ref = "sentry-android" }
 
 
 
