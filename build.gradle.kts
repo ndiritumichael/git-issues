@@ -1,3 +1,5 @@
+import dev.iurysouza.modulegraph.Theme
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 plugins {
     alias(libs.plugins.android.application) apply false
@@ -15,6 +17,7 @@ plugins {
     alias(libs.plugins.google.gms.google.services) apply false
     alias(libs.plugins.google.firebase.crashlytics) apply false
     alias(libs.plugins.dokka)
+    id("dev.iurysouza.modulegraph") version "0.10.1"
 }
 
 subprojects {
@@ -28,9 +31,6 @@ subprojects {
         filter {
             exclude("**/build/**")
         }
-    }
-
-    tasks.withType<org.jlleitschuh.gradle.ktlint.tasks.KtLintCheckTask>().configureEach {
     }
 
     apply(plugin = "io.gitlab.arturbosch.detekt")
@@ -53,4 +53,21 @@ tasks.dokkaHtmlMultiModule {
     moduleName.set("GitIssues Dokka Documentation")
     dependsOn(":core:dokkaHtmlMultiModule")
     dependsOn(":feature:dokkaHtmlMultiModule")
+}
+moduleGraphConfig {
+    readmePath.set("./README.md")
+    heading = "### Module Graph"
+    theme.set(
+        Theme.BASE(
+            mapOf(
+                "primaryTextColor" to "#fff",
+                "primaryColor" to "#5a4f7c",
+                "primaryBorderColor" to "#5a4f7c",
+                "lineColor" to "#f5a623",
+                "tertiaryColor" to "#40375c",
+                "fontSize" to "12px",
+            ),
+            focusColor = "#FA8140",
+        ),
+    )
 }
