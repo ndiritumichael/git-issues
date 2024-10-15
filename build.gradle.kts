@@ -13,11 +13,10 @@ plugins {
     alias(libs.plugins.detekt) apply true
     alias(libs.plugins.spotless) apply true
     alias(libs.plugins.android.library) apply false
-    alias(libs.plugins.module.graph) apply true
+    alias(libs.plugins.module.graph)
     alias(libs.plugins.google.gms.google.services) apply false
     alias(libs.plugins.google.firebase.crashlytics) apply false
     alias(libs.plugins.dokka)
-    id("dev.iurysouza.modulegraph") version "0.10.1"
 }
 
 subprojects {
