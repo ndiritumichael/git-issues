@@ -48,7 +48,7 @@ This project uses Paging 3 to efficiently load and display paginated data from G
   - The system handles refreshing data and loading additional pages seamlessly, ensuring smooth scrolling and minimal load times for the user.
 This approach helps maintain a responsive UI while managing data efficiently, even for large datasets.
 
-<img src="docs/paging3-base-lifecycle.png" width="500"/>
+<img src="docs/paging3-base-lifecycle.png" width="1902" alt="paging 3 structure"/>
 
 ### Modularization Structure
 
