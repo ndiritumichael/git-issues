@@ -122,7 +122,8 @@ The project includes unit tests for all modules, Instrumented tests are ran as u
 | **Unit tests for the issues feature**     | <img src="docs/testimages/issuesfeaturetests.png" /> |
 | **Unit tests for the repository feature** | <img src="docs/testimages/repositoriestests.png" />  |
 | **End to End Tests**                      | <img src="docs/testimages/e2etests.png" />           |
-| **End to End Tests on a physical device**  | <video  src="docs/video/E2Etests.mp4"/>    |
+
+https://github.com/user-attachments/assets/a461dd3e-2a8a-4ea3-94dd-53b343c3e94e
 
 
 
@@ -152,7 +153,7 @@ The project includes unit tests for all modules, Instrumented tests are ran as u
     * [MockK](https://github.com/mockk) - mocking library for Kotlin
     * [Truth](https://github.com/agoda-com/Kakao) - A fluent assertions library for Android and Java.
     * [Roboelectric](https://github.com/robolectric/robolectric) - A library that allows you to run your tests on a simulated Android platform.
-    *[Turbine](https://github.com/cashapp/turbine) - Turbine is a testing library for kotlinx.coroutines Flow.
+    * [Turbine](https://github.com/cashapp/turbine) - Turbine is a testing library for kotlinx.coroutines Flow.
 * Gradle
     * [Gradle Kotlin DSL](https://docs.gradle.org/current/userguide/kotlin_dsl.html) - An alternative syntax for writing Gradle build scripts using Koltin.
     * [Version Catalogs](https://developer.android.com/build/migrate-to-catalogs) - A scalable way of maintaining dependencies and plugins in a multi-module project.
