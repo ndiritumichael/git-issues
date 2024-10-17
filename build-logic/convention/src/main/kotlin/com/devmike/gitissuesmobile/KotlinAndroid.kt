@@ -29,6 +29,7 @@ internal fun Project.configureKotlinAndroid(commonExtension: CommonExtension<*, 
         dependencies {
             add("implementation", libs.findLibrary("timber").get())
             add("implementation", libs.findLibrary("androidx.core.ktx").get())
+            add("implementation", libs.findLibrary("kotlinx.coroutines.android").get())
 
             add("androidTestImplementation", libs.findLibrary("androidx.espresso.core").get())
             add("androidTestImplementation", libs.findLibrary("androidx.junit").get())

@@ -36,11 +36,12 @@ ktor = "2.3.12"
 
 lottie = "6.0.0"
 mockk = "1.13.11"
-moduleGraph = "2.5.0"
+moduleGraph = "0.10.1"
 pagingRuntime = "3.3.2"
 robolectric = "4.13"
 room = "2.6.1"
 
+sentry-android = "4.11.0"
 spotless = "6.4.2"
 timber = "5.0.1"
 appcompat = "1.7.0"
@@ -119,14 +120,7 @@ androidx-room-paging = { module = "androidx.room:room-paging", version.ref = "ro
 datastore = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore"}
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber"}
 
-#ktor
-ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
-ktor-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
-ktor-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
-ktor-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
-ktor-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
-ktor-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktor" }
-ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+
 
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
@@ -169,11 +163,13 @@ hilt-plugin = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 kotlinX-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 room-compiler = { id = "androidx.room", version.ref = "room" }
-module-graph = { id = "com.jraska.module.graph.assertion", version.ref = "moduleGraph" }
+module-graph = { id = "dev.iurysouza.modulegraph", version.ref = "moduleGraph" }
 apollo = { id = "com.apollographql.apollo", version.ref = "apollo" }
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
 google-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "googleFirebaseCrashlytics" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka"}
+sentry-android = { id = "io.sentry.android.gradle", version.ref ="sentry-android" }
+sentry-kotlin-compiler = { id = "io.sentry.kotlin.compiler.gradle", version.ref = "sentry-android" }
 
 
 
