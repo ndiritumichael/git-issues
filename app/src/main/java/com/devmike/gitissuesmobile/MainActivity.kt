@@ -95,10 +95,12 @@ class MainActivity : ComponentActivity() {
     }
 
     private val launcher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == RESULT_OK) {
-                val ex = AuthorizationException.fromIntent(it.data!!)
-                val result = AuthorizationResponse.fromIntent(it.data!!)
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult(),
+        ) { activityResult ->
+            if (activityResult.resultCode == RESULT_OK) {
+                val ex = AuthorizationException.fromIntent(activityResult.data!!)
+                val result = AuthorizationResponse.fromIntent(activityResult.data!!)
 
                 if (ex != null) {
                     Timber.tag("tokenerror").d("tokenerror: $ex")
@@ -116,10 +118,14 @@ class MainActivity : ComponentActivity() {
                                     Toast.LENGTH_SHORT,
                                 ).show()
                         } else {
-                            val token = res?.accessToken
-                            Toast.makeText(this, "Token: $token", Toast.LENGTH_SHORT).show()
-
-                            insertToken(token!!)
+                            res?.accessToken?.let { insertToken(it) }?:run {
+                                Toast
+                                    .makeText(
+                                        this,
+                                        "Something went wrong please try again",
+                                        Toast.LENGTH_SHORT,
+                                    ).show()
+                            }
                         }
                     }
                 }

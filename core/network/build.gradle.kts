@@ -60,20 +60,6 @@ tasks.withType<Test> {
     //   jacoco. = true
 }
 
-/**
-* fixes the warning * What went wrong:
-* A problem was found with the configuration of task
-*':core:network:runKtlintCheckOverMainSourceSet' (type 'KtLintCheckTask').
-* - Gradle detected a problem with the following location:
-*'C:\Users\User\AndroidStudioProjects\GitIssuesMobile\core\network\build\generated\source\apollo\service'.
-* Reason: Task ':core:network:runKtlintCheckOverMainSourceSet' uses this output of task '
-*:core:network:generateServiceApolloSources' without declaring an explicit or implicit dependency.
-*This can lead to incorrect results being produced, depending on what order the tasks are executed.
-*/
-tasks.named("runKtlintCheckOverMainSourceSet") {
-    dependsOn(tasks.named("generateServiceApolloSources"))
-}
-
 tasks.withType(Test::class) {
     configure<JacocoTaskExtension> {
         isIncludeNoLocationClasses = true
