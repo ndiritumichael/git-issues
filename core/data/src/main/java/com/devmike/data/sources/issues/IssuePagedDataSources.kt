@@ -10,7 +10,6 @@ import com.devmike.database.entities.IssueWithAssigneesAndLabels
 import com.devmike.database.repository.CachedIssueRepo
 import com.devmike.domain.models.IssueSearchModel
 import com.devmike.network.networkSource.GitHubIssuesRepo
-import timber.log.Timber
 import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
@@ -42,13 +41,6 @@ class IssuePagedDataSources
                         }
                     }
 
-                Timber
-                    .tag(
-                        "issueerror",
-                    ).d(
-                        "cursor for ${issueSearchModel.toCachedIssueDTO()}  was the cursor $cursor",
-                    )
-
                 val response =
                     gitHubIssuesRepo.getRepositoryIssues(
                         issueSearchModel.copy(cursor = cursor),
@@ -60,12 +52,6 @@ class IssuePagedDataSources
                         MediatorResult.Error(error)
                     },
                     onSuccess = { pagedDtoWrapper ->
-                        Timber
-                            .tag(
-                                "issueerror",
-                            ).d(
-                                "cursor for ${pagedDtoWrapper.data.size}  was the cursor $cursor",
-                            )
 
                         cachedIssueRepo.insertIssues(
                             loadType == LoadType.REFRESH,
