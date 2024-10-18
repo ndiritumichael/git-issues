@@ -118,7 +118,14 @@ class MainActivity : ComponentActivity() {
                                     Toast.LENGTH_SHORT,
                                 ).show()
                         } else {
-                            res?.accessToken?.let { insertToken(it) }
+                            res?.accessToken?.let { insertToken(it) }?:run {
+                                Toast
+                                    .makeText(
+                                        this,
+                                        "Something went wrong please try again",
+                                        Toast.LENGTH_SHORT,
+                                    ).show()
+                            }
                         }
                     }
                 }
