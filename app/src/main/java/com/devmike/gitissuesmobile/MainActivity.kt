@@ -117,8 +117,7 @@ class MainActivity : ComponentActivity() {
                                     "Something went wrong please try again",
                                     Toast.LENGTH_SHORT,
                                 ).show()
-                        } else {
-                            val token = res?.accessToken
+                        } else{
                             res?.accessToken?.let { insertToken(it) }
                         }
                     }
