@@ -1,7 +1,7 @@
 package com.devmike.issues.screen.components
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -18,7 +18,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.devmike.domain.helper.IssueState
 
@@ -56,11 +55,11 @@ fun FiltersScreen(
                             Box(
                                 modifier =
                                     Modifier
-                                        .background(
+                                        .border(
+                                            1.dp,
                                             MaterialTheme.colorScheme.onPrimary,
                                             CircleShape,
-                                        ).clip(CircleShape)
-                                        .size(15.dp),
+                                        ).size(15.dp),
                             ) {
                                 Text(
                                     text = "${
@@ -71,6 +70,7 @@ fun FiltersScreen(
                                         Modifier
                                             .align(Alignment.Center),
                                     style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onPrimary,
                                 )
                             }
                         }
@@ -90,11 +90,11 @@ fun FiltersScreen(
                             Box(
                                 modifier =
                                     Modifier
-                                        .background(
+                                        .border(
+                                            1.dp,
                                             MaterialTheme.colorScheme.onPrimary,
                                             CircleShape,
-                                        ).clip(CircleShape)
-                                        .size(15.dp),
+                                        ).size(15.dp),
                             ) {
                                 Text(
                                     text = "${
@@ -105,6 +105,7 @@ fun FiltersScreen(
                                         Modifier
                                             .align(Alignment.Center),
                                     style = MaterialTheme.typography.labelSmall,
+                                    color = MaterialTheme.colorScheme.onPrimary,
                                 )
                             }
                         }
