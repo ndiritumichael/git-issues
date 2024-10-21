@@ -13,7 +13,7 @@ The app implements pagination to efficiently retrieve data in manageable chunks 
 |----------------------------------------|-------------------------------------------|-----------------------------------------------|
 | <img src="docs/appimages/issuelist.png" width="250"/> | <img src="docs/appimages/issuewithsearch.png" width="250"/> | <img src="docs/appimages/issuelabels.png" width="250"/> |
 #### demo
-[![Git Issues App Demo](https://res.cloudinary.com/marcomontalbano/image/upload/v1729526959/video_to_markdown/images/google-drive--1RwVil67gg5u8_SNzwYQovZuSn5RBybwS-c05b58ac6eb4c4700831b2b3070cd403.jpg)](https://drive.google.com/file/d/1RwVil67gg5u8_SNzwYQovZuSn5RBybwS/view?usp=sharing "Git Issues App Demo")
+https://github.com/user-attachments/assets/5280d0c6-9c0e-469e-b3ac-42cf5a1795e6
 
 *Pre-requisites*
 - Built on A.S Koala
