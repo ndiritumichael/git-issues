@@ -124,7 +124,7 @@ The project includes unit tests for all modules, Instrumented tests are ran as u
 | **Unit tests for the issues feature**     | <img src="docs/testimages/issuesfeaturetests.png" /> |
 | **Unit tests for the repository feature** | <img src="docs/testimages/repositoriestests.png" />  |
 | **End to End Tests**                      | <img src="docs/testimages/e2etests.png" />           |
-
+#### End to End tests running on device
 https://github.com/user-attachments/assets/a461dd3e-2a8a-4ea3-94dd-53b343c3e94e
 
 
