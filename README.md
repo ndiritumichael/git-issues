@@ -12,9 +12,11 @@ The app implements pagination to efficiently retrieve data in manageable chunks 
 | Paged Issues List                                   | Issue List with query                                  | Valid Issue Labels                                  |
 |----------------------------------------|-------------------------------------------|-----------------------------------------------|
 | <img src="docs/appimages/issuelist.png" width="250"/> | <img src="docs/appimages/issuewithsearch.png" width="250"/> | <img src="docs/appimages/issuelabels.png" width="250"/> |
+#### demo
+https://github.com/user-attachments/assets/5280d0c6-9c0e-469e-b3ac-42cf5a1795e6
 
 *Pre-requisites*
-- Built on A.S Koala
+- A.S Koala or newer
 - JDK 17
 - A Fine [Grained Access token from Github](https://github.com/settings/tokens?type=beta) to download schema from Github GraphQl API.
 - Sentry DSN and Auth Token from [Sentry](https://docs.sentry.io/platforms/android/#install)
