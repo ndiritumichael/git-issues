@@ -12,7 +12,8 @@ The app implements pagination to efficiently retrieve data in manageable chunks 
 | Paged Issues List                                   | Issue List with query                                  | Valid Issue Labels                                  |
 |----------------------------------------|-------------------------------------------|-----------------------------------------------|
 | <img src="docs/appimages/issuelist.png" width="250"/> | <img src="docs/appimages/issuewithsearch.png" width="250"/> | <img src="docs/appimages/issuelabels.png" width="250"/> |
-
+#### demo
+<video src="https://drive.google.com/file/d/1RwVil67gg5u8_SNzwYQovZuSn5RBybwS/view?usp=sharing" width="300" />
 *Pre-requisites*
 - Built on A.S Koala
 - JDK 17
